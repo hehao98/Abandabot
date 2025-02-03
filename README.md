@@ -1,2 +1,3 @@
 # Abandabot
-An intelligent agent that monitors and responds to abandoned dependencies
+
+Your intelligent assistant that monitors and responds to abandoned dependencies
