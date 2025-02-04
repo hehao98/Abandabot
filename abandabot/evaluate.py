@@ -7,8 +7,8 @@ import argparse
 import subprocess
 
 
-from abandabot import REPO_PATH, CODEQL_DB_PATH
-from abandabot.codeql import install_codeql_cli, create_database
+from abandabot import REPO_PATH, CODEQL_DB_PATH, REPORT_PATH
+from abandabot.codeql import install_codeql_cli, create_database, execute_query
 
 
 def remove_readonly(func, path, _):
@@ -48,6 +48,7 @@ def main():
     install_codeql_cli()
     os.makedirs(CODEQL_DB_PATH, exist_ok=True)
     os.makedirs(REPO_PATH, exist_ok=True)
+    os.makedirs(REPORT_PATH, exist_ok=True)
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -68,6 +69,9 @@ def main():
     clone_repo(args.github, overwrite=args.overwrite)
 
     repo_path = os.path.join(REPO_PATH, args.github.replace("/", "_"))
+    database_path = os.path.join(CODEQL_DB_PATH, args.github.replace("/", "_"))
+    report_path = os.path.join(REPORT_PATH, f"{args.github.replace('/', '_')}")
+    os.makedirs(report_path, exist_ok=True)
 
     if not os.path.exists(os.path.join(repo_path, "package.json")):
         logging.info("Skipping CodeQL database creation, no package.json found")
@@ -76,9 +80,15 @@ def main():
 
     create_database(
         repo_path,
-        os.path.join(CODEQL_DB_PATH, args.github.replace("/", "_")),
+        database_path,
         language="javascript",
         overwrite=args.overwrite,
+    )
+
+    execute_query(
+        query_path="queries/find_dep_usage.ql",
+        database_path=database_path,
+        output_path=os.path.join(report_path, "dep-usage.csv"),
     )
 
 

@@ -65,7 +65,7 @@ def create_database(
         logging.info("CodeQL database already exists at %s", database_path)
         return
 
-    logging.info("Creating CodeQL database")
+    logging.info("Creating CodeQL database at %s for repo %s", database_path, repo_path)
     subprocess.run(
         [
             CODEQL_CLI_PATH,
@@ -75,8 +75,26 @@ def create_database(
             "--source-root",
             repo_path,
             f"--language={language}",
-            "--overwrite" if overwrite else "--no-overwrite",
+            "--overwrite",
         ],
         check=True,
         stdout=subprocess.PIPE,
     )
+
+
+def execute_query(query_path: str, database_path: str, output_path: str) -> None:
+    logging.info("Executing CodeQL query %s on database %s", query_path, database_path)
+    subprocess.run(
+        [
+            CODEQL_CLI_PATH,
+            "database",
+            "analyze",
+            database_path,
+            query_path,
+            "--format=csv",
+            f"--output={output_path}",
+        ],
+        check=True,
+        stdout=subprocess.PIPE,
+    )
+    logging.info("CodeQL query results saved to %s", output_path)
