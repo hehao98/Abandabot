@@ -1,6 +1,7 @@
 import os
 import sys
 import stat
+import json
 import shutil
 import logging
 import argparse
@@ -9,10 +10,10 @@ import dotenv
 import pandas as pd
 
 from langchain_openai import ChatOpenAI
-from langchain_core.messages import HumanMessage, SystemMessage
 
 from abandabot import REPO_PATH, CODEQL_DB_PATH, REPORT_PATH
 from abandabot.codeql import install_codeql_cli, create_database, execute_query
+from abandabot.prompt import AbandabotReport, build_abandabot_prompt
 
 
 def check_env() -> None:
@@ -85,14 +86,23 @@ def find_dep_usage_codeql(repo: str, overwrite: bool) -> pd.DataFrame:
 
 
 def generate_report(repo: str, dep: str, dep_usage: pd.DataFrame) -> None:
-    model = ChatOpenAI(model="gpt-4o-mini")
+    report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
+    prompt_path = os.path.join(report_path, f"prompt-{dep}.txt")
+    output_path = os.path.join(report_path, f"report-{dep}.json")
 
-    messages = [
-        SystemMessage("Translate the following from English into Italian"),
-        HumanMessage("hi!"),
-    ]
+    model_name = "gpt-4o-mini"
+    model = ChatOpenAI(model=model_name).with_structured_output(AbandabotReport)
 
-    logging.info(model.invoke(messages))
+    logging.info("Generating report for %s using %s", repo, model_name)
+    prompt = build_abandabot_prompt(repo, dep, dep_usage)
+    with open(prompt_path, "w") as f:
+        f.write(prompt)
+    logging.info("Prompt saved to %s", prompt_path)
+
+    output = model.invoke(prompt)
+    with open(output_path, "w") as f:
+        f.write(json.dumps(output, indent=2))
+    logging.info("Report saved to %s", output_path)
 
 
 def main():
