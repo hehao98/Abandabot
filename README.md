@@ -1,6 +1,6 @@
 # Abandabot
 
-Your intelligent assistant that monitors and responds to abandoned dependencies
+An intelligent assistant that evaluates abandoned dependencies
 
 ## Setup
 

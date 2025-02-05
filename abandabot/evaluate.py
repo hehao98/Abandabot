@@ -5,11 +5,26 @@ import shutil
 import logging
 import argparse
 import subprocess
+import dotenv
 import pandas as pd
 
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage, SystemMessage
 
 from abandabot import REPO_PATH, CODEQL_DB_PATH, REPORT_PATH
 from abandabot.codeql import install_codeql_cli, create_database, execute_query
+
+
+def check_env() -> None:
+    dotenv.load_dotenv()
+
+    if not shutil.which("git"):
+        raise RuntimeError("git is not installed")
+
+    required_env_vars = ["OPENAI_API_KEY"]
+    for var in required_env_vars:
+        if var not in os.environ:
+            raise RuntimeError(f"{var} is not set in the local .env file")
 
 
 def remove_readonly(func, path, _):
@@ -70,7 +85,14 @@ def find_dep_usage_codeql(repo: str, overwrite: bool) -> pd.DataFrame:
 
 
 def generate_report(repo: str, dep: str, dep_usage: pd.DataFrame) -> None:
-    raise NotImplementedError("Report generation is not implemented yet")
+    model = ChatOpenAI(model="gpt-4o-mini")
+
+    messages = [
+        SystemMessage("Translate the following from English into Italian"),
+        HumanMessage("hi!"),
+    ]
+
+    logging.info(model.invoke(messages))
 
 
 def main():
@@ -79,6 +101,8 @@ def main():
         level=logging.INFO,
         handlers=[logging.StreamHandler(sys.stdout)],
     )
+
+    check_env()
 
     install_codeql_cli()
     os.makedirs(CODEQL_DB_PATH, exist_ok=True)
