@@ -88,7 +88,8 @@ def main():
     execute_query(
         query_path="queries/find_dep_usage.ql",
         database_path=database_path,
-        output_path=os.path.join(report_path, "dep-usage.csv"),
+        output_path=os.path.join(report_path, "dep-usage.bqrs"),
+        decode_path=os.path.join(report_path, "dep-usage.csv"),
     )
 
 

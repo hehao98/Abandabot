@@ -4,9 +4,6 @@
  * @description This query finds all source code usage of all dependencies declared in package.json.
  *     It only finds places where the directly imported module/variable/function is used. It does not
  *     track usages of submodules, subfunctions, or any objects/classes created from such usage.
- * @kind problem
- * @precision very-high
- * @severity info
  */
 
 import javascript
@@ -29,5 +26,4 @@ where
     useLineno = use.getStartLine() and
     useNode = use.getAstNode()
   )
-select name, file, useNode, impLineno.toString(), useLineno.toString(),
-  useNode.getStartLine().getText()
+select name, file, useNode, impLineno, useLineno

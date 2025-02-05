@@ -13,5 +13,5 @@ poetry install
 ## Basic Usage
 
 ```
-$ poetry run python -m abandabot.evalaute --github OWNER/REPO [--overwrite]
+$ poetry run python -m abandabot.evaluate --github OWNER/REPO [--overwrite]
 ```

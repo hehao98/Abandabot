@@ -82,17 +82,30 @@ def create_database(
     )
 
 
-def execute_query(query_path: str, database_path: str, output_path: str) -> None:
+def execute_query(
+    query_path: str, database_path: str, output_path: str, decode_path: str
+) -> None:
     logging.info("Executing CodeQL query %s on database %s", query_path, database_path)
     subprocess.run(
         [
             CODEQL_CLI_PATH,
-            "database",
-            "analyze",
-            database_path,
-            query_path,
-            "--format=csv",
+            "query",
+            "run",
+            f"--database={database_path}",
             f"--output={output_path}",
+            query_path,
+        ],
+        check=True,
+        stdout=subprocess.PIPE,
+    )
+    subprocess.run(
+        [
+            CODEQL_CLI_PATH,
+            "bqrs",
+            "decode",
+            f"--output={decode_path}",
+            "--format=csv",
+            output_path,
         ],
         check=True,
         stdout=subprocess.PIPE,
