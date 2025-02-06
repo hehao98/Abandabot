@@ -49,7 +49,7 @@ def clone_repo(repo: str, overwrite: bool = False) -> None:
 
     logging.info(f"Cloning repository {repo}")
     subprocess.run(
-        ["git", "clone", f"https://github.com/{repo}.git", repo_path],
+        ["git", "clone", f"https://github.com/{repo}.git", repo_path, "--depth", "1"],
         check=True,
         stdout=subprocess.PIPE,
     )
