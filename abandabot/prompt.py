@@ -10,7 +10,7 @@ PROMPT_BASE = """
 You are an expert JavaScript developer. I am going to ask you important dependency 
 management questions regarding whether I will need to take action if a dependency gets abandoned.
 I will provide you with the project README file, the package.json file, 
-the dependency name, and the source code files (or code snippets) in this project 
+the dependency name, and the partial code snippets in this project 
 where the dependency is used. I want you to evaluate the following four dimensions 
 regarding the dependency and the project:
 

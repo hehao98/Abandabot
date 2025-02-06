@@ -10,8 +10,18 @@ The project works with Python 3.11+ and uses [`poetry`](https://python-poetry.or
 poetry install
 ```
 
+The Abandabot currently uses ChatGPT-4o-mini and needs to have the OPENAI_API_KEY env variable setup in the `.env` file. Optionally, LangSmith config can be added. Example `.env` file:
+
+```
+LANGSMITH_TRACING=true
+LANGSMITH_ENDPOINT="https://api.smith.langchain.com"
+LANGSMITH_API_KEY="[Your LangSmith API key]"
+LANGSMITH_PROJECT="[Your LangSmith project name]"
+OPENAI_API_KEY="[Your OpenAI API key]"
+```
+
 ## Basic Usage
 
 ```
-$ poetry run python -m abandabot.evaluate --github OWNER/REPO --dep DEPENDENCY [--overwrite]
+$ poetry run python -m abandabot --github OWNER/REPO --dep DEPENDENCY [--overwrite]
 ```

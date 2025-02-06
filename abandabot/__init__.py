@@ -1,6 +1,7 @@
 # read pyproject.toml
 import tomllib
 
+
 with open("pyproject.toml", "rb") as f:
     PY_PROJECT = tomllib.load(f)
 
