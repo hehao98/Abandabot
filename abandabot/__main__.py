@@ -144,7 +144,7 @@ def main():
     dep_usage = find_dep_usage_codeql(args.github, args.overwrite)
     if args.dep not in set(dep_usage.name):
         logging.info(
-            "Dependency %s not found in %s, found deps are: ",
+            "Dependency %s not found in %s, found deps are: %s",
             args.dep,
             args.github,
             set(dep_usage.name),

@@ -35,7 +35,7 @@ $ poetry run python -m abandabot.evaluate
 This requires a ground truth dataset `ground_truth.csv` in the following format:
 
 ```
-repo,repo_url,dependency,important_abandonment,estimated_action
+repo,repo_url,dep,important_abandonment,estimated_action
 abc/def,http://github.com/abc/def,vue,Yes,Immediate action is necessary
 ...
 ```

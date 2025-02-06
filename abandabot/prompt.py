@@ -63,7 +63,9 @@ def build_abandabot_prompt(repo: str, dep: str, dep_usage: pd.DataFrame) -> str:
     repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
 
     if os.path.exists(os.path.join(repo_path, "README.md")):
-        with open(os.path.join(repo_path, "README.md"), "r") as f:
+        with open(
+            os.path.join(repo_path, "README.md"), "r", encoding="utf-8", errors="ignore"
+        ) as f:
             readme = f.read()
         # only keep the first 15 lines of the README
         readme = "\n".join(readme.split("\n")[:15]) + "\n...\n"
