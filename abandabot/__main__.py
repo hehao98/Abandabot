@@ -9,8 +9,8 @@ import subprocess
 import dotenv
 import pandas as pd
 
+from typing import Optional
 from langchain_openai import ChatOpenAI
-
 from abandabot import REPO_PATH, CODEQL_DB_PATH, REPORT_PATH
 from abandabot.codeql import install_codeql_cli, create_database, execute_query
 from abandabot.prompt import AbandabotReport, build_abandabot_prompt
@@ -55,7 +55,7 @@ def clone_repo(repo: str, overwrite: bool = False) -> None:
     )
 
 
-def find_dep_usage_codeql(repo: str, overwrite: bool) -> pd.DataFrame:
+def find_dep_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
     clone_repo(repo, overwrite=overwrite)
 
     repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
@@ -66,7 +66,7 @@ def find_dep_usage_codeql(repo: str, overwrite: bool) -> pd.DataFrame:
     if not os.path.exists(os.path.join(repo_path, "package.json")):
         logging.info("Skipping CodeQL database creation, no package.json found")
         logging.info("Currently only JS/TS projects using npm are supported")
-        return
+        return None
 
     create_database(
         repo_path,
@@ -142,7 +142,7 @@ def main():
     logging.info("GitHub repository: %s", args.github)
 
     dep_usage = find_dep_usage_codeql(args.github, args.overwrite)
-    if args.dep not in set(dep_usage.name):
+    if dep_usage is None or args.dep not in set(dep_usage.name):
         logging.info(
             "Dependency %s not found in %s, found deps are: %s",
             args.dep,
