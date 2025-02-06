@@ -25,3 +25,19 @@ OPENAI_API_KEY="[Your OpenAI API key]"
 ```
 $ poetry run python -m abandabot --github OWNER/REPO --dep DEPENDENCY [--overwrite]
 ```
+
+## Run Performance Evaluation
+
+```
+$ poetry run python -m abandabot.evaluate
+```
+
+This requires a ground truth dataset `ground_truth.csv` in the following format:
+
+```
+repo,repo_url,dependency,important_abandonment,estimated_action
+abc/def,http://github.com/abc/def,vue,Yes,Immediate action is necessary
+...
+```
+
+Due to the confidential requirements of our interviews, we cannot share the ground truth we used.
