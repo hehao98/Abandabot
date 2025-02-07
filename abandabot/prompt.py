@@ -9,15 +9,15 @@ from abandabot import REPO_PATH
 PROMPT_BASE = """
 You are an expert JavaScript developer. I am going to ask you important dependency 
 management questions regarding whether I will need to take action if a dependency gets abandoned.
-I will provide you with the project README file, the package.json file, 
-the dependency name, and the partial code snippets in this project 
+I will provide you with the project's README file, the project's package.json file, 
+the dependency name, and partial code snippets from this project 
 where the dependency is used. I want you to evaluate the following four dimensions 
 regarding the dependency and the project:
 
-1. How important is the dependency to the project? 
-2. How difficult is it to replace the dependency, due to its depth of integration?
-3. How difficult is it to replace the dependency, due to the lack of alternatives?
-4. How likely it is that external changes will force the project to act on its abandonment?
+1. How important is the functionality provided by the dependency to the project? 
+2. How difficult is it to replace the dependency, considering the depth of its integration in the project’s code base?
+3. How difficult is it to replace the dependency, considering the availability of alternative packages that could serve as suitable replacements and provide the same functionality?
+4. How likely is it that external environmental changes will force the project to act on the dependency's abandonment?
 
 For each question, I want you to provide an answer on a scale from 1 to 5, where 
 1 is the least important, difficult, or likely, and 5 is the most important, 
