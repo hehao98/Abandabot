@@ -20,6 +20,8 @@ LANGSMITH_PROJECT="[Your LangSmith project name]"
 OPENAI_API_KEY="[Your OpenAI API key]"
 ```
 
+For TypeScript projects, please also install Node.js and ensure `node` is on the PATH.
+
 ## Basic Usage
 
 ```

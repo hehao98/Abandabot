@@ -95,7 +95,7 @@ def generate_report(repo: str, dep: str, dep_usage: pd.DataFrame) -> None:
 
     logging.info("Generating report for %s using %s", repo, model_name)
     prompt = build_abandabot_prompt(repo, dep, dep_usage)
-    with open(prompt_path, "w") as f:
+    with open(prompt_path, "w", encoding="utf-8", errors="ignore") as f:
         f.write(prompt)
     logging.info("Prompt saved to %s", prompt_path)
 

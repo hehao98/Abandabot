@@ -24,7 +24,7 @@ def main():
         if os.path.exists(os.path.join(report_path, f"report-{dep}.json")):
             logging.info("Skipping %s %s, report already exists", repo, dep)
             continue
-        
+
         logging.info("Evaluating %s %s", repo, dep)
         subprocess.run(
             [
@@ -42,6 +42,7 @@ def main():
             stdout=subprocess.PIPE,
         )
 
+    summary = []
     for repo, dep, est_action in zip(df["repo"], df["dep"], df["estimated_action"]):
         report_path = os.path.join("reports", f"{repo.replace('/', '_')}")
         report_file = os.path.join(report_path, f"report-{dep}.json")
@@ -53,23 +54,32 @@ def main():
         with open(report_file, "r") as f:
             report = json.load(f)
 
-        actual_action = report["recommendation"]["recommendation"]
+        ai_action = report["recommendation"]["recommendation"]
         logging.info(
             "%s %s: estimated=%d, actual=%d",
             repo,
             dep,
             est_action,
-            actual_action,
+            ai_action,
         )
         total += 1
-        if est_action == actual_action:
+        if est_action == ai_action:
             match += 1
         else:
             mismatch += 1
+        summary.append(
+            {
+                "repo": repo,
+                "dep": dep,
+                "estimated_action": est_action,
+                "ai_action": ai_action,
+            }
+        )
 
     logging.info(
         "Total: %d, Match: %d, Mismatch: %d, Error: %d", total, match, mismatch, error
     )
+    pd.DataFrame(summary).to_csv("summary.csv", index=False)
 
 
 if __name__ == "__main__":
