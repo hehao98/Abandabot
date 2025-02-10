@@ -20,7 +20,7 @@ regarding the dependency and the project:
 3. How difficult is it to replace the dependency, considering the availability of alternative packages that could serve as suitable replacements and provide the same functionality?
 4. How likely is it that external environmental changes will force the project to act on the dependency's abandonment?
 
-For each question, I want you to provide an answer on a scale from 1 to 5, where 
+For each question, I want you to provide a score on a scale from 1 to 5, where 
 1 is the least important, difficult, or likely, and 5 is the most important, 
 difficult, or likely. Along with the score, please provide detailed, specific reasoning 
 behind the score. Finally, please provide a final score from one of 
@@ -50,7 +50,7 @@ class AbandabotReport(TypedDict):
         reasoning: str
 
     class Recommendation(TypedDict):
-        score: str
+        recommendation: str
         reasoning: str
 
     importance: Dimension
@@ -61,7 +61,7 @@ class AbandabotReport(TypedDict):
 
 
 def build_abandabot_prompt(
-    repo: str, dep: str, context: dict[str, set[int]], context_window: int = 10
+    repo: str, dep: str, context: dict[str, set[int]], context_window: int = 5
 ) -> str:
     """Build a prompt for Abandabot
 
@@ -71,7 +71,7 @@ def build_abandabot_prompt(
         context (dict[str, set[int]]): A dictionary of file names
             and line numbers where the dependency is used
         context_window (int, optional): The number of lines to include
-            per dependency usage. Defaults to 10.
+            per dependency usage. Defaults to 5.
 
     Returns:
         str: The prompt for Abandabot
@@ -82,8 +82,8 @@ def build_abandabot_prompt(
     if os.path.exists(os.path.join(repo_path, "README.md")):
         with open(os.path.join(repo_path, "README.md"), "r", **encoding) as f:
             readme = f.read()
-        # only keep the first 15 lines of the README
-        readme = "\n".join(readme.split("\n")[:15]) + "\n...\n"
+        # only keep the first 100 lines of the README
+        readme = "\n".join(readme.split("\n")[:100]) + "\n...\n"
     else:
         readme = "NOT FOUND"
 
@@ -92,7 +92,7 @@ def build_abandabot_prompt(
 
     prompt = PROMPT_BASE.format(dep=dep, readme=readme, pkg_json=pkg_json)
 
-    for file, linenos in context:
+    for file, linenos in context.items():
         with open(os.path.join(repo_path, file), "r", **encoding) as f:
             code_lines = f.read().split("\n")
 

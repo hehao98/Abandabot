@@ -55,6 +55,33 @@ def clone_repo(repo: str, overwrite: bool = False) -> None:
     )
 
 
+def find_keyword_usage(repo: str, dep: str) -> dict[str, set[int]]:
+    repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
+    encoding = {"encoding": "utf-8", "errors": "ignore"}
+    report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
+    df_path = os.path.join(report_path, "keyword-usage.csv")
+    keyword_usage = defaultdict(set)
+
+    for root, _, files in os.walk(repo_path):
+        for file in files:
+            full_path = os.path.relpath(os.path.join(root, file), repo_path)
+
+            with open(os.path.join(root, file), "r", **encoding) as f:
+                lines = f.readlines()
+
+            for i, line in enumerate(lines):
+                if dep in line:
+                    keyword_usage[full_path].add(i + 1)
+
+    keyword_usage_df = []
+    for file, linenos in keyword_usage.items():
+        for lineno in linenos:
+            keyword_usage_df.append({"file": file, "lineno": lineno})
+    pd.DataFrame(keyword_usage_df).to_csv(df_path, index=False)
+
+    return keyword_usage
+
+
 def find_dep_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
     clone_repo(repo, overwrite=overwrite)
 
@@ -85,8 +112,16 @@ def find_dep_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
     return pd.read_csv(os.path.join(report_path, "dep-usage.csv"))
 
 
+def find_api_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
+    pass
+
+
 def build_dep_context(repo: str, dep: str, overwrite: bool) -> dict[str, set[int]]:
     context = defaultdict(set)
+
+    keyword_usage = find_keyword_usage(repo, dep)
+    for file, linenos in keyword_usage.items():
+        context[file].update(linenos)
 
     dep_usage = find_dep_usage_codeql(repo, overwrite)
     if dep_usage is None or dep not in set(dep_usage.name):
@@ -99,7 +134,7 @@ def build_dep_context(repo: str, dep: str, overwrite: bool) -> dict[str, set[int
     else:
         for _, row in dep_usage.iterrows():
             if row["name"] == dep:
-                context[row["file"]].add(row["line"])
+                context[row["file"]].add(row["useLineno"])
 
     return context
 
