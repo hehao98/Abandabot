@@ -57,9 +57,12 @@ def clone_repo(repo: str, overwrite: bool = False) -> None:
 
 def find_keyword_usage(repo: str, dep: str) -> dict[str, set[int]]:
     repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
-    encoding = {"encoding": "utf-8", "errors": "ignore"}
     report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
     df_path = os.path.join(report_path, "keyword-usage.csv")
+    os.makedirs(report_path, exist_ok=True)
+
+    encoding = {"encoding": "utf-8", "errors": "ignore"}
+    
     keyword_usage = defaultdict(set)
 
     for root, _, files in os.walk(repo_path):
@@ -88,7 +91,6 @@ def find_dep_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
     repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
     database_path = os.path.join(CODEQL_DB_PATH, repo.replace("/", "_"))
     report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
-    os.makedirs(report_path, exist_ok=True)
 
     if not os.path.exists(os.path.join(repo_path, "package.json")):
         logging.info("Skipping CodeQL database creation, no package.json found")

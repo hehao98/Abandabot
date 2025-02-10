@@ -37,10 +37,6 @@ The dependency I want to ask is {dep}. I provide relevant files as follows:
 [start of README.md]
 {readme}
 [end of README.md]
-
-[start of package.json]
-{pkg_json}
-[end of package.json]
 """
 
 
@@ -83,14 +79,11 @@ def build_abandabot_prompt(
         with open(os.path.join(repo_path, "README.md"), "r", **encoding) as f:
             readme = f.read()
         # only keep the first 100 lines of the README
-        readme = "\n".join(readme.split("\n")[:100]) + "\n...\n"
+        readme = "\n".join(readme.split("\n")[:50]) + "\n...\n"
     else:
         readme = "NOT FOUND"
 
-    with open(os.path.join(repo_path, "package.json"), "r", **encoding) as f:
-        pkg_json = f.read()
-
-    prompt = PROMPT_BASE.format(dep=dep, readme=readme, pkg_json=pkg_json)
+    prompt = PROMPT_BASE.format(dep=dep, readme=readme)
 
     for file, linenos in context.items():
         with open(os.path.join(repo_path, file), "r", **encoding) as f:
@@ -109,7 +102,7 @@ def build_abandabot_prompt(
             elif (lineno - 1) in all_lines_in_context:
                 code += "...\n"
 
-        prompt += f"\n[start of {file}]\n{code}\n[end of {file}]\n"
+        prompt += f"\n[start of {file}]\n{code}[end of {file}]\n"
 
     return prompt
 
