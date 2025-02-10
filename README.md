@@ -28,6 +28,8 @@ For TypeScript projects, please also install Node.js and ensure `node` is on the
 $ poetry run python -m abandabot --github OWNER/REPO --dep DEPENDENCY [--overwrite]
 ```
 
+It will download CodeQL automatically to the abandabot directory. The current CodeQL version used (v2.20.4) may crash on Windows for certain TypeScript projects, so we recommend using Linux or Mac OS instead for running Abandabot.
+
 ## Run Performance Evaluation
 
 ```

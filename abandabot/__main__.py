@@ -87,8 +87,8 @@ def find_dep_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
 
 def generate_report(repo: str, dep: str, dep_usage: pd.DataFrame) -> None:
     report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
-    prompt_path = os.path.join(report_path, f"prompt-{dep}.txt")
-    output_path = os.path.join(report_path, f"report-{dep}.json")
+    prompt_path = os.path.join(report_path, f"prompt-{dep.replace('/', '_')}.txt")
+    output_path = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
 
     model_name = "gpt-4o-mini"
     model = ChatOpenAI(model=model_name).with_structured_output(AbandabotReport)
@@ -143,7 +143,7 @@ def main():
 
     dep_usage = find_dep_usage_codeql(args.github, args.overwrite)
     if dep_usage is None or args.dep not in set(dep_usage.name):
-        logging.info(
+        logging.warning(
             "Dependency %s not found in %s, found deps are: %s",
             args.dep,
             args.github,

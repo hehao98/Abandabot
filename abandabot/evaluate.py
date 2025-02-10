@@ -5,45 +5,37 @@ import subprocess
 import pandas as pd
 
 
-def main():
-    logging.basicConfig(
-        format="%(asctime)s [%(levelname)s] %(filename)s:%(lineno)d %(message)s",
-        level=logging.INFO,
-        handlers=[logging.StreamHandler()],
-    )
-
-    if not os.path.exists("ground_truth.csv"):
-        logging.error("ground_truth.csv not found, please create one first")
+def run_one(repo, dep):
+    report_path = os.path.join("reports", f"{repo.replace('/', '_')}")
+    if os.path.exists(os.path.join(report_path, f"report-{dep}.json")):
+        logging.info("Skipping %s %s, report already exists", repo, dep)
         return
 
-    df = pd.read_csv("ground_truth.csv")
+    logging.info("Evaluating %s %s", repo, dep)
+    subprocess.run(
+        [
+            "poetry",
+            "run",
+            "python",
+            "-m",
+            "abandabot",
+            "--github",
+            repo,
+            "--dep",
+            dep,
+        ],
+        check=True,
+        stdout=subprocess.PIPE,
+    )
+
+
+def collect_reports(ground_truth: pd.DataFrame) -> pd.DataFrame:
+    summary = []
     total, match, mismatch, error = 0, 0, 0, 0
 
-    for repo, dep in zip(df["repo"], df["dep"]):
-        report_path = os.path.join("reports", f"{repo.replace('/', '_')}")
-        if os.path.exists(os.path.join(report_path, f"report-{dep}.json")):
-            logging.info("Skipping %s %s, report already exists", repo, dep)
-            continue
-
-        logging.info("Evaluating %s %s", repo, dep)
-        subprocess.run(
-            [
-                "poetry",
-                "run",
-                "python",
-                "-m",
-                "abandabot",
-                "--github",
-                repo,
-                "--dep",
-                dep,
-            ],
-            check=True,
-            stdout=subprocess.PIPE,
-        )
-
-    summary = []
-    for repo, dep, est_action in zip(df["repo"], df["dep"], df["estimated_action"]):
+    for repo, dep, est_action in zip(
+        ground_truth["repo"], ground_truth["dep"], ground_truth["estimated_action"]
+    ):
         report_path = os.path.join("reports", f"{repo.replace('/', '_')}")
         report_file = os.path.join(report_path, f"report-{dep}.json")
         if not os.path.exists(report_file):
@@ -62,11 +54,6 @@ def main():
             est_action,
             ai_action,
         )
-        total += 1
-        if est_action == ai_action:
-            match += 1
-        else:
-            mismatch += 1
         summary.append(
             {
                 "repo": repo,
@@ -75,11 +62,37 @@ def main():
                 "ai_action": ai_action,
             }
         )
+        total += 1
+        if est_action == ai_action:
+            match += 1
+        else:
+            mismatch += 1
 
     logging.info(
         "Total: %d, Match: %d, Mismatch: %d, Error: %d", total, match, mismatch, error
     )
+    return pd.DataFrame(summary)
+
+
+def main():
+    logging.basicConfig(
+        format="%(asctime)s [%(levelname)s] %(filename)s:%(lineno)d %(message)s",
+        level=logging.INFO,
+        handlers=[logging.StreamHandler()],
+    )
+
+    if not os.path.exists("ground_truth.csv"):
+        logging.error("ground_truth.csv not found, please create one first")
+        return
+
+    df = pd.read_csv("ground_truth.csv")
+
+    for repo, dep in zip(df["repo"], df["dep"]):
+        run_one(repo, dep)
+
+    summary = collect_reports(df)
     pd.DataFrame(summary).to_csv("summary.csv", index=False)
+    logging.info("Finish")
 
 
 if __name__ == "__main__":
