@@ -1,9 +1,10 @@
 import os
-import pandas as pd
+import json
+import logging
 
 from typing_extensions import TypedDict
-
-from abandabot import REPO_PATH
+from langchain_openai import ChatOpenAI
+from abandabot import REPO_PATH, CODEQL_DB_PATH, REPORT_PATH
 
 
 PROMPT_BASE = """
@@ -22,7 +23,7 @@ regarding the dependency and the project:
 For each question, I want you to provide an answer on a scale from 1 to 5, where 
 1 is the least important, difficult, or likely, and 5 is the most important, 
 difficult, or likely. Along with the score, please provide detailed, specific reasoning 
-behind the score. Finally, please provide a final recommendation from one of 
+behind the score. Finally, please provide a final score from one of 
 the following options:
 
 1. Immediate action is necessary
@@ -49,7 +50,7 @@ class AbandabotReport(TypedDict):
         reasoning: str
 
     class Recommendation(TypedDict):
-        recommendation: str
+        score: str
         reasoning: str
 
     importance: Dimension
@@ -59,7 +60,22 @@ class AbandabotReport(TypedDict):
     recommendation: Recommendation
 
 
-def build_abandabot_prompt(repo: str, dep: str, dep_usage: pd.DataFrame) -> str:
+def build_abandabot_prompt(
+    repo: str, dep: str, context: dict[str, set[int]], context_window: int = 10
+) -> str:
+    """Build a prompt for Abandabot
+
+    Args:
+        repo (str): The repository name
+        dep (str): The dependency name
+        context (dict[str, set[int]]): A dictionary of file names
+            and line numbers where the dependency is used
+        context_window (int, optional): The number of lines to include
+            per dependency usage. Defaults to 10.
+
+    Returns:
+        str: The prompt for Abandabot
+    """
     repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
     encoding = {"encoding": "utf-8", "errors": "ignore"}
 
@@ -76,14 +92,43 @@ def build_abandabot_prompt(repo: str, dep: str, dep_usage: pd.DataFrame) -> str:
 
     prompt = PROMPT_BASE.format(dep=dep, readme=readme, pkg_json=pkg_json)
 
-    for file, uses in dep_usage[dep_usage.name == dep].groupby("file"):
+    for file, linenos in context:
         with open(os.path.join(repo_path, file), "r", **encoding) as f:
             code_lines = f.read().split("\n")
+
+        all_lines_in_context = set()
+        for lineno in sorted(linenos):
+            start = max(0, lineno - context_window)
+            end = min(len(code_lines), lineno + context_window)
+            all_lines_in_context.update(range(start, end))
+
         code = ""
-        for lineno in sorted(uses["useLineno"].tolist()):
-            start = max(0, lineno - 5)
-            end = min(len(code_lines), lineno + 5)
-            code += "\n...\n" + "\n".join(code_lines[start:end]) + "\n...\n"
+        for lineno in range(len(code_lines)):
+            if lineno in all_lines_in_context:
+                code += str(lineno) + " " + code_lines[lineno] + "\n"
+            elif (lineno - 1) in all_lines_in_context:
+                code += "...\n"
+
         prompt += f"\n[start of {file}]\n{code}\n[end of {file}]\n"
 
     return prompt
+
+
+def generate_report(repo: str, dep: str, context: dict[str, set[int]]) -> None:
+    report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
+    prompt_path = os.path.join(report_path, f"prompt-{dep.replace('/', '_')}.txt")
+    output_path = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
+
+    model_name = "gpt-4o-mini"
+    model = ChatOpenAI(model=model_name).with_structured_output(AbandabotReport)
+
+    logging.info("Generating report for %s using %s", repo, model_name)
+    prompt = build_abandabot_prompt(repo, dep, context)
+    with open(prompt_path, "w", encoding="utf-8", errors="ignore") as f:
+        f.write(prompt)
+    logging.info("Prompt saved to %s", prompt_path)
+
+    output = model.invoke(prompt)
+    with open(output_path, "w") as f:
+        f.write(json.dumps(output, indent=2))
+    logging.info("Report saved to %s", output_path)

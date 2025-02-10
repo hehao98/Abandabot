@@ -1,7 +1,6 @@
 import os
 import sys
 import stat
-import json
 import shutil
 import logging
 import argparse
@@ -10,10 +9,11 @@ import dotenv
 import pandas as pd
 
 from typing import Optional
-from langchain_openai import ChatOpenAI
+from collections import defaultdict
+
 from abandabot import REPO_PATH, CODEQL_DB_PATH, REPORT_PATH
 from abandabot.codeql import install_codeql_cli, create_database, execute_query
-from abandabot.prompt import AbandabotReport, build_abandabot_prompt
+from abandabot.model import generate_report
 
 
 def check_env() -> None:
@@ -85,24 +85,23 @@ def find_dep_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
     return pd.read_csv(os.path.join(report_path, "dep-usage.csv"))
 
 
-def generate_report(repo: str, dep: str, dep_usage: pd.DataFrame) -> None:
-    report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
-    prompt_path = os.path.join(report_path, f"prompt-{dep.replace('/', '_')}.txt")
-    output_path = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
+def build_dep_context(repo: str, dep: str, overwrite: bool) -> dict[str, set[int]]:
+    context = defaultdict(set)
 
-    model_name = "gpt-4o-mini"
-    model = ChatOpenAI(model=model_name).with_structured_output(AbandabotReport)
+    dep_usage = find_dep_usage_codeql(repo, overwrite)
+    if dep_usage is None or dep not in set(dep_usage.name):
+        logging.warning(
+            "Dependency %s not found in %s, found deps are: %s",
+            dep,
+            repo,
+            set(dep_usage.name),
+        )
+    else:
+        for _, row in dep_usage.iterrows():
+            if row["name"] == dep:
+                context[row["file"]].add(row["line"])
 
-    logging.info("Generating report for %s using %s", repo, model_name)
-    prompt = build_abandabot_prompt(repo, dep, dep_usage)
-    with open(prompt_path, "w", encoding="utf-8", errors="ignore") as f:
-        f.write(prompt)
-    logging.info("Prompt saved to %s", prompt_path)
-
-    output = model.invoke(prompt)
-    with open(output_path, "w") as f:
-        f.write(json.dumps(output, indent=2))
-    logging.info("Report saved to %s", output_path)
+    return context
 
 
 def main():
@@ -111,13 +110,6 @@ def main():
         level=logging.INFO,
         handlers=[logging.StreamHandler(sys.stdout)],
     )
-
-    check_env()
-
-    install_codeql_cli()
-    os.makedirs(CODEQL_DB_PATH, exist_ok=True)
-    os.makedirs(REPO_PATH, exist_ok=True)
-    os.makedirs(REPORT_PATH, exist_ok=True)
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -139,19 +131,19 @@ def main():
     )
     args = parser.parse_args()
 
+    check_env()
+
+    install_codeql_cli()
+    os.makedirs(CODEQL_DB_PATH, exist_ok=True)
+    os.makedirs(REPO_PATH, exist_ok=True)
+    os.makedirs(REPORT_PATH, exist_ok=True)
+
     logging.info("GitHub repository: %s", args.github)
 
-    dep_usage = find_dep_usage_codeql(args.github, args.overwrite)
-    if dep_usage is None or args.dep not in set(dep_usage.name):
-        logging.warning(
-            "Dependency %s not found in %s, found deps are: %s",
-            args.dep,
-            args.github,
-            set(dep_usage.name),
-        )
-        return
+    context = build_dep_context(args.github, args.dep, args.overwrite)
 
-    generate_report(args.github, args.dep, dep_usage)
+    generate_report(args.github, args.dep, context)
+
     logging.info("Report generated successfully")
 
 
