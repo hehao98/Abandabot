@@ -26,4 +26,4 @@ where
     useLineno = use.getStartLine() and
     useNode = use.getAstNode()
   )
-select name, file, useNode, impLineno, useLineno
+select name, file, useLineno as lineno, useNode as node order by name, file, lineno

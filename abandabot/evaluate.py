@@ -46,9 +46,9 @@ def collect_reports(ground_truth: pd.DataFrame) -> pd.DataFrame:
         with open(report_file, "r") as f:
             report = json.load(f)
 
-        ai_action = report["recommendation"]["recommendation"]
+        ai_action = report["recommendation"]
         logging.info(
-            "%s %s: estimated=%d, actual=%d",
+            "%s %s: estimated=%s, actual=%s",
             repo,
             dep,
             est_action,

@@ -62,11 +62,19 @@ def find_keyword_usage(repo: str, dep: str) -> dict[str, set[int]]:
     os.makedirs(report_path, exist_ok=True)
 
     encoding = {"encoding": "utf-8", "errors": "ignore"}
-    
+
     keyword_usage = defaultdict(set)
 
     for root, _, files in os.walk(repo_path):
         for file in files:
+            # only consider common files that may contain JS/TS code
+            if not file.endswith((".js", ".jsx", ".ts", ".tsx", ".vue", ".html")):
+                continue
+            if file.endswith(("package-lock.json")):
+                continue
+            if os.path.islink(os.path.join(root, file)):
+                continue
+
             full_path = os.path.relpath(os.path.join(root, file), repo_path)
 
             with open(os.path.join(root, file), "r", **encoding) as f:
@@ -115,7 +123,32 @@ def find_dep_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
 
 
 def find_api_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
-    pass
+    clone_repo(repo, overwrite=overwrite)
+
+    repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
+    database_path = os.path.join(CODEQL_DB_PATH, repo.replace("/", "_"))
+    report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
+
+    if not os.path.exists(os.path.join(repo_path, "package.json")):
+        logging.info("Skipping CodeQL database creation, no package.json found")
+        logging.info("Currently only JS/TS projects using npm are supported")
+        return None
+
+    create_database(
+        repo_path,
+        database_path,
+        language="javascript",
+        overwrite=overwrite,
+    )
+
+    execute_query(
+        query_path="queries/find_api_usage.ql",
+        database_path=database_path,
+        output_path=os.path.join(report_path, "api-usage.bqrs"),
+        decode_path=os.path.join(report_path, "api-usage.csv"),
+    )
+
+    return pd.read_csv(os.path.join(report_path, "api-usage.csv"))
 
 
 def build_dep_context(repo: str, dep: str, overwrite: bool) -> dict[str, set[int]]:
@@ -123,12 +156,12 @@ def build_dep_context(repo: str, dep: str, overwrite: bool) -> dict[str, set[int
 
     keyword_usage = find_keyword_usage(repo, dep)
     for file, linenos in keyword_usage.items():
-        context[file].update(linenos)
+       context[file].update(linenos)
 
     dep_usage = find_dep_usage_codeql(repo, overwrite)
     if dep_usage is None or dep not in set(dep_usage.name):
         logging.warning(
-            "Dependency %s not found in %s, found deps are: %s",
+            "Dep %s imports not found in %s, found are: %s",
             dep,
             repo,
             set(dep_usage.name),
@@ -136,7 +169,20 @@ def build_dep_context(repo: str, dep: str, overwrite: bool) -> dict[str, set[int
     else:
         for _, row in dep_usage.iterrows():
             if row["name"] == dep:
-                context[row["file"]].add(row["useLineno"])
+                context[row["file"]].add(row["lineno"])
+
+    api_usage = find_api_usage_codeql(repo, overwrite)
+    if api_usage is None or dep not in set(api_usage.name):
+        logging.warning(
+            "Dep %s API calls not found in %s, found are: %s",
+            dep,
+            repo,
+            set(api_usage.name),
+        )
+    else:
+        for _, row in api_usage.iterrows():
+            if row["name"] == dep:
+                context[row["file"]].add(row["lineno"])
 
     return context
 
