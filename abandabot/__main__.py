@@ -23,8 +23,6 @@ def check_env() -> None:
             raise RuntimeError(f"{var} is not set in the local .env file")
 
 
-
-
 def main():
     logging.basicConfig(
         format="%(asctime)s [%(levelname)s] %(filename)s:%(lineno)d %(message)s",
