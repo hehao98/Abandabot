@@ -4,9 +4,11 @@ import logging
 import subprocess
 import pandas as pd
 
+from abandabot import REPORT_PATH
+
 
 def run_one(repo, dep):
-    report_path = os.path.join("reports", f"{repo.replace('/', '_')}")
+    report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
     report_file = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
     # if os.path.exists(report_file):
     #    logging.info("Skipping %s %s, report already exists", repo, dep)
@@ -29,16 +31,21 @@ def run_one(repo, dep):
     )
     with open(report_file, "r") as f:
         report = json.load(f)
-    logging.info("Recommendation for %s in %s: %s", dep, repo, report["recommendation"])
-    logging.info("Reasoning: %s", report["recommendation_reasoning"])
+    logging.info(
+        "Evaluation for %s in %s: impactful=%s, recommendation=%s",
+        dep,
+        repo,
+        report["impactful"],
+        report["recommendation"],
+    )
 
 
 def collect_reports(ground_truth: pd.DataFrame) -> pd.DataFrame:
     summary = []
-    total, match, mismatch, error = 0, 0, 0, 0
+    total, error, tp, fp, tn, fn = 0, 0, 0, 0, 0, 0
 
-    for repo, dep, est_action in zip(
-        ground_truth["repo"], ground_truth["dep"], ground_truth["estimated_action"]
+    for repo, dep, dev_eval in zip(
+        ground_truth["repo"], ground_truth["dep"], ground_truth["important_abandonment"]
     ):
         report_path = os.path.join("reports", f"{repo.replace('/', '_')}")
         report_file = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
@@ -50,30 +57,41 @@ def collect_reports(ground_truth: pd.DataFrame) -> pd.DataFrame:
         with open(report_file, "r") as f:
             report = json.load(f)
 
-        ai_action = report["recommendation"]
+        ai_eval = "Yes" if report["impactful"] else "No"
         logging.info(
-            "%s %s: estimated=%s, actual=%s",
+            "%s %s: dev_eval=%s, ai_eval=%s",
             repo,
             dep,
-            est_action,
-            ai_action,
+            dev_eval,
+            ai_eval,
         )
         summary.append(
             {
                 "repo": repo,
                 "dep": dep,
-                "estimated_action": est_action,
-                "ai_action": ai_action,
+                "developer_eval": dev_eval,
+                "ai_eval": ai_eval,
             }
         )
         total += 1
-        if est_action == ai_action:
-            match += 1
-        else:
-            mismatch += 1
+        if dev_eval == "Yes" and ai_eval == "Yes":
+            tp += 1
+        elif dev_eval == "No" and ai_eval == "Yes":
+            fp += 1
+        elif dev_eval == "Yes" and ai_eval == "No":
+            fn += 1
+        elif dev_eval == "No" and ai_eval == "No":
+            tn += 1
+
+    acc, precision, recall = (tp + tn) / (total - error), tp / (tp + fp), tp / (tp + fn)
 
     logging.info(
-        "Total: %d, Match: %d, Mismatch: %d, Error: %d", total, match, mismatch, error
+        "total=%d, error=%d, accuracy=%.4f, precision=%.4f, recall=%.4f",
+        total,
+        error,
+        acc,
+        precision,
+        recall,
     )
     return pd.DataFrame(summary)
 
@@ -95,7 +113,7 @@ def main():
         run_one(repo, dep)
 
     summary = collect_reports(df)
-    pd.DataFrame(summary).to_csv("summary.csv", index=False)
+    pd.DataFrame(summary).to_csv(os.path.join(REPORT_PATH, "summary.csv"), index=False)
     logging.info("Finish")
 
 

@@ -29,14 +29,15 @@ dimensions regarding the dependency and the project:
 For each question, I want you to provide a score on a scale from 1 to 5, where 
 1 is the least important, difficult, or likely, and 5 is the most important, 
 difficult, or likely. Along with the score, please provide detailed, specific reasoning 
-behind the score. Finally, please provide a final recommendation from one of 
-the following options:
+behind the score. Finally, please provide a final impact evaluation, in the  in the 
+"impactful" field of your JSON response, and a recommendation from one of the following 
+options, to the "recommendation" field of your JSON response:
 
-1. Immediate action is necessary
-2. Action is advisable
-3. No immediate action is necessary
+1. Action is necessary
+2. Monitoring the situation
 
-You should also provide detailed, specific reasoning for your final recommendation.
+You should also provide detailed, specific reasoning for your impact evaluation and 
+recommendation, in the "reasoning" field of your JSON response.
 
 The project I want to ask is {repo} and the dependency I want to ask is {dep}.
 {repo} appears to have {n_files_dep} files where {dep} is used.
@@ -58,8 +59,9 @@ class AbandabotReport(TypedDict):
     integration: Dimension
     alternatives: Dimension
     likelihood: Dimension
+    impactful: bool
     recommendation: str
-    recommendation_reasoning: str
+    reasoning: str
 
 
 def get_dir_tree(dir_path: str, prefix: str = "") -> Iterator[str]:
