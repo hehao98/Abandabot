@@ -99,6 +99,10 @@ def find_dep_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
     repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
     database_path = os.path.join(CODEQL_DB_PATH, repo.replace("/", "_"))
     report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
+    dep_usage_path = os.path.join(report_path, "dep-usage.csv")
+    if os.path.exists(dep_usage_path) and not overwrite:
+        logging.info("Dep usage found at %s", dep_usage_path)
+        return pd.read_csv(dep_usage_path)
 
     if not os.path.exists(os.path.join(repo_path, "package.json")):
         logging.info("Skipping CodeQL database creation, no package.json found")
@@ -119,7 +123,7 @@ def find_dep_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
         decode_path=os.path.join(report_path, "dep-usage.csv"),
     )
 
-    return pd.read_csv(os.path.join(report_path, "dep-usage.csv"))
+    return pd.read_csv(dep_usage_path)
 
 
 def find_api_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
@@ -128,6 +132,10 @@ def find_api_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
     repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
     database_path = os.path.join(CODEQL_DB_PATH, repo.replace("/", "_"))
     report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
+    api_usage_path = os.path.join(report_path, "api-usage.csv")
+    if os.path.exists(api_usage_path) and not overwrite:
+        logging.info("API usage found at %s", api_usage_path)
+        return pd.read_csv(api_usage_path)
 
     if not os.path.exists(os.path.join(repo_path, "package.json")):
         logging.info("Skipping CodeQL database creation, no package.json found")
@@ -148,7 +156,7 @@ def find_api_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
         decode_path=os.path.join(report_path, "api-usage.csv"),
     )
 
-    return pd.read_csv(os.path.join(report_path, "api-usage.csv"))
+    return pd.read_csv(api_usage_path)
 
 
 def build_dep_context(repo: str, dep: str, overwrite: bool) -> dict[str, set[int]]:
@@ -156,7 +164,7 @@ def build_dep_context(repo: str, dep: str, overwrite: bool) -> dict[str, set[int
 
     keyword_usage = find_keyword_usage(repo, dep)
     for file, linenos in keyword_usage.items():
-       context[file].update(linenos)
+        context[file].update(linenos)
 
     dep_usage = find_dep_usage_codeql(repo, overwrite)
     if dep_usage is None or dep not in set(dep_usage.name):

@@ -85,20 +85,22 @@ predicate hasRequireFlow(
   )
 }
 
-from
-  string name, string file, int lineno, AstNode node, ImportToCall::PathNode impSource,
-  ConnectFlow::PathNode connSink, RequireToCall::PathNode reqSource, RequireToCall::PathNode reqSink
+from string name, string file, int lineno, DataFlow::Node node
 where
   isDependency(name) and
   (
-    hasImportFlow(name, impSource, connSink) and
-    file = connSink.getNode().getFile().getRelativePath() and
-    lineno = connSink.getNode().getStartLine() and
-    node = connSink.getNode().getAstNode()
+    exists(ImportToCall::PathNode impSource, ConnectFlow::PathNode connSink |
+      hasImportFlow(name, impSource, connSink) and
+      file = connSink.getNode().getFile().getRelativePath() and
+      lineno = connSink.getNode().getStartLine() and
+      node = connSink.getNode()
+    )
     or
-    hasRequireFlow(name, reqSource, reqSink) and
-    file = reqSink.getNode().getFile().getRelativePath() and
-    lineno = reqSink.getNode().getStartLine() and
-    node = reqSink.getNode().getAstNode()
+    exists(RequireToCall::PathNode reqSource, RequireToCall::PathNode reqSink |
+      hasRequireFlow(name, reqSource, reqSink) and
+      file = reqSink.getNode().getFile().getRelativePath() and
+      lineno = reqSink.getNode().getStartLine() and
+      node = reqSink.getNode()
+    )
   )
 select name, file, lineno, node order by name, file, lineno
