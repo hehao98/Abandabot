@@ -39,7 +39,7 @@ the following options:
 You should also provide detailed, specific reasoning for your final recommendation.
 
 The project I want to ask is {repo} and the dependency I want to ask is {dep}.
-{repo} appears to have {n_files_dep} out of {n_files} JS/TS files where {dep} is used.
+{repo} appears to have {n_files_dep} out of {n_files} files where {dep} is used.
 
 I provide relevant context as follows:
 
@@ -50,10 +50,6 @@ I provide relevant context as follows:
 [start of README.md]
 {readme}
 [end of README.md]
-
-[start of package.json]
-{package_json}
-[end of package.json]
 """
 
 
@@ -130,12 +126,6 @@ def build_abandabot_prompt(
     else:
         readme = "NOT FOUND"
 
-    if os.path.exists(os.path.join(repo_path, "package.json")):
-        with open(os.path.join(repo_path, "package.json"), "r", **encoding) as f:
-            package_json = f.read()
-    else:
-        package_json = "NOT FOUND"
-
     tree = list(get_dir_tree(repo_path))
 
     prompt = PROMPT_BASE.format(
@@ -143,7 +133,6 @@ def build_abandabot_prompt(
         repo=repo,
         tree="\n".join(tree),
         readme=readme,
-        package_json=package_json,
         n_files=len(tree),
         n_files_dep=len(context),
     )

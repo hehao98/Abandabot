@@ -67,15 +67,18 @@ def find_keyword_usage(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
 
     for root, _, files in os.walk(repo_path):
         for file in files:
-            # only consider common files that may contain JS/TS code
-            if not file.endswith((".js", ".jsx", ".ts", ".tsx", ".vue", ".html")):
-                continue
+            # Skip lock files, symlinks, and files larger than 10kb
             if file.endswith(("package-lock.json")):
                 continue
             if os.path.islink(os.path.join(root, file)):
                 continue
+            if os.path.getsize(os.path.join(root, file)) > 10 * 1024:
+                continue
 
             full_path = os.path.relpath(os.path.join(root, file), repo_path)
+
+            if full_path.startswith(".git") or full_path.startswith("node_modules"):
+                continue
 
             with open(os.path.join(root, file), "r", **encoding) as f:
                 lines = f.readlines()
