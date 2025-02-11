@@ -180,8 +180,13 @@ def build_dep_context(repo: str, dep: str, overwrite: bool) -> dict[str, set[int
                 set(usage.name),
             )
         else:
+            # if a lot of usages are detected, many of them may be suprious
+            # To avoid exceeding the token limit, we randomly sample 50 usages
+            usage = usage[usage["name"] == dep]
+            if len(usage) > 50:
+                logging.info("Sampling 50 out of %d usages from %s", len(usage), kind)
+                usage = usage.sample(n=min(50, len(usage)))
             for _, row in usage.iterrows():
-                if row["name"] == dep:
-                    context[row["file"]].add(row["lineno"])
+                context[row["file"]].add(row["lineno"])
 
     return context

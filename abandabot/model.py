@@ -39,13 +39,9 @@ the following options:
 You should also provide detailed, specific reasoning for your final recommendation.
 
 The project I want to ask is {repo} and the dependency I want to ask is {dep}.
-{repo} appears to have {n_files_dep} out of {n_files} files where {dep} is used.
+{repo} appears to have {n_files_dep} files where {dep} is used.
 
 I provide relevant context as follows:
-
-[start of project directory tree]
-{tree}
-[end of project directory tree]
 
 [start of README.md]
 {readme}
@@ -63,7 +59,7 @@ class AbandabotReport(TypedDict):
     alternatives: Dimension
     likelihood: Dimension
     recommendation: str
-    reasoning: str
+    recommendation_reasoning: str
 
 
 def get_dir_tree(dir_path: str, prefix: str = "") -> Iterator[str]:
@@ -126,14 +122,13 @@ def build_abandabot_prompt(
     else:
         readme = "NOT FOUND"
 
-    tree = list(get_dir_tree(repo_path))
+    # tree = list(get_dir_tree(repo_path))
 
     prompt = PROMPT_BASE.format(
         dep=dep,
         repo=repo,
-        tree="\n".join(tree),
         readme=readme,
-        n_files=len(tree),
+        # n_files=len(tree),
         n_files_dep=len(context),
     )
 

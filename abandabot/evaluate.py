@@ -7,10 +7,10 @@ import pandas as pd
 
 def run_one(repo, dep):
     report_path = os.path.join("reports", f"{repo.replace('/', '_')}")
-    if os.path.exists(os.path.join(report_path, f"report-{dep}.json")):
-        logging.info("Skipping %s %s, report already exists", repo, dep)
-        return
-
+    report_file = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
+    # if os.path.exists(report_file):
+    #    logging.info("Skipping %s %s, report already exists", repo, dep)
+    # else:
     logging.info("Evaluating %s %s", repo, dep)
     subprocess.run(
         [
@@ -27,6 +27,10 @@ def run_one(repo, dep):
         check=True,
         stdout=subprocess.PIPE,
     )
+    with open(report_file, "r") as f:
+        report = json.load(f)
+    logging.info("Recommendation for %s in %s: %s", dep, repo, report["recommendation"])
+    logging.info("Reasoning: %s", report["recommendation_reasoning"])
 
 
 def collect_reports(ground_truth: pd.DataFrame) -> pd.DataFrame:
@@ -37,7 +41,7 @@ def collect_reports(ground_truth: pd.DataFrame) -> pd.DataFrame:
         ground_truth["repo"], ground_truth["dep"], ground_truth["estimated_action"]
     ):
         report_path = os.path.join("reports", f"{repo.replace('/', '_')}")
-        report_file = os.path.join(report_path, f"report-{dep}.json")
+        report_file = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
         if not os.path.exists(report_file):
             logging.warning("Report file %s not found, skipping", report_file)
             error += 1
