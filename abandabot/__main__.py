@@ -1,6 +1,7 @@
 import os
 import sys
 import stat
+import json
 import shutil
 import logging
 import argparse
@@ -55,15 +56,30 @@ def clone_repo(repo: str, overwrite: bool = False) -> None:
     )
 
 
-def find_keyword_usage(repo: str, dep: str) -> dict[str, set[int]]:
+def find_keyword_usage(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
     repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
     report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
     df_path = os.path.join(report_path, "keyword-usage.csv")
     os.makedirs(report_path, exist_ok=True)
 
+    if not overwrite and os.path.exists(df_path):
+        logging.info("Keyword usage found at %s", df_path)
+        return pd.read_csv(df_path)
+
     encoding = {"encoding": "utf-8", "errors": "ignore"}
 
     keyword_usage = defaultdict(set)
+
+    if not os.path.exists(os.path.join(repo_path, "package.json")):
+        logging.info("Skipping keyword usage creation, no package.json found")
+        logging.info("Currently only JS/TS projects using npm are supported")
+        return None
+
+    with open(os.path.join(repo_path, "package.json"), "r", **encoding) as f:
+        package_json = json.load(f)
+    all_deps = set(package_json.get("dependencies", {}).keys()) | set(
+        package_json.get("devDependencies", {}).keys()
+    )
 
     for root, _, files in os.walk(repo_path):
         for file in files:
@@ -81,16 +97,17 @@ def find_keyword_usage(repo: str, dep: str) -> dict[str, set[int]]:
                 lines = f.readlines()
 
             for i, line in enumerate(lines):
-                if dep in line:
-                    keyword_usage[full_path].add(i + 1)
+                for dep in all_deps:
+                    if dep in line:
+                        keyword_usage[dep].add((full_path, i + 1))
 
     keyword_usage_df = []
-    for file, linenos in keyword_usage.items():
-        for lineno in linenos:
-            keyword_usage_df.append({"file": file, "lineno": lineno})
-    pd.DataFrame(keyword_usage_df).to_csv(df_path, index=False)
-
-    return keyword_usage
+    for dep, values in keyword_usage.items():
+        for file, lineno in values:
+            keyword_usage_df.append({"name": dep, "file": file, "lineno": lineno})
+    keyword_usage_df = pd.DataFrame(keyword_usage_df)
+    keyword_usage_df.to_csv(df_path, index=False)
+    return keyword_usage_df
 
 
 def find_dep_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
@@ -162,35 +179,23 @@ def find_api_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
 def build_dep_context(repo: str, dep: str, overwrite: bool) -> dict[str, set[int]]:
     context = defaultdict(set)
 
-    keyword_usage = find_keyword_usage(repo, dep)
-    for file, linenos in keyword_usage.items():
-        context[file].update(linenos)
-
-    dep_usage = find_dep_usage_codeql(repo, overwrite)
-    if dep_usage is None or dep not in set(dep_usage.name):
-        logging.warning(
-            "Dep %s imports not found in %s, found are: %s",
-            dep,
-            repo,
-            set(dep_usage.name),
-        )
-    else:
-        for _, row in dep_usage.iterrows():
-            if row["name"] == dep:
-                context[row["file"]].add(row["lineno"])
-
-    api_usage = find_api_usage_codeql(repo, overwrite)
-    if api_usage is None or dep not in set(api_usage.name):
-        logging.warning(
-            "Dep %s API calls not found in %s, found are: %s",
-            dep,
-            repo,
-            set(api_usage.name),
-        )
-    else:
-        for _, row in api_usage.iterrows():
-            if row["name"] == dep:
-                context[row["file"]].add(row["lineno"])
+    for kind, usage in [
+        ("keyword", find_keyword_usage(repo, overwrite)),
+        ("import", find_dep_usage_codeql(repo, overwrite)),
+        ("api", find_api_usage_codeql(repo, overwrite)),
+    ]:
+        if usage is None or dep not in set(usage.name):
+            logging.warning(
+                "Dep %s %s usage not found in %s, found are: %s",
+                dep,
+                kind,
+                repo,
+                set(usage.name),
+            )
+        else:
+            for _, row in usage.iterrows():
+                if row["name"] == dep:
+                    context[row["file"]].add(row["lineno"])
 
     return context
 
