@@ -48,6 +48,17 @@ def main():
         action="store_true",
         help="Overwrite the GitHub repository and CodeQL DB if it already exists",
     )
+    parser.add_argument(
+        "--exclude-dimension",
+        action="store_true",
+        help="Exclude multiple dimensions of dependency evaluation in the report",
+    )
+    parser.add_argument(
+        "--exclude-context",
+        action="store_true",
+        help="Exclude project and dependency context information in the report",
+    )
+
     args = parser.parse_args()
 
     check_env()
@@ -59,9 +70,18 @@ def main():
 
     logging.info("GitHub repository: %s", args.github)
 
-    context = build_dep_context(args.github, args.dep, args.overwrite)
+    if not args.exclude_context:
+        context = build_dep_context(args.github, args.dep, args.overwrite)
+    else:
+        context = {}
 
-    generate_report(args.github, args.dep, context)
+    generate_report(
+        args.github,
+        args.dep,
+        not args.exclude_dimension,
+        not args.exclude_context,
+        context,
+    )
 
     logging.info("Report generated successfully")
 
