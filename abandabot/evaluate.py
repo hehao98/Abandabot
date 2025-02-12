@@ -80,6 +80,7 @@ def collect_reports(ground_truth: pd.DataFrame) -> pd.DataFrame:
                 "ai_eval": ai_eval,
                 "dev_action": dep_action,
                 "ai_action": ai_action,
+                "ai_report": json.dumps(report),
             }
         )
 
@@ -131,16 +132,16 @@ def main():
     for repo, dep in zip(df["repo"], df["dep"]):
         run_one(repo, dep)
 
-    summary = collect_reports(df)
-    pd.DataFrame(summary).to_csv(os.path.join(REPORT_PATH, "summary.csv"), index=False)
+    summ = collect_reports(df)
+    pd.DataFrame(summ).to_csv(os.path.join(REPORT_PATH, "summary.csv"), index=False)
 
     logging.info("Evaluating performance for impactful abandonment")
-    evaluate_performance(summary["dev_eval"], summary["ai_eval"], "Yes", "No")
+    evaluate_performance(summ["dev_eval"], summ["ai_eval"], "Yes", "No")
 
     logging.info("Evaluating performance for recommended action")
-    evaluate_performance(summary["dev_action"], summary["ai_action"], "Action", "Monitor")
+    evaluate_performance(summ["dev_action"], summ["ai_action"], "Action", "Monitor")
 
-    logging.info("Finish")
+    logging.info("Finish!")
 
 
 if __name__ == "__main__":
