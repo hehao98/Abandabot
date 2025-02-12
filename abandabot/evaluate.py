@@ -52,6 +52,7 @@ def collect_reports(ground_truth: pd.DataFrame) -> pd.DataFrame:
         ground_truth["dep"],
         ground_truth["impactful"],
     ):
+
         report_path = os.path.join("reports", f"{repo.replace('/', '_')}")
         report_file = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
         if not os.path.exists(report_file):
@@ -60,6 +61,10 @@ def collect_reports(ground_truth: pd.DataFrame) -> pd.DataFrame:
 
         with open(report_file, "r") as f:
             report = json.load(f)
+
+        if "impactful" not in report:
+            logging.warning("Report file %s is incomplete, skipping", report_file)
+            continue
 
         ai_eval = "Yes" if report["impactful"] else "No"
         logging.info(
@@ -149,7 +154,7 @@ def main():
 
             summ = collect_reports(df)
             summary_path = os.path.join(REPORT_PATH, f"summary-{model}-{ablation}.csv")
-            pd.DataFrame(summ).to_csv(summary_path)
+            pd.DataFrame(summ).to_csv(summary_path, index=False)
 
             logging.info("Evaluating performance for impactful abandonment")
             perf = evaluate_performance(summ["dev_eval"], summ["ai_eval"], "Yes", "No")

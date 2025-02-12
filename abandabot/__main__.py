@@ -49,9 +49,9 @@ def main():
         help="Overwrite the GitHub repository and CodeQL DB if it already exists",
     )
     parser.add_argument(
-        "--exclude-dimension",
+        "--exclude-reasoning",
         action="store_true",
-        help="Exclude multiple dimensions of dependency evaluation in the report",
+        help="Exclude multiple dimensions of reasoning for dependency evaluation in the report",
     )
     parser.add_argument(
         "--exclude-context",
@@ -78,7 +78,7 @@ def main():
     generate_report(
         args.github,
         args.dep,
-        not args.exclude_dimension,
+        not args.exclude_reasoning,
         not args.exclude_context,
         context,
     )
