@@ -80,6 +80,7 @@ def collect_reports(ground_truth: pd.DataFrame) -> pd.DataFrame:
                 "dep": dep,
                 "dev_eval": dep_eval,
                 "ai_eval": ai_eval,
+                "report": json.dumps(report),
             }
         )
 
