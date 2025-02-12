@@ -3,7 +3,9 @@ import json
 import logging
 import subprocess
 import pandas as pd
+import multiprocessing as mp
 
+from collections import defaultdict
 from abandabot import REPORT_PATH
 
 
@@ -11,30 +13,34 @@ def run_one(repo: str, dep: str, options: list[str] = []) -> None:
     report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
     report_file = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
     logging.info("Evaluating %s %s", repo, dep)
-    subprocess.run(
-        [
-            "poetry",
-            "run",
-            "python",
-            "-m",
-            "abandabot",
-            "--github",
-            repo,
-            "--dep",
-            dep,
-            *options,
-        ],
-        check=True,
-        stdout=subprocess.PIPE,
-    )
+    try:
+        subprocess.run(
+            [
+                "poetry",
+                "run",
+                "python",
+                "-m",
+                "abandabot",
+                "--github",
+                repo,
+                "--dep",
+                dep,
+                *options,
+            ],
+            check=True,
+            stdout=subprocess.PIPE,
+        )
+    except subprocess.CalledProcessError as e:
+        logging.error("Error: %s", e)
+        return
     with open(report_file, "r") as f:
-        report = json.load(f)
+        report: dict = json.load(f)
     logging.info(
         "Evaluation for %s in %s: impactful=%s, reasoning=%s",
         dep,
         repo,
-        report["impactful"],
-        report["reasoning"],
+        report.get("impactful"),
+        report.get("reasoning"),
     )
 
 
@@ -111,31 +117,35 @@ def main():
     df = pd.read_csv("ground_truth.csv")
     df = df[df.impactful != "Unsure/Maybe"]
 
-    models = ["chatgpt"]  # antropic, deepseek, gemini, llama
+    models = ["gpt-4o-mini"]  # antropic, deepseek, gemini, llama
     ablations = [
-        # "no+context+reasoning",
-        # "no+context",
-        # "no+reasoning",
+        "no+context+no+reasoning",
+        "no+context",
+        "no+reasoning",
         "context+reasoning",
     ]
+    perf_summ = defaultdict(list)
 
     for model in models:
         for ablation in ablations:
-            logging.info("Evaluating model %s with ablation %s", model, ablation)
+            logging.info("Evaluating model %s with %s", model, ablation)
 
             options = []
-            if ablation == "no+context+reasoning":
+            if ablation == "no+context+no+reasoning":
                 options = ["--exclude-context", "--exclude-reasoning"]
             elif ablation == "no+context":
                 options = ["--exclude-context"]
             elif ablation == "no+reasoning":
                 options = ["--exclude-reasoning"]
 
-            for repo, dep in zip(df["repo"], df["dep"]):
-                try:
-                    run_one(repo, dep, options)
-                except Exception as e:
-                    logging.error("Error evaluating %s %s: %s", repo, dep, e)
+            with mp.Pool(4) as pool:
+                pool.starmap(
+                    run_one,
+                    [(repo, dep, options) for repo, dep in zip(df["repo"], df["dep"])],
+                )
+
+            # for repo, dep in zip(df["repo"], df["dep"]):
+            #    run_one(repo, dep, options)
 
             summ = collect_reports(df)
             summary_path = os.path.join(REPORT_PATH, f"summary-{model}-{ablation}.csv")
@@ -144,6 +154,10 @@ def main():
             logging.info("Evaluating performance for impactful abandonment")
             perf = evaluate_performance(summ["dev_eval"], summ["ai_eval"], "Yes", "No")
             logging.info("Performance %s+%s: %s", model, ablation, perf)
+            perf_summ[f"{model}+{ablation}"].append(perf)
+
+    with open(os.path.join(REPORT_PATH, "performance.json"), "w") as f:
+        json.dump(perf_summ, f, indent=2)
 
     logging.info("Finish!")
 

@@ -220,8 +220,10 @@ def build_abandabot_prompt(
     # tree = list(get_dir_tree(repo_path))
 
     dep_usage_overview = ""
-    for dep, dep_context in context.items():
-        dep_usage_overview += f"{dep}\n"
+    for dep2, dep_context in context.items():
+        if dep != dep2:
+            continue
+        dep_usage_overview += f"{dep2}\n"
         for file, linenos in dep_context.items():
             dep_usage_overview += f"  {file}:{','.join(sorted(map(str, linenos)))}\n"
     dep_usage_overview = dep_usage_overview[:-1]
