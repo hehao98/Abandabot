@@ -10,25 +10,25 @@ from abandabot import REPORT_PATH
 def run_one(repo, dep):
     report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
     report_file = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
-    # if os.path.exists(report_file):
-    #    logging.info("Skipping %s %s, report already exists", repo, dep)
-    # else:
-    logging.info("Evaluating %s %s", repo, dep)
-    subprocess.run(
-        [
-            "poetry",
-            "run",
-            "python",
-            "-m",
-            "abandabot",
-            "--github",
-            repo,
-            "--dep",
-            dep,
-        ],
-        check=True,
-        stdout=subprocess.PIPE,
-    )
+    if os.path.exists(report_file):
+        logging.info("Skipping %s %s, report already exists", repo, dep)
+    else:
+        logging.info("Evaluating %s %s", repo, dep)
+        subprocess.run(
+            [
+                "poetry",
+                "run",
+                "python",
+                "-m",
+                "abandabot",
+                "--github",
+                repo,
+                "--dep",
+                dep,
+            ],
+            check=True,
+            stdout=subprocess.PIPE,
+        )
     with open(report_file, "r") as f:
         report = json.load(f)
     logging.info(
@@ -42,58 +42,76 @@ def run_one(repo, dep):
 
 def collect_reports(ground_truth: pd.DataFrame) -> pd.DataFrame:
     summary = []
-    total, error, tp, fp, tn, fn = 0, 0, 0, 0, 0, 0
 
-    for repo, dep, dev_eval in zip(
-        ground_truth["repo"], ground_truth["dep"], ground_truth["important_abandonment"]
+    for repo, dep, dep_eval, dep_action in zip(
+        ground_truth["repo"],
+        ground_truth["dep"],
+        ground_truth["impactful"],
+        ground_truth["action"],
     ):
         report_path = os.path.join("reports", f"{repo.replace('/', '_')}")
         report_file = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
         if not os.path.exists(report_file):
             logging.warning("Report file %s not found, skipping", report_file)
-            error += 1
             continue
 
         with open(report_file, "r") as f:
             report = json.load(f)
 
         ai_eval = "Yes" if report["impactful"] else "No"
+        ai_action = (
+            "Monitor" if "Monitor" in str(report["recommendation"]) else "Action"
+        )
+        dep_action = "Monitor" if "No" in dep_action else "Action"
         logging.info(
-            "%s %s: dev_eval=%s, ai_eval=%s",
+            "%s %s: dev_eval=%s, ai_eval=%s, dep_action=%s, ai_action=%s",
             repo,
             dep,
-            dev_eval,
+            dep_eval,
             ai_eval,
+            ai_action,
+            dep_action,
         )
         summary.append(
             {
                 "repo": repo,
                 "dep": dep,
-                "developer_eval": dev_eval,
+                "dev_eval": dep_eval,
                 "ai_eval": ai_eval,
+                "dev_action": dep_action,
+                "ai_action": ai_action,
             }
         )
-        total += 1
-        if dev_eval == "Yes" and ai_eval == "Yes":
-            tp += 1
-        elif dev_eval == "No" and ai_eval == "Yes":
-            fp += 1
-        elif dev_eval == "Yes" and ai_eval == "No":
-            fn += 1
-        elif dev_eval == "No" and ai_eval == "No":
-            tn += 1
 
-    acc, precision, recall = (tp + tn) / (total - error), tp / (tp + fp), tp / (tp + fn)
+    return pd.DataFrame(summary)
+
+
+def evaluate_performance(
+    ground_truth: pd.Series, report: pd.Series, true_label: str, false_label: str
+) -> None:
+    if len(ground_truth) != len(report):
+        logging.error("Length of ground_truth and report not match")
+        return
+
+    total, tp, fp, tn, fn = len(report), 0, 0, 0, 0
+    for dev_eval, ai_eval in zip(ground_truth, report):
+        if dev_eval == true_label and ai_eval == true_label:
+            tp += 1
+        elif dev_eval == false_label and ai_eval == true_label:
+            fp += 1
+        elif dev_eval == true_label and ai_eval == false_label:
+            fn += 1
+        elif dev_eval == false_label and ai_eval == false_label:
+            tn += 1
+    acc, precision, recall = (tp + tn) / (total), tp / (tp + fp), tp / (tp + fn)
 
     logging.info(
-        "total=%d, error=%d, accuracy=%.4f, precision=%.4f, recall=%.4f",
+        "total=%d, accuracy=%.4f, precision=%.4f, recall=%.4f",
         total,
-        error,
         acc,
         precision,
         recall,
     )
-    return pd.DataFrame(summary)
 
 
 def main():
@@ -108,12 +126,20 @@ def main():
         return
 
     df = pd.read_csv("ground_truth.csv")
+    df = df[df.impactful != "Unsure/Maybe"]
 
     for repo, dep in zip(df["repo"], df["dep"]):
         run_one(repo, dep)
 
     summary = collect_reports(df)
     pd.DataFrame(summary).to_csv(os.path.join(REPORT_PATH, "summary.csv"), index=False)
+
+    logging.info("Evaluating performance for impactful abandonment")
+    evaluate_performance(summary["dev_eval"], summary["ai_eval"], "Yes", "No")
+
+    logging.info("Evaluating performance for recommended action")
+    evaluate_performance(summary["dev_action"], summary["ai_action"], "Action", "Monitor")
+
     logging.info("Finish")
 
 
