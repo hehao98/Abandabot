@@ -163,30 +163,32 @@ def find_api_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
     return pd.read_csv(api_usage_path)
 
 
-def build_dep_context(repo: str, dep: str, overwrite: bool) -> dict[str, set[int]]:
-    context = defaultdict(set)
+def build_dep_context(repo: str, overwrite: bool) -> dict[str, dict[str, set[int]]]:
+    """
+    Find the full context of dependency usage in a repository
+
+    Args:
+        repo (str): The repository to analyze
+        overwrite (bool): Whether to overwrite existing data
+
+    Returns:
+        dict[str, dict[str, set[int]]]: A dictionary mapping dependencies to files
+            and line numbers where the dependency is used
+    """
+    context = defaultdict(lambda: defaultdict(set))
 
     for kind, usage in [
         ("keyword", find_keyword_usage(repo, overwrite)),
         ("import", find_dep_usage_codeql(repo, overwrite)),
         ("api", find_api_usage_codeql(repo, overwrite)),
     ]:
-        if usage is None or dep not in set(usage.name):
-            logging.warning(
-                "Dep %s %s usage not found in %s, found are: %s",
-                dep,
-                kind,
-                repo,
-                set(usage.name),
-            )
-        else:
+        for dep, dep_usage in usage.groupby("name"):
             # if a lot of usages are detected, many of them may be suprious
             # To avoid exceeding the token limit, we randomly sample 50 usages
-            usage = usage[usage["name"] == dep]
-            if len(usage) > 50:
+            if len(dep_usage) > 50:
                 logging.info("Sampling 50 out of %d usages from %s", len(usage), kind)
-                usage = usage.sample(n=min(50, len(usage)))
-            for _, row in usage.iterrows():
-                context[row["file"]].add(row["lineno"])
+                dep_usage = dep_usage.sample(n=min(50, len(usage)))
+            for _, row in dep_usage.iterrows():
+                context[dep][row["file"]].add(row["lineno"])
 
     return context

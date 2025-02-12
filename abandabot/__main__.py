@@ -71,7 +71,7 @@ def main():
     logging.info("GitHub repository: %s", args.github)
 
     if not args.exclude_context:
-        context = build_dep_context(args.github, args.dep, args.overwrite)
+        context = build_dep_context(args.github, args.overwrite)
     else:
         context = {}
 

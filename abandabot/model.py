@@ -164,7 +164,7 @@ def build_abandabot_prompt(
     dep: str,
     include_dimension: bool = False,
     include_context: bool = False,
-    context: dict[str, set[int]] = dict(),
+    context: dict[str, dict[str, set[int]]] = dict(),
     context_window: int = 5,
 ) -> str:
     """Build a prompt for Abandabot
@@ -177,7 +177,7 @@ def build_abandabot_prompt(
             Defaults to True.
         include_context (bool, optional): Whether to include into the prompt
             the context of the repository and dependency. Defaults to True.
-        context (dict[str, set[int]]): A dictionary of file names
+        context (dict[str, dict[str, set[int]]]): A dictionary mapping dependencies to files
             and line numbers where the dependency is used. Defaults to an empty dict.
         context_window (int, optional): The number of lines to include
             per dependency usage. Defaults to 5.
@@ -217,8 +217,10 @@ def build_abandabot_prompt(
     # tree = list(get_dir_tree(repo_path))
 
     dep_usage_overview = ""
-    for file, linenos in context.items():
-        dep_usage_overview += f"{file}: {','.join(sorted(map(str, linenos)))}\n"
+    for dep, dep_context in context.items():
+        dep_usage_overview += f"{dep}\n"
+        for file, linenos in dep_context.items():
+            dep_usage_overview += f"  {file}:{','.join(sorted(map(str, linenos)))}\n"
     dep_usage_overview = dep_usage_overview[:-1]
 
     prompt += PROMPT_CONTEXT.format(
@@ -228,7 +230,11 @@ def build_abandabot_prompt(
         dep_usage_overview=dep_usage_overview,
     )
 
-    for file, linenos in context.items():
+    if dep not in context:
+        logging.warning("No context found for %s, found are: %s", dep, context.keys())
+        return prompt
+
+    for file, linenos in context[dep].items():
         with open(os.path.join(repo_path, file), "r", **encoding) as f:
             code_lines = f.read().split("\n")
 
@@ -255,7 +261,7 @@ def generate_report(
     dep: str,
     include_dimension: bool = False,
     include_context: bool = False,
-    context: dict[str, set[int]] = dict(),
+    context: dict[str, dict[str, set[int]]] = dict(),
     context_window: int = 5,
 ) -> None:
     """Generate an abandonment report for a dependency in a repository
@@ -268,8 +274,8 @@ def generate_report(
             Defaults to True.
         include_context (bool, optional): Whether to include into the prompt
             the context of the repository and dependency. Defaults to True.
-        context (dict[str, set[int]]): A dictionary of file names
-            and line numbers where the dependency is used. Defaults to an empty dict.
+        context (dict[str, dict[str, set[int]]]): A dictionary mapping dependencies to files
+            and line numbers where the dependency is used Defaults to an empty dict.
         context_window (int, optional): The number of lines to include
             per dependency usage. Defaults to 5.
 
