@@ -43,7 +43,7 @@ questions based on the information I provided:
 
 1. How important is the functionality provided by the dependency to the project? 
 2. How difficult is it to replace the dependency, considering the depth of its 
-    integration in the project’s code base?
+    integration in the project's code base?
 3. How difficult is it to replace the dependency, considering the availability of 
     alternative packages that could serve as suitable replacements and provide the 
     same functionality?
@@ -53,19 +53,19 @@ questions based on the information I provided:
 For each question, I want you to provide a score on a scale from 1 to 5, where 
 1 is the least important, difficult, or likely, and 5 is the most important, 
 difficult, or likely. Along with the score, please provide detailed, specific reasoning 
-behind the score. Your response for each question should be placed in the "importance", 
+behind the score. Your response for each question should be placed in the top-level "importance", 
 "integration", "alternatives", and "likelihood" fields of your JSON response, respectively.
 For each of these fields, you should provide a "score" field with the score you assigned
 to the question, and a "reasoning" field with your detailed, specific reasoning.
 
 Finally, considering all your above answers, please provide a final impact 
-evaluation, in the boolean "impactful" field of your JSON response:
+evaluation, in the boolean top-level "impactful" field of your JSON response:
 
 1. true: The dependencies' abandonment would likely be directly impactful to the project
 2. false: The dependencies' abandonment would not likely be directly impactful to the project 
 
 You should also provide detailed, specific reasoning for your impact evaluation,
- in the "reasoning" field of your JSON response.
+in the top-level "reasoning" field of your JSON response.
 
 The project I want to ask is {repo} and the dependency I want to ask is {dep}.
 """
@@ -93,7 +93,6 @@ I provide relevant context as follows:
 
 class AbandabotReportNoContext(TypedDict):
     impactful: bool
-    recommendation: str
     reasoning: str
 
 
@@ -107,7 +106,6 @@ class AbandabotReport(TypedDict):
     alternatives: Dimension
     likelihood: Dimension
     impactful: bool
-    recommendation: str
     reasoning: str
 
 
