@@ -68,7 +68,7 @@ def find_keyword_usage(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
     for root, _, files in os.walk(repo_path):
         for file in files:
             # Skip lock files, symlinks, and files larger than 10kb
-            if file.endswith(("package-lock.json")):
+            if file.endswith(("package-lock.json")) or file.endswith(("package.json")):
                 continue
             if os.path.islink(os.path.join(root, file)):
                 continue

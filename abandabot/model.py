@@ -47,6 +47,10 @@ I provide relevant context as follows:
 [start of README.md]
 {readme}
 [end of README.md]
+
+[start of package.json]
+{package_json}
+[end of package.json]
 """
 
 
@@ -120,9 +124,15 @@ def build_abandabot_prompt(
         with open(os.path.join(repo_path, "README.md"), "r", **encoding) as f:
             readme = f.read()
         # only keep the first 100 lines of the README
-        readme = "\n".join(readme.split("\n")[:50]) + "\n...\n"
+        readme = "\n".join(readme.split("\n")[:100]) + "\n...\n"
     else:
         readme = "NOT FOUND"
+
+    if os.path.exists(os.path.join(repo_path, "package.json")):
+        with open(os.path.join(repo_path, "package.json"), "r", **encoding) as f:
+            package_json = f.read()
+    else:
+        package_json = "NOT FOUND"    
 
     # tree = list(get_dir_tree(repo_path))
 
@@ -130,6 +140,7 @@ def build_abandabot_prompt(
         dep=dep,
         repo=repo,
         readme=readme,
+        package_json=package_json,
         # n_files=len(tree),
         n_files_dep=len(context),
     )
