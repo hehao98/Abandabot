@@ -11,25 +11,31 @@ from abandabot import REPO_PATH, REPORT_PATH
 
 
 PROMPT_BASE_NO_DIMENSION = """
-You are an expert JavaScript developer. I am going to ask you important dependency 
-management questions regarding whether the abandonment is impactful and I will need
-to take action, if a dependency gets abandoned. Please provide a final impact 
-evaluation, in the "impactful" field of your JSON response, and a recommendation from 
-one of the following options, to the "recommendation" field of your JSON response:
+You are an expert JavaScript developer building a tool to notify a project's maintainers 
+when one of the project's dependencies becomes abandoned. However, instead of notifying
+them when any of their dependencies are abandoned, you want to only notify them about 
+the abandonment of dependencies that are likely important and impactful to the project 
+given the context of their dependency usage, so as to minimize notification fatigue. 
 
-1. Action is necessary
-2. Monitoring the situation
+Finally, considering all your above answers, please provide a final impact 
+evaluation, in the boolean "impactful" field of your JSON response:
 
-You should also provide detailed, specific reasoning for your impact evaluation and 
-recommendation, in the "reasoning" field of your JSON response.
+1. true: The dependencies' abandonment would likely be directly impactful to the project
+2. false: The dependencies' abandonment would not likely be directly impactful to the project
 
 The project I want to ask is {repo} and the dependency I want to ask is {dep}.
 """
 
 PROMPT_BASE = """
-You are an expert JavaScript developer. I am going to ask you important dependency 
-management questions regarding whether the abandonment is impactful and I will need
-to take action, if a dependency gets abandoned. For context, I will provide you with
+You are an expert JavaScript developer building a tool to notify a project's maintainers 
+when one of the project's dependencies becomes abandoned. However, instead of notifying
+them when any of their dependencies are abandoned, you want to only notify them about 
+the abandonment of dependencies that are likely important and impactful to the project 
+given the context of their dependency usage, so as to minimize notification fatigue. 
+
+I am going to ask you important dependency management questions regarding whether 
+a dependency's future hypothetical abandonment is likely to be impactful and therefore 
+noteworthy to the project. For context, I will provide you with
 the project's README file, the dependency's README file, the package.json file, an 
 overview of dependency usage in this project, and partial code snippets from 
 this project where the dependency is used. I want you to answer the following four 
@@ -53,14 +59,13 @@ For each of these fields, you should provide a "score" field with the score you 
 to the question, and a "reasoning" field with your detailed, specific reasoning.
 
 Finally, considering all your above answers, please provide a final impact 
-evaluation, in the "impactful" field of your JSON response, and a recommendation from 
-one of the following options, to the "recommendation" field of your JSON response:
+evaluation, in the boolean "impactful" field of your JSON response:
 
-1. Action is necessary
-2. Monitoring the situation
+1. true: The dependencies' abandonment would likely be directly impactful to the project
+2. false: The dependencies' abandonment would not likely be directly impactful to the project 
 
-You should also provide detailed, specific reasoning for your impact evaluation and 
-recommendation, in the "reasoning" field of your JSON response.
+You should also provide detailed, specific reasoning for your impact evaluation,
+ in the "reasoning" field of your JSON response.
 
 The project I want to ask is {repo} and the dependency I want to ask is {dep}.
 """
