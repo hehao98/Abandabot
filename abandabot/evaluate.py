@@ -1,17 +1,40 @@
 import os
 import json
+import pymongo
 import logging
 import subprocess
 import pandas as pd
 import multiprocessing as mp
 
 from collections import defaultdict
-from abandabot import REPORT_PATH
+from abandabot import REPORT_PATH, MONGO_URI
 
 
-def run_one(repo: str, dep: str, options: list[str] = []) -> None:
-    report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
-    report_file = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
+def run_one(
+    repo: str,
+    dep: str,
+    model: str,
+    include_reasoning: bool,
+    include_context: bool,
+    run_id: int,
+) -> None:
+    with pymongo.MongoClient(MONGO_URI) as client:
+        collection = client.abandabot.reports
+        if collection.find_one(
+            {
+                "repo": repo,
+                "dep": dep,
+                "model": model,
+                "include_reasoning": include_reasoning,
+                "include_context": include_context,
+                "run_id": run_id,
+            }
+        ):
+            logging.info(
+                "Report for %s %s %s already exists, skipping", repo, dep, model
+            )
+            return
+
     logging.info("Evaluating %s %s", repo, dep)
     try:
         subprocess.run(
@@ -25,7 +48,10 @@ def run_one(repo: str, dep: str, options: list[str] = []) -> None:
                 repo,
                 "--dep",
                 dep,
-                *options,
+                "--model",
+                model,
+                "--exclude-reasoning" if not include_reasoning else "",
+                "--exclude-context" if not include_context else "",
             ],
             check=True,
             stdout=subprocess.PIPE,
@@ -33,8 +59,26 @@ def run_one(repo: str, dep: str, options: list[str] = []) -> None:
     except subprocess.CalledProcessError as e:
         logging.error("Error: %s", e)
         return
+
+    report_path = os.path.join(REPORT_PATH, f"{repo.replace('/', '_')}")
+    report_file = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
     with open(report_file, "r") as f:
         report: dict = json.load(f)
+
+    with pymongo.MongoClient(MONGO_URI) as client:
+        collection = client.abandabot.reports
+        collection.insert_one(
+            {
+                "repo": repo,
+                "dep": dep,
+                "model": model,
+                "include_reasoning": include_reasoning,
+                "include_context": include_context,
+                "run_id": run_id,
+                "report": report,
+            }
+        )
+
     logging.info(
         "Evaluation for %s in %s: impactful=%s, reasoning=%s",
         dep,
@@ -123,14 +167,14 @@ def main():
     df = pd.read_csv("ground_truth.csv")
     df = df[df.impactful != "Unsure/Maybe"]
 
-    models = ["gpt-4o-mini"]  # antropic, deepseek, gemini, llama
+    models = ["gpt-4o-mini", "deepseek-v3"]
     ablations = [
         "no+context+no+reasoning",
         "no+context",
         "no+reasoning",
         "context+reasoning",
     ]
-    n_runs = 5
+    n_runs = 10
     perf_summ = defaultdict(list)
 
     for model in models:

@@ -332,6 +332,7 @@ def generate_report(
         f.write(prompt)
     logging.info("Prompt saved to %s", prompt_path)
 
+    output = {}
     for _ in range(3):  # Max 3 retries
         try:
             output = model.invoke(prompt)
