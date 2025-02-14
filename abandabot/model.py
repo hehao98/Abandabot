@@ -1,5 +1,4 @@
 import os
-import re
 import json
 import logging
 import requests
@@ -11,6 +10,7 @@ from typing import Iterator, Optional
 from typing_extensions import TypedDict
 from langchain_openai import ChatOpenAI
 from langchain_fireworks import ChatFireworks
+from langchain_anthropic import ChatAnthropic
 from abandabot import REPO_PATH, REPORT_PATH
 
 
@@ -21,7 +21,7 @@ them when any of their dependencies are abandoned, you want to only notify them 
 the abandonment of dependencies that are likely important and impactful to the project,
 {context} so as to minimize notification fatigue. 
 
-Your response string should contain and only contain a parsable JSON document. 
+Your response should contain and only contain a parsable JSON document. 
 In the boolean "impactful" field of your JSON document, please provide a final impact evaluation, 
 
 1. true: The dependencies' abandonment would likely be directly impactful to the project
@@ -37,7 +37,7 @@ them when any of their dependencies are abandoned, you want to only notify them 
 the abandonment of dependencies that are likely important and impactful to the project
 {context} so as to minimize notification fatigue. 
 
-Your response string should contain and only contain a parsable JSON document.  
+Your response should contain and only contain a parsable JSON document.
 In the top-level "reasoning" field of your JSON document, you should provide detailed,
 specific reasoning for your impact evaluation, The reasoning should be based on
 how important are the functionalities of the dependency to the project, 
@@ -332,16 +332,17 @@ def generate_report(
     prompt_path = os.path.join(report_path, f"prompt-{dep.replace('/', '_')}.txt")
     output_path = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
 
-    assert model_name in ["gpt-4o-mini", "deepseek-v3", "llama-v3p1"]
-
     if model_name == "gpt-4o-mini":
         model = ChatOpenAI(model="gpt-4o-mini")
     elif model_name == "deepseek-v3":
         model = ChatFireworks(model="accounts/fireworks/models/deepseek-v3")
     elif model_name == "llama-v3p1":
-        model = ChatFireworks(
-            model="accounts/fireworks/models/llama-v3p1-405b-instruct"
-        )
+        model = ChatFireworks(model="accounts/fireworks/models/llama-v3p1-70b-instruct")
+    elif model_name == "claude-3-5":
+        model = ChatAnthropic(model="claude-3-5-sonnet-20241022")
+    else:
+        raise ValueError(f"Unsupported model: {model_name}")
+
     model = model.with_structured_output(
         AbandabotReportReasoning if include_reasoning else AbandabotReportNoReasoning
     )

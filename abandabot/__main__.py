@@ -22,6 +22,8 @@ def check_env(model: str) -> None:
         required_env_vars.append("OPENAI_API_KEY")
     elif model in ("deepseek-v3", "llama-v3p1"):
         required_env_vars.append("FIREWORKS_API_KEY")
+    elif model == "claude-3-5":
+        required_env_vars.append("ANTHROPIC_API_KEY")
 
     for var in required_env_vars:
         if var not in os.environ:
@@ -52,7 +54,7 @@ def main():
         "--model",
         type=str,
         required=True,
-        choices=["gpt-4o-mini", "deepseek-v3", "llama-v3p1"],
+        choices=["gpt-4o-mini", "deepseek-v3", "llama-v3p1", "claude-3-5"],
         help="The model to use for dependency evaluation",
     )
     parser.add_argument(
