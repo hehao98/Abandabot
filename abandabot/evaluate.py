@@ -130,37 +130,46 @@ def main():
         "no+reasoning",
         "context+reasoning",
     ]
+    n_runs = 5
     perf_summ = defaultdict(list)
 
     for model in models:
         for ablation in ablations:
-            logging.info("Evaluating model %s with %s", model, ablation)
+            for i in range(n_runs):
+                logging.info("Evaluating %s-%s run %d", model, ablation, i)
 
-            options = []
-            if ablation == "no+context+no+reasoning":
-                options = ["--exclude-context", "--exclude-reasoning"]
-            elif ablation == "no+context":
-                options = ["--exclude-context"]
-            elif ablation == "no+reasoning":
-                options = ["--exclude-reasoning"]
+                options = []
+                if ablation == "no+context+no+reasoning":
+                    options = ["--exclude-context", "--exclude-reasoning"]
+                elif ablation == "no+context":
+                    options = ["--exclude-context"]
+                elif ablation == "no+reasoning":
+                    options = ["--exclude-reasoning"]
 
-            with mp.Pool(4) as pool:
-                pool.starmap(
-                    run_one,
-                    [(repo, dep, options) for repo, dep in zip(df["repo"], df["dep"])],
+                with mp.Pool(4) as pool:
+                    pool.starmap(
+                        run_one,
+                        [
+                            (repo, dep, options)
+                            for repo, dep in zip(df["repo"], df["dep"])
+                        ],
+                    )
+
+                # for repo, dep in zip(df["repo"], df["dep"]):
+                #    run_one(repo, dep, options)
+
+                summ = collect_reports(df)
+                summary_path = os.path.join(
+                    REPORT_PATH, f"summary-{model}-{ablation}.csv"
                 )
+                pd.DataFrame(summ).to_csv(summary_path, index=False)
 
-            # for repo, dep in zip(df["repo"], df["dep"]):
-            #    run_one(repo, dep, options)
-
-            summ = collect_reports(df)
-            summary_path = os.path.join(REPORT_PATH, f"summary-{model}-{ablation}.csv")
-            pd.DataFrame(summ).to_csv(summary_path, index=False)
-
-            logging.info("Evaluating performance for impactful abandonment")
-            perf = evaluate_performance(summ["dev_eval"], summ["ai_eval"], "Yes", "No")
-            logging.info("Performance %s+%s: %s", model, ablation, perf)
-            perf_summ[f"{model}+{ablation}"].append(perf)
+                logging.info("Evaluating performance for impactful abandonment")
+                perf = evaluate_performance(
+                    summ["dev_eval"], summ["ai_eval"], "Yes", "No"
+                )
+                logging.info("Performance %s+%s: %s", model, ablation, perf)
+                perf_summ[f"{model}+{ablation}"].append(perf)
 
     with open(os.path.join(REPORT_PATH, "performance.json"), "w") as f:
         json.dump(perf_summ, f, indent=2)

@@ -18,6 +18,9 @@ LANGSMITH_ENDPOINT="https://api.smith.langchain.com"
 LANGSMITH_API_KEY="[Your LangSmith API key]"
 LANGSMITH_PROJECT="[Your LangSmith project name]"
 OPENAI_API_KEY="[Your OpenAI API key]"
+DEEPSEEK_API_KEY="[Your DeepSeek API key]"
+GOOGLE_API_KEY="[Your Google API key]"
+ANTHROPIC_API_KEY="[Your Anthropic API key]"
 ```
 
 For TypeScript projects, please also install Node.js and ensure `node` is on the PATH.

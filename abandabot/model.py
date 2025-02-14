@@ -10,15 +10,37 @@ from langchain_openai import ChatOpenAI
 from abandabot import REPO_PATH, REPORT_PATH
 
 
-PROMPT_BASE_NO_DIMENSION = """
+PROMPT_BASE_NO_REASONING = """
+You are an expert JavaScript developer building a tool to notify a project's maintainers 
+when one of the project's dependencies becomes abandoned. However, instead of notifying
+them when any of their dependencies are abandoned, you want to only notify them about 
+the abandonment of dependencies that are likely important and impactful to the project,
+so as to minimize notification fatigue. 
+
+Please provide a final impact evaluation, in the boolean "impactful" field of your JSON response:
+
+1. true: The dependencies' abandonment would likely be directly impactful to the project
+2. false: The dependencies' abandonment would not likely be directly impactful to the project
+
+The project I want to ask is {repo} and the dependency I want to ask is {dep}.
+"""
+
+PROMPT_BASE_REASONING = """
 You are an expert JavaScript developer building a tool to notify a project's maintainers 
 when one of the project's dependencies becomes abandoned. However, instead of notifying
 them when any of their dependencies are abandoned, you want to only notify them about 
 the abandonment of dependencies that are likely important and impactful to the project 
 given the context of their dependency usage, so as to minimize notification fatigue. 
 
-Finally, considering all your above answers, please provide a final impact 
-evaluation, in the boolean "impactful" field of your JSON response:
+You should provide detailed, specific reasoning for your impact evaluation,
+in the top-level "reasoning" field of your JSON response. The reasoning should be based on
+how important are the functionalities of the dependency to the project, 
+how deeply integrated the dependency is into the proejct,
+the extent to which potential alternative packages could be used for replacements, and
+how much enviormental pressure there is for the dependency to evolve in the future.
+
+Based on your reasoning, please provide a final impact evaluation, in the boolean 
+"impactful" field of your JSON response:
 
 1. true: The dependencies' abandonment would likely be directly impactful to the project
 2. false: The dependencies' abandonment would not likely be directly impactful to the project
@@ -91,7 +113,11 @@ I provide relevant context as follows:
 """
 
 
-class AbandabotReportNoContext(TypedDict):
+class AbandabotReportNoReasoning(TypedDict):
+    impactful: bool
+
+
+class AbandabotReportReasoning(TypedDict):
     impactful: bool
     reasoning: str
 
@@ -165,7 +191,7 @@ def get_dep_readme(dep: str) -> Optional[str]:
 def build_abandabot_prompt(
     repo: str,
     dep: str,
-    include_dimension: bool = False,
+    include_reasoning: bool = False,
     include_context: bool = False,
     context: dict[str, dict[str, set[int]]] = dict(),
     context_window: int = 5,
@@ -175,7 +201,7 @@ def build_abandabot_prompt(
     Args:
         repo (str): The repository name
         dep (str): The dependency name
-        include_dimension (bool, optional): Whether to include into the prompt
+        include_reasoning (bool, optional): Whether to include into the prompt
             the four dimensions developers often consider for abandonment.
             Defaults to True.
         include_context (bool, optional): Whether to include into the prompt
@@ -191,10 +217,10 @@ def build_abandabot_prompt(
     repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
     encoding = {"encoding": "utf-8", "errors": "ignore"}
 
-    if include_dimension:
-        prompt = PROMPT_BASE.format(repo=repo, dep=dep)
+    if include_reasoning:
+        prompt = PROMPT_BASE_REASONING.format(repo=repo, dep=dep)
     else:
-        prompt = PROMPT_BASE_NO_DIMENSION.format(repo=repo, dep=dep)
+        prompt = PROMPT_BASE_NO_REASONING.format(repo=repo, dep=dep)
 
     if not include_context:
         return prompt
@@ -264,7 +290,7 @@ def build_abandabot_prompt(
 def generate_report(
     repo: str,
     dep: str,
-    include_dimension: bool = False,
+    include_reasoning: bool = False,
     include_context: bool = False,
     context: dict[str, dict[str, set[int]]] = dict(),
     context_window: int = 5,
@@ -274,7 +300,7 @@ def generate_report(
     Args:
         repo (str): The repository name
         dep (str): The dependency name
-        include_dimension (bool, optional): Whether to include into the prompt
+        include_reasoning (bool, optional): Whether to include into the prompt
             the four dimensions developers often consider for abandonment.
             Defaults to True.
         include_context (bool, optional): Whether to include into the prompt
@@ -293,12 +319,12 @@ def generate_report(
 
     model_name = "gpt-4o-mini"
     model = ChatOpenAI(model=model_name).with_structured_output(
-        AbandabotReport if include_context else AbandabotReportNoContext
+        AbandabotReportReasoning if include_reasoning else AbandabotReportNoReasoning
     )
 
     logging.info("Generating report for %s using %s", repo, model_name)
     prompt = build_abandabot_prompt(
-        repo, dep, include_dimension, include_context, context, context_window
+        repo, dep, include_reasoning, include_context, context, context_window
     )
     with open(prompt_path, "w", encoding="utf-8", errors="ignore") as f:
         f.write(prompt)
