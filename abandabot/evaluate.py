@@ -93,7 +93,13 @@ def run_one(
     )
 
 
-def collect_reports(ground_truth: pd.DataFrame) -> pd.DataFrame:
+def collect_reports(
+    ground_truth: pd.DataFrame,
+    model: str,
+    include_reasoning: bool,
+    include_context: bool,
+    run_id: int,
+) -> pd.DataFrame:
     summary = []
 
     for repo, dep, dep_eval in zip(
@@ -101,18 +107,18 @@ def collect_reports(ground_truth: pd.DataFrame) -> pd.DataFrame:
         ground_truth["dep"],
         ground_truth["impactful"],
     ):
-
-        report_path = os.path.join("reports", f"{repo.replace('/', '_')}")
-        report_file = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
-        if not os.path.exists(report_file):
-            logging.warning("Report file %s not found, skipping", report_file)
-            continue
-
-        with open(report_file, "r") as f:
-            report = json.load(f)
-
+        key = {
+            "repo": repo,
+            "dep": dep,
+            "model": model,
+            "include_reasoning": include_reasoning,
+            "include_context": include_context,
+            "run_id": run_id,
+        }
+        with pymongo.MongoClient(MONGO_URI) as client:
+            report = client.abandabot.reports.find_one(key)["report"]
         if "impactful" not in report:
-            logging.warning("Report file %s is incomplete, skipping", report_file)
+            logging.warning("Report %s is incomplete, skipping", key)
             continue
 
         ai_eval = "Yes" if report["impactful"] else "No"
@@ -172,7 +178,20 @@ def main():
     df = pd.read_csv("ground_truth.csv")
     df = df[df.impactful != "Unsure/Maybe"]
 
-    models = ["gpt-4o-mini", "deepseek-v3", "llama-v3p1"]
+    with pymongo.MongoClient(MONGO_URI) as client:
+        client.abandabot.reports.create_index(
+            [
+                ("repo", 1),
+                ("dep", 1),
+                ("model", 1),
+                ("include_reasoning", 1),
+                ("include_context", 1),
+                ("run_id", 1),
+            ],
+            unique=True,
+        )
+
+    models = ["gpt-4o-mini", "deepseek-v3", "llama-v3p1", "claude-3-5"]
     ablations = [
         "no+context+no+reasoning",
         "no+context",
@@ -203,11 +222,19 @@ def main():
                         ],
                     )
 
-                summ = collect_reports(df)
-                summary_path = os.path.join(
-                    REPORT_PATH, f"summary-{model}-{ablation}.csv"
+                summ = collect_reports(
+                    df,
+                    model,
+                    "no+reasoning" not in ablation,
+                    "no+context" not in ablation,
+                    i,
                 )
-                pd.DataFrame(summ).to_csv(summary_path, index=False)
+                pd.DataFrame(summ).to_csv(
+                    os.path.join(
+                        REPORT_PATH, f"summary-{model}-{ablation}-run-{i}.csv"
+                    ),
+                    index=False,
+                )
 
                 logging.info("Evaluating performance for impactful abandonment")
                 perf = evaluate_performance(
