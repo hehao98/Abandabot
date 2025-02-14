@@ -332,22 +332,19 @@ def generate_report(
     prompt_path = os.path.join(report_path, f"prompt-{dep.replace('/', '_')}.txt")
     output_path = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
 
-    assert model_name in ["gpt-4o-mini", "deepseek-v3"]
+    assert model_name in ["gpt-4o-mini", "deepseek-v3", "llama-v3p1"]
 
     if model_name == "gpt-4o-mini":
-        model = ChatOpenAI(model="gpt-4o-mini").with_structured_output(
-            AbandabotReportReasoning
-            if include_reasoning
-            else AbandabotReportNoReasoning
-        )
+        model = ChatOpenAI(model="gpt-4o-mini")
     elif model_name == "deepseek-v3":
+        model = ChatFireworks(model="accounts/fireworks/models/deepseek-v3")
+    elif model_name == "llama-v3p1":
         model = ChatFireworks(
-            model="accounts/fireworks/models/deepseek-v3"
-        ).with_structured_output(
-            AbandabotReportReasoning
-            if include_reasoning
-            else AbandabotReportNoReasoning
+            model="accounts/fireworks/models/llama-v3p1-405b-instruct"
         )
+    model = model.with_structured_output(
+        AbandabotReportReasoning if include_reasoning else AbandabotReportNoReasoning
+    )
 
     logging.info("Generating report for %s using %s", repo, model_name)
     prompt = build_abandabot_prompt(

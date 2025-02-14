@@ -172,7 +172,7 @@ def main():
     df = pd.read_csv("ground_truth.csv")
     df = df[df.impactful != "Unsure/Maybe"]
 
-    models = ["gpt-4o-mini", "deepseek-v3"]
+    models = ["gpt-4o-mini", "deepseek-v3", "llama-v3p1"]
     ablations = [
         "no+context+no+reasoning",
         "no+context",
