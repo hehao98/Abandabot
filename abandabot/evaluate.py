@@ -35,24 +35,29 @@ def run_one(
             )
             return
 
+    command = [
+        "poetry",
+        "run",
+        "python",
+        "-m",
+        "abandabot",
+        "--github",
+        repo,
+        "--dep",
+        dep,
+        "--model",
+        model,
+    ]
+
+    if not include_reasoning:
+        command += ["--exclude-reasoning"]
+    if not include_context:
+        command += ["--exclude-context"]
+
     logging.info("Evaluating %s %s", repo, dep)
     try:
         subprocess.run(
-            [
-                "poetry",
-                "run",
-                "python",
-                "-m",
-                "abandabot",
-                "--github",
-                repo,
-                "--dep",
-                dep,
-                "--model",
-                model,
-                "--exclude-reasoning" if not include_reasoning else "",
-                "--exclude-context" if not include_context else "",
-            ],
+            command,
             check=True,
             stdout=subprocess.PIPE,
         )
@@ -182,14 +187,6 @@ def main():
             for i in range(n_runs):
                 logging.info("Evaluating %s-%s run %d", model, ablation, i)
 
-                options = []
-                if ablation == "no+context+no+reasoning":
-                    options = ["--exclude-context", "--exclude-reasoning"]
-                elif ablation == "no+context":
-                    options = ["--exclude-context"]
-                elif ablation == "no+reasoning":
-                    options = ["--exclude-reasoning"]
-
                 with mp.Pool(4) as pool:
                     pool.starmap(
                         run_one,
@@ -198,8 +195,8 @@ def main():
                                 repo,
                                 dep,
                                 model,
-                                "--exclude-reasoning" in options,
-                                "--exclude-context" in options,
+                                "no+reasoning" not in ablation,
+                                "no+context" not in ablation,
                                 i,
                             )
                             for repo, dep in zip(df["repo"], df["dep"])
