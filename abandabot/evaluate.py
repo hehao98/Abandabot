@@ -194,13 +194,17 @@ def main():
                     pool.starmap(
                         run_one,
                         [
-                            (repo, dep, options)
+                            (
+                                repo,
+                                dep,
+                                model,
+                                "--exclude-reasoning" in options,
+                                "--exclude-context" in options,
+                                i,
+                            )
                             for repo, dep in zip(df["repo"], df["dep"])
                         ],
                     )
-
-                # for repo, dep in zip(df["repo"], df["dep"]):
-                #    run_one(repo, dep, options)
 
                 summ = collect_reports(df)
                 summary_path = os.path.join(
