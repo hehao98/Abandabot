@@ -2,6 +2,8 @@ import os
 import json
 import logging
 import requests
+import openai
+import time
 
 from pathlib import Path
 from typing import Iterator, Optional
@@ -330,7 +332,14 @@ def generate_report(
         f.write(prompt)
     logging.info("Prompt saved to %s", prompt_path)
 
-    output = model.invoke(prompt)
+    for _ in range(3):  # Max 3 retries
+        try:
+            output = model.invoke(prompt)
+            break
+        except openai.RateLimitError as ex:
+            logging.error("OpenAI rate limit exceeded: %s", ex)
+            time.sleep(10)
+
     with open(output_path, "w") as f:
         f.write(json.dumps(output, indent=2))
     logging.info("Report saved to %s", output_path)
