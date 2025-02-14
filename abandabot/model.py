@@ -1,4 +1,5 @@
 import os
+import re
 import json
 import logging
 import requests
@@ -9,6 +10,7 @@ from pathlib import Path
 from typing import Iterator, Optional
 from typing_extensions import TypedDict
 from langchain_openai import ChatOpenAI
+from langchain_fireworks import ChatFireworks
 from abandabot import REPO_PATH, REPORT_PATH
 
 
@@ -17,9 +19,10 @@ You are an expert JavaScript developer building a tool to notify a project's mai
 when one of the project's dependencies becomes abandoned. However, instead of notifying
 them when any of their dependencies are abandoned, you want to only notify them about 
 the abandonment of dependencies that are likely important and impactful to the project,
-so as to minimize notification fatigue. 
+{context} so as to minimize notification fatigue. 
 
-Please provide a final impact evaluation, in the boolean "impactful" field of your JSON response:
+Your response string should contain and only contain a parsable JSON document. 
+In the boolean "impactful" field of your JSON document, please provide a final impact evaluation, 
 
 1. true: The dependencies' abandonment would likely be directly impactful to the project
 2. false: The dependencies' abandonment would not likely be directly impactful to the project
@@ -31,18 +34,19 @@ PROMPT_BASE_REASONING = """
 You are an expert JavaScript developer building a tool to notify a project's maintainers 
 when one of the project's dependencies becomes abandoned. However, instead of notifying
 them when any of their dependencies are abandoned, you want to only notify them about 
-the abandonment of dependencies that are likely important and impactful to the project 
-given the context of their dependency usage, so as to minimize notification fatigue. 
+the abandonment of dependencies that are likely important and impactful to the project
+{context} so as to minimize notification fatigue. 
 
-You should provide detailed, specific reasoning for your impact evaluation,
-in the top-level "reasoning" field of your JSON response. The reasoning should be based on
+Your response string should contain and only contain a parsable JSON document.  
+In the top-level "reasoning" field of your JSON document, you should provide detailed,
+specific reasoning for your impact evaluation, The reasoning should be based on
 how important are the functionalities of the dependency to the project, 
 how deeply integrated the dependency is into the proejct,
 the extent to which potential alternative packages could be used for replacements, and
 how much enviormental pressure there is for the dependency to evolve in the future.
 
 Based on your reasoning, please provide a final impact evaluation, in the boolean 
-"impactful" field of your JSON response:
+"impactful" field of your JSON document:
 
 1. true: The dependencies' abandonment would likely be directly impactful to the project
 2. false: The dependencies' abandonment would not likely be directly impactful to the project
@@ -219,10 +223,17 @@ def build_abandabot_prompt(
     repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
     encoding = {"encoding": "utf-8", "errors": "ignore"}
 
-    if include_reasoning:
-        prompt = PROMPT_BASE_REASONING.format(repo=repo, dep=dep)
+    if include_context:
+        context_msg = "given the context of their dependency usage,"
     else:
-        prompt = PROMPT_BASE_NO_REASONING.format(repo=repo, dep=dep)
+        context_msg = ""
+
+    if include_reasoning:
+        prompt = PROMPT_BASE_REASONING.format(repo=repo, dep=dep, context=context_msg)
+    else:
+        prompt = PROMPT_BASE_NO_REASONING.format(
+            repo=repo, dep=dep, context=context_msg
+        )
 
     if not include_context:
         return prompt
@@ -292,6 +303,7 @@ def build_abandabot_prompt(
 def generate_report(
     repo: str,
     dep: str,
+    model_name: str,
     include_reasoning: bool = False,
     include_context: bool = False,
     context: dict[str, dict[str, set[int]]] = dict(),
@@ -302,6 +314,7 @@ def generate_report(
     Args:
         repo (str): The repository name
         dep (str): The dependency name
+        model_name (str): The model name to use for the report
         include_reasoning (bool, optional): Whether to include into the prompt
             the four dimensions developers often consider for abandonment.
             Defaults to True.
@@ -319,10 +332,22 @@ def generate_report(
     prompt_path = os.path.join(report_path, f"prompt-{dep.replace('/', '_')}.txt")
     output_path = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
 
-    model_name = "gpt-4o-mini"
-    model = ChatOpenAI(model=model_name).with_structured_output(
-        AbandabotReportReasoning if include_reasoning else AbandabotReportNoReasoning
-    )
+    assert model_name in ["gpt-4o-mini", "deepseek-v3"]
+
+    if model_name == "gpt-4o-mini":
+        model = ChatOpenAI(model="gpt-4o-mini").with_structured_output(
+            AbandabotReportReasoning
+            if include_reasoning
+            else AbandabotReportNoReasoning
+        )
+    elif model_name == "deepseek-v3":
+        model = ChatFireworks(
+            model="accounts/fireworks/models/deepseek-v3"
+        ).with_structured_output(
+            AbandabotReportReasoning
+            if include_reasoning
+            else AbandabotReportNoReasoning
+        )
 
     logging.info("Generating report for %s using %s", repo, model_name)
     prompt = build_abandabot_prompt(
@@ -332,6 +357,7 @@ def generate_report(
         f.write(prompt)
     logging.info("Prompt saved to %s", prompt_path)
 
+    output = {}
     for _ in range(3):  # Max 3 retries
         try:
             output = model.invoke(prompt)

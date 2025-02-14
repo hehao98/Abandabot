@@ -18,7 +18,7 @@ LANGSMITH_ENDPOINT="https://api.smith.langchain.com"
 LANGSMITH_API_KEY="[Your LangSmith API key]"
 LANGSMITH_PROJECT="[Your LangSmith project name]"
 OPENAI_API_KEY="[Your OpenAI API key]"
-DEEPSEEK_API_KEY="[Your DeepSeek API key]"
+NVIDIA_API_KEY="[Your Nvidia API key]"
 GOOGLE_API_KEY="[Your Google API key]"
 ANTHROPIC_API_KEY="[Your Anthropic API key]"
 ```
@@ -28,7 +28,7 @@ For TypeScript projects, please also install Node.js and ensure `node` is on the
 ## Basic Usage
 
 ```
-$ poetry run python -m abandabot --github OWNER/REPO --dep DEPENDENCY [--overwrite]
+$ poetry run python -m abandabot --github OWNER/REPO --dep DEPENDENCY --model MODEL [--overwrite]
 ```
 
 It will download CodeQL automatically to the abandabot directory. The current CodeQL version used (v2.20.4) may crash on Windows for certain TypeScript projects, so we recommend using Linux or Mac OS instead for running Abandabot.
