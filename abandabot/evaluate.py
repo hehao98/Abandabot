@@ -70,6 +70,10 @@ def run_one(
     with open(report_file, "r") as f:
         report: dict = json.load(f)
 
+    if report is None:
+        logging.error("Report for %s %s is empty", repo, dep)
+        return
+
     with pymongo.MongoClient(MONGO_URI) as client:
         collection = client.abandabot.reports
         collection.insert_one(
@@ -116,7 +120,16 @@ def collect_reports(
             "run_id": run_id,
         }
         with pymongo.MongoClient(MONGO_URI) as client:
-            report = client.abandabot.reports.find_one(key)["report"]
+            report = client.abandabot.reports.find_one(key)
+        if (
+            report is None
+            or report["report"] is None
+            or "impactful" not in report["report"]
+        ):
+            logging.warning("Report %s not found, skipping", key)
+            continue
+        else:
+            report = report["report"]
         if "impactful" not in report:
             logging.warning("Report %s is incomplete, skipping", key)
             continue
@@ -191,7 +204,12 @@ def main():
             unique=True,
         )
 
-    models = ["gpt-4o-mini", "deepseek-v3", "llama-v3p1", "claude-3-5"]
+    models = [
+        "gpt-4o-mini",
+        "deepseek-v3",
+        "llama-v3p3",
+        "gemini-2.0"
+    ]  # "claude-3-5"]
     ablations = [
         "no+context+no+reasoning",
         "no+context",

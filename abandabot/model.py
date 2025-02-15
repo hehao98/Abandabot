@@ -11,6 +11,8 @@ from typing_extensions import TypedDict
 from langchain_openai import ChatOpenAI
 from langchain_fireworks import ChatFireworks
 from langchain_anthropic import ChatAnthropic
+from langchain_google_vertexai import ChatVertexAI
+from langchain_core.exceptions import OutputParserException
 from abandabot import REPO_PATH, REPORT_PATH
 
 
@@ -338,8 +340,12 @@ def generate_report(
         model = ChatFireworks(model="accounts/fireworks/models/deepseek-v3")
     elif model_name == "llama-v3p1":
         model = ChatFireworks(model="accounts/fireworks/models/llama-v3p1-70b-instruct")
+    elif model_name == "llama-v3p3":
+        model = ChatFireworks(model="accounts/fireworks/models/llama-v3p3-70b-instruct")
     elif model_name == "claude-3-5":
         model = ChatAnthropic(model="claude-3-5-sonnet-20241022")
+    elif model_name == "gemini-2.0":
+        model = ChatVertexAI(model="gemini-2.0-flash")
     else:
         raise ValueError(f"Unsupported model: {model_name}")
 
@@ -355,11 +361,13 @@ def generate_report(
         f.write(prompt)
     logging.info("Prompt saved to %s", prompt_path)
 
-    output = {}
+    output = None
     for _ in range(3):  # Max 3 retries
         try:
             output = model.invoke(prompt)
             break
+        except OutputParserException as ex:
+            logging.error("Failed to parse output: %s", ex)
         except openai.RateLimitError as ex:
             logging.error("OpenAI rate limit exceeded: %s", ex)
             time.sleep(10)

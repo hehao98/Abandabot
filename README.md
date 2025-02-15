@@ -18,8 +18,7 @@ LANGSMITH_ENDPOINT="https://api.smith.langchain.com"
 LANGSMITH_API_KEY="[Your LangSmith API key]"
 LANGSMITH_PROJECT="[Your LangSmith project name]"
 OPENAI_API_KEY="[Your OpenAI API key]"
-NVIDIA_API_KEY="[Your Nvidia API key]"
-GOOGLE_API_KEY="[Your Google API key]"
+FIREWORKS_API_KEY="[Your Fireworks API key]"
 ANTHROPIC_API_KEY="[Your Anthropic API key]"
 ```
 
