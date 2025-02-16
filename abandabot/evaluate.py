@@ -16,6 +16,7 @@ def run_one(
     model: str,
     include_reasoning: bool,
     include_context: bool,
+    complex_reasoning: bool,
     run_id: int,
 ) -> None:
     with pymongo.MongoClient(MONGO_URI) as client:
@@ -27,12 +28,11 @@ def run_one(
                 "model": model,
                 "include_reasoning": include_reasoning,
                 "include_context": include_context,
+                "complex_reasoning": complex_reasoning,
                 "run_id": run_id,
             }
         ):
-            logging.info(
-                "Report for %s %s %s already exists, skipping", repo, dep, model
-            )
+            logging.info("Report %s %s %s already exists", repo, dep, model)
             return
 
     command = [
@@ -49,10 +49,12 @@ def run_one(
         model,
     ]
 
-    if not include_reasoning:
-        command += ["--exclude-reasoning"]
-    if not include_context:
-        command += ["--exclude-context"]
+    if include_reasoning:
+        command += ["--include-reasoning"]
+    if include_context:
+        command += ["--include-context"]
+    if complex_reasoning:
+        command += ["--complex-reasoning"]
 
     logging.info("Evaluating %s %s", repo, dep)
     try:
@@ -83,6 +85,7 @@ def run_one(
                 "model": model,
                 "include_reasoning": include_reasoning,
                 "include_context": include_context,
+                "complex_reasoning": complex_reasoning,
                 "run_id": run_id,
                 "report": report,
             }
@@ -102,6 +105,7 @@ def collect_reports(
     model: str,
     include_reasoning: bool,
     include_context: bool,
+    complex_reasoning: bool,
     run_id: int,
 ) -> pd.DataFrame:
     summary = []
@@ -117,6 +121,7 @@ def collect_reports(
             "model": model,
             "include_reasoning": include_reasoning,
             "include_context": include_context,
+            "complex_reasoning": complex_reasoning,
             "run_id": run_id,
         }
         with pymongo.MongoClient(MONGO_URI) as client:
@@ -199,22 +204,19 @@ def main():
                 ("model", 1),
                 ("include_reasoning", 1),
                 ("include_context", 1),
+                ("complex_reasoning", 1),
                 ("run_id", 1),
             ],
             unique=True,
         )
 
-    models = [
-        "gpt-4o-mini",
-        "deepseek-v3",
-        "llama-v3p3",
-        "gemini-2.0"
-    ]  # "claude-3-5"]
+    models = ["gpt-4o-mini", "deepseek-v3", "llama-v3p3", "gemini-2.0"]  # "claude-3-5"]
     ablations = [
         "no+context+no+reasoning",
         "no+context",
         "no+reasoning",
         "context+reasoning",
+        "context+reasoning+complex",
     ]
     n_runs = 10
     perf_summ = defaultdict(list)
@@ -234,6 +236,7 @@ def main():
                                 model,
                                 "no+reasoning" not in ablation,
                                 "no+context" not in ablation,
+                                "complex" in ablation,
                                 i,
                             )
                             for repo, dep in zip(df["repo"], df["dep"])
@@ -245,6 +248,7 @@ def main():
                     model,
                     "no+reasoning" not in ablation,
                     "no+context" not in ablation,
+                    "complex" in ablation,
                     i,
                 )
                 pd.DataFrame(summ).to_csv(

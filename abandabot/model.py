@@ -56,7 +56,7 @@ Based on your reasoning, please provide a final impact evaluation, in the boolea
 The project I want to ask is {repo} and the dependency I want to ask is {dep}.
 """
 
-PROMPT_BASE = """
+PROMPT_BASE_COMPLEX_REASONING = """
 You are an expert JavaScript developer building a tool to notify a project's maintainers 
 when one of the project's dependencies becomes abandoned. However, instead of notifying
 them when any of their dependencies are abandoned, you want to only notify them about 
@@ -201,6 +201,7 @@ def build_abandabot_prompt(
     dep: str,
     include_reasoning: bool = False,
     include_context: bool = False,
+    complex_reasoning: bool = False,
     context: dict[str, dict[str, set[int]]] = dict(),
     context_window: int = 5,
 ) -> str:
@@ -211,9 +212,13 @@ def build_abandabot_prompt(
         dep (str): The dependency name
         include_reasoning (bool, optional): Whether to include into the prompt
             the four dimensions developers often consider for abandonment.
-            Defaults to True.
+            Defaults to False.
         include_context (bool, optional): Whether to include into the prompt
-            the context of the repository and dependency. Defaults to True.
+            the context of the repository and dependency. Defaults to False.
+        complex_reasoning (bool, optional): Whether to include into the prompt
+            the four dimensions developers often consider for abandonment
+            with detailed JSON formatted reasoning. Defaults to False.
+            If True, include_reasoning and include_conetxt must be True.
         context (dict[str, dict[str, set[int]]]): A dictionary mapping dependencies to files
             and line numbers where the dependency is used. Defaults to an empty dict.
         context_window (int, optional): The number of lines to include
@@ -225,13 +230,18 @@ def build_abandabot_prompt(
     repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
     encoding = {"encoding": "utf-8", "errors": "ignore"}
 
+    if complex_reasoning and (not include_context or not include_reasoning):
+        raise ValueError("include_context/reasoning must be True for complex reasoning")
+
     if include_context:
         context_msg = "given the context of their dependency usage,"
     else:
         context_msg = ""
 
-    if include_reasoning:
+    if include_reasoning and not complex_reasoning:
         prompt = PROMPT_BASE_REASONING.format(repo=repo, dep=dep, context=context_msg)
+    if include_reasoning and complex_reasoning:
+        prompt = PROMPT_BASE_COMPLEX_REASONING.format(repo=repo, dep=dep)
     else:
         prompt = PROMPT_BASE_NO_REASONING.format(
             repo=repo, dep=dep, context=context_msg
@@ -308,6 +318,7 @@ def generate_report(
     model_name: str,
     include_reasoning: bool = False,
     include_context: bool = False,
+    complex_reasoning: bool = False,
     context: dict[str, dict[str, set[int]]] = dict(),
     context_window: int = 5,
 ) -> None:
@@ -322,6 +333,10 @@ def generate_report(
             Defaults to True.
         include_context (bool, optional): Whether to include into the prompt
             the context of the repository and dependency. Defaults to True.
+        complex_reasoning (bool, optional): Whether to include into the prompt
+            the four dimensions developers often consider for abandonment
+            with detailed JSON formatted reasoning. Defaults to False.
+            If True, include_reasoning and include_conetxt must be True.
         context (dict[str, dict[str, set[int]]]): A dictionary mapping dependencies to files
             and line numbers where the dependency is used Defaults to an empty dict.
         context_window (int, optional): The number of lines to include
@@ -349,13 +364,23 @@ def generate_report(
     else:
         raise ValueError(f"Unsupported model: {model_name}")
 
-    model = model.with_structured_output(
-        AbandabotReportReasoning if include_reasoning else AbandabotReportNoReasoning
-    )
+    output_format = AbandabotReportNoReasoning
+    if include_reasoning:
+        if complex_reasoning:
+            output_format = AbandabotReport
+        else:
+            output_format = AbandabotReportReasoning
+    model = model.with_structured_output(output_format)
 
     logging.info("Generating report for %s using %s", repo, model_name)
     prompt = build_abandabot_prompt(
-        repo, dep, include_reasoning, include_context, context, context_window
+        repo,
+        dep,
+        include_reasoning,
+        include_context,
+        complex_reasoning,
+        context,
+        context_window,
     )
     with open(prompt_path, "w", encoding="utf-8", errors="ignore") as f:
         f.write(prompt)

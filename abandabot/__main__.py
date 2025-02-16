@@ -54,7 +54,14 @@ def main():
         "--model",
         type=str,
         required=True,
-        choices=["gpt-4o-mini", "deepseek-v3", "llama-v3p1", "llama-v3p3", "claude-3-5", "gemini-2.0"],
+        choices=[
+            "gpt-4o-mini",
+            "deepseek-v3",
+            "llama-v3p1",
+            "llama-v3p3",
+            "claude-3-5",
+            "gemini-2.0",
+        ],
         help="The model to use for dependency evaluation",
     )
     parser.add_argument(
@@ -63,14 +70,19 @@ def main():
         help="Overwrite the GitHub repository and CodeQL DB if it already exists",
     )
     parser.add_argument(
-        "--exclude-reasoning",
+        "--include-reasoning",
         action="store_true",
-        help="Exclude multiple dimensions of reasoning for dependency evaluation in the report",
+        help="Include multiple dimensions of reasoning for dependency evaluation in the report",
     )
     parser.add_argument(
-        "--exclude-context",
+        "--include-context",
         action="store_true",
-        help="Exclude project and dependency context information in the report",
+        help="Include project and dependency context information in the report",
+    )
+    parser.add_argument(
+        "--complex-reasoning",
+        action="store_true",
+        help="Include complex reasoning for dependency evaluation in the report",
     )
 
     args = parser.parse_args()
@@ -84,7 +96,7 @@ def main():
 
     logging.info("GitHub repository: %s", args.github)
 
-    if not args.exclude_context:
+    if args.include_context:
         context = build_dep_context(args.github, args.overwrite)
     else:
         context = {}
@@ -93,8 +105,9 @@ def main():
         args.github,
         args.dep,
         args.model,
-        not args.exclude_reasoning,
-        not args.exclude_context,
+        args.include_reasoning,
+        args.include_context,
+        args.complex_reasoning,
         context,
     )
 
