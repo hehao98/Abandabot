@@ -182,7 +182,6 @@ def main():
 
     candidates = pd.read_csv("survey_repos.csv")
     sample_repos = sorted(candidates.repoSlug.sample(1000, random_state=114514))
-    sample_repos = sample_repos
 
     for repo in sample_repos:
         collect_reports(repo, model="gpt-4o-mini")
