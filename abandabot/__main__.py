@@ -18,7 +18,7 @@ def check_env(model: str) -> None:
         raise RuntimeError("git is not installed")
 
     required_env_vars = []
-    if model == "chatgpt-4o-mini":
+    if model in ("gpt-4o-mini", "gpt-4o"):
         required_env_vars.append("OPENAI_API_KEY")
     elif model in ("deepseek-v3", "llama-v3p1", "llama-v3p3"):
         required_env_vars.append("FIREWORKS_API_KEY")
@@ -56,6 +56,7 @@ def main():
         required=True,
         choices=[
             "gpt-4o-mini",
+            "gpt-4o",
             "deepseek-v3",
             "llama-v3p1",
             "llama-v3p3",

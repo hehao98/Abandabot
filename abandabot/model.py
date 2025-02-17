@@ -126,21 +126,21 @@ class AbandabotReportNoReasoning(TypedDict):
 
 
 class AbandabotReportReasoning(TypedDict):
-    impactful: bool
     reasoning: str
+    impactful: bool
 
 
 class AbandabotReport(TypedDict):
     class Dimension(TypedDict):
-        score: int
         reasoning: str
+        score: int
 
     importance: Dimension
     integration: Dimension
     alternatives: Dimension
     likelihood: Dimension
-    impactful: bool
     reasoning: str
+    impactful: bool
 
 
 def get_dir_tree(dir_path: str, prefix: str = "") -> Iterator[str]:
@@ -237,6 +237,7 @@ def build_abandabot_prompt(
         context_msg = "given the context of their dependency usage,"
     else:
         context_msg = ""
+        repo = "##anonymous##"
 
     if include_reasoning and not complex_reasoning:
         prompt = PROMPT_BASE_REASONING.format(repo=repo, dep=dep, context=context_msg)
@@ -351,6 +352,8 @@ def generate_report(
 
     if model_name == "gpt-4o-mini":
         model = ChatOpenAI(model="gpt-4o-mini")
+    elif model_name == "gpt-4o":
+        model = ChatOpenAI(model="gpt-4o")
     elif model_name == "deepseek-v3":
         model = ChatFireworks(model="accounts/fireworks/models/deepseek-v3")
     elif model_name == "llama-v3p1":

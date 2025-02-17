@@ -5,6 +5,7 @@ import logging
 import subprocess
 import pandas as pd
 import multiprocessing as mp
+import sklearn.metrics as skm
 
 from collections import defaultdict
 from abandabot import REPORT_PATH, MONGO_URI
@@ -167,19 +168,29 @@ def evaluate_performance(
         logging.error("Length of ground_truth and report not match")
         return
 
-    total, tp, fp, tn, fn = len(report), 0, 0, 0, 0
-    for dev_eval, ai_eval in zip(ground_truth, report):
-        if dev_eval == true_label and ai_eval == true_label:
-            tp += 1
-        elif dev_eval == false_label and ai_eval == true_label:
-            fp += 1
-        elif dev_eval == true_label and ai_eval == false_label:
-            fn += 1
-        elif dev_eval == false_label and ai_eval == false_label:
-            tn += 1
-    acc, precision, recall = (tp + tn) / (total), tp / (tp + fp), tp / (tp + fn)
-    f1 = 2 * precision * recall / (precision + recall)
-    return {"accuracy": acc, "precision": precision, "recall": recall, "f1": f1}
+    return {
+        "macro_precision": skm.precision_score(
+            ground_truth,
+            report,
+            labels=[true_label, false_label],
+            average="macro",
+            zero_division=0,
+        ),
+        "macro_recall": skm.recall_score(
+            ground_truth,
+            report,
+            labels=[true_label, false_label],
+            average="macro",
+            zero_division=0,
+        ),
+        "macro_f1": skm.f1_score(
+            ground_truth,
+            report,
+            labels=[true_label, false_label],
+            average="macro",
+            zero_division=0,
+        ),
+    }
 
 
 def main():
@@ -210,7 +221,14 @@ def main():
             unique=True,
         )
 
-    models = ["gpt-4o-mini", "deepseek-v3", "llama-v3p3", "gemini-2.0", "claude-3-5"]
+    models = [
+        "gpt-4o",
+        "gpt-4o-mini",
+        "deepseek-v3",
+        "llama-v3p3",
+        "gemini-2.0",
+        # "claude-3-5", # rate limit too problematic
+    ]
     ablations = [
         "no+context+no+reasoning",
         "no+context",
@@ -218,7 +236,7 @@ def main():
         "context+reasoning",
         "context+reasoning+complex",
     ]
-    n_runs = 10
+    n_runs = 5
     perf_summ = defaultdict(list)
 
     for model in models:
@@ -259,9 +277,15 @@ def main():
                 )
 
                 logging.info("Evaluating performance for impactful abandonment")
-                perf = evaluate_performance(
-                    summ["dev_eval"], summ["ai_eval"], "Yes", "No"
-                )
+                perf = {
+                    "errors": len(df) - len(summ),
+                    **evaluate_performance(
+                        summ["dev_eval"],
+                        summ["ai_eval"],
+                        true_label="Yes",
+                        false_label="No",
+                    ),
+                }
                 logging.info("Performance %s+%s: %s", model, ablation, perf)
                 perf_summ[f"{model}+{ablation}"].append(perf)
 
