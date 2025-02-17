@@ -1,5 +1,6 @@
 import os
 import json
+import random
 import dotenv
 import logging
 import pymongo
@@ -33,6 +34,10 @@ def collect_reports(repo: str, model: str) -> None:
     )
 
     logging.info("repo %s: %s", repo, all_deps)
+
+    if len(all_deps) >= 20:
+        logging.info("Too many dependencies, sampling 20")
+        all_deps = random.sample(all_deps, 20)
 
     for dep in all_deps:
         with pymongo.MongoClient(MONGO_URI) as client:
@@ -163,6 +168,8 @@ def main():
 
     logging.info("Start!")
 
+    random.seed(114514)
+
     with pymongo.MongoClient(MONGO_URI) as client:
         client.abandabot.survey_reports.create_index(
             [
@@ -175,17 +182,17 @@ def main():
 
     candidates = pd.read_csv("survey_repos.csv")
     sample_repos = sorted(candidates.repoSlug.sample(1000, random_state=114514))
-    sample_repos = sample_repos[:10]  # test on 10 repos first
+    sample_repos = sample_repos
 
     for repo in sample_repos:
         collect_reports(repo, model="gpt-4o-mini")
 
         collect_reports(repo, model="deepseek-v3")
 
-        generate_surveys(repo)
+        # generate_surveys(repo)
 
     logging.info("Done!")
 
 
 if __name__ == "__main__":
-    generate_surveys("facebook/react")
+    main()
