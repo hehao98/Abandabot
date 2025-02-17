@@ -210,7 +210,7 @@ def main():
             unique=True,
         )
 
-    models = ["gpt-4o-mini", "deepseek-v3", "llama-v3p3", "gemini-2.0"]  # "claude-3-5"]
+    models = ["gpt-4o-mini", "deepseek-v3", "llama-v3p3", "gemini-2.0", "claude-3-5"]
     ablations = [
         "no+context+no+reasoning",
         "no+context",
