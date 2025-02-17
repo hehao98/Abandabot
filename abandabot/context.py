@@ -182,6 +182,9 @@ def build_dep_context(repo: str, overwrite: bool) -> dict[str, dict[str, set[int
         ("import", find_dep_usage_codeql(repo, overwrite)),
         ("api", find_api_usage_codeql(repo, overwrite)),
     ]:
+        if usage is None:
+            logging.error("No %s usage found", kind)
+            continue
         for dep, dep_usage in usage.groupby("name"):
             # if a lot of usages are detected, many of them may be suprious
             # To avoid exceeding the token limit, we randomly sample 50 usages
