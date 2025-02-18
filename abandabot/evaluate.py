@@ -169,6 +169,42 @@ def evaluate_performance(
         return
 
     return {
+        "yes_precision": skm.precision_score(
+            ground_truth,
+            report,
+            pos_label=true_label,
+            zero_division=0,
+        ),
+        "yes_recall": skm.recall_score(
+            ground_truth,
+            report,
+            pos_label=true_label,
+            zero_division=0,
+        ),
+        "yes_f1": skm.f1_score(
+            ground_truth,
+            report,
+            pos_label=true_label,
+            zero_division=0,
+        ),
+        "no_precision": skm.precision_score(
+            ground_truth,
+            report,
+            pos_label=false_label,
+            zero_division=0,
+        ),
+        "no_recall": skm.recall_score(
+            ground_truth,
+            report,
+            pos_label=false_label,
+            zero_division=0,
+        ),
+        "no_f1": skm.f1_score(
+            ground_truth,
+            report,
+            pos_label=false_label,
+            zero_division=0,
+        ),
         "macro_precision": skm.precision_score(
             ground_truth,
             report,
@@ -236,7 +272,7 @@ def main():
         "context+reasoning",
         "context+reasoning+complex",
     ]
-    n_runs = 5
+    n_runs = 10
     perf_summ = defaultdict(list)
 
     for model in models:
