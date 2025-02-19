@@ -43,7 +43,7 @@ Your response should contain and only contain a parsable JSON document.
 In the top-level "reasoning" field of your JSON document, you should provide detailed,
 specific reasoning for your impact evaluation, The reasoning should be based on
 how important are the functionalities of the dependency to the project, 
-how deeply integrated the dependency is into the proejct,
+how deeply integrated the dependency is into the project,
 the extent to which potential alternative packages could be used for replacements, and
 how much environmental pressure there is for the dependency to evolve in the future.
 
