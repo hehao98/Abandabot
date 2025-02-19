@@ -184,9 +184,7 @@ def main():
     sample_repos = sorted(candidates.repoSlug.sample(1000, random_state=114514))
 
     for repo in sample_repos:
-        collect_reports(repo, model="gpt-4o-mini")
-
-        collect_reports(repo, model="deepseek-v3")
+        collect_reports(repo, model="llama-v3p3")
 
         # generate_surveys(repo)
 

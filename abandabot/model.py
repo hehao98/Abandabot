@@ -41,11 +41,7 @@ the abandonment of dependencies that are likely important and impactful to the p
 
 Your response should contain and only contain a parsable JSON document.
 In the top-level "reasoning" field of your JSON document, you should provide detailed,
-specific reasoning for your impact evaluation, The reasoning should be based on
-how important are the functionalities of the dependency to the project, 
-how deeply integrated the dependency is into the project,
-the extent to which potential alternative packages could be used for replacements, and
-how much environmental pressure there is for the dependency to evolve in the future.
+specific reasoning for your impact evaluation.
 
 Based on your reasoning, please provide a final impact evaluation, in the boolean 
 "impactful" field of your JSON document:
@@ -88,14 +84,13 @@ behind the score. Your response for each question should be placed in the top-le
 For each of these fields, you should provide a "score" field with the score you assigned
 to the question, and a "reasoning" field with your detailed, specific reasoning.
 
-Finally, considering all your above answers, please provide a final impact 
+Cnsidering all your above answers, please provide detailed, specific reasoning for
+whether the dependency abandabot would be impactful, in the top-level "reasoning" 
+field of your JSON response. Finally, provide a final impact 
 evaluation, in the boolean top-level "impactful" field of your JSON response:
 
 1. true: The dependencies' abandonment would likely be directly impactful to the project
 2. false: The dependencies' abandonment would not likely be directly impactful to the project 
-
-You should also provide detailed, specific reasoning for your impact evaluation,
-in the top-level "reasoning" field of your JSON response.
 
 The project I want to ask is {repo} and the dependency I want to ask is {dep}.
 """

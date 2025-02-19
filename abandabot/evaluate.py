@@ -259,7 +259,7 @@ def main():
 
     models = [
         "gpt-4o",
-        "gpt-4o-mini",
+        # "gpt-4o-mini", # bad at long prompts
         "deepseek-v3",
         "llama-v3p3",
         "gemini-2.0",
