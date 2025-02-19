@@ -45,7 +45,7 @@ specific reasoning for your impact evaluation, The reasoning should be based on
 how important are the functionalities of the dependency to the project, 
 how deeply integrated the dependency is into the proejct,
 the extent to which potential alternative packages could be used for replacements, and
-how much enviormental pressure there is for the dependency to evolve in the future.
+how much environmental pressure there is for the dependency to evolve in the future.
 
 Based on your reasoning, please provide a final impact evaluation, in the boolean 
 "impactful" field of your JSON document:
