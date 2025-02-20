@@ -6,6 +6,7 @@ import logging
 import pymongo
 import subprocess
 import pandas as pd
+import multiprocessing as mp
 
 from typing import Optional
 from github import Github
@@ -182,13 +183,15 @@ def main():
         )
 
     candidates = pd.read_csv("survey_repos.csv")
-    sample_repos = sorted(candidates.repoSlug.sample(1000, random_state=114514))
+    sample_repos = sorted(candidates.repoSlug.sample(2000, random_state=114514))
+
+    #with mp.Pool(8) as pool:
+    #    pool.starmap(collect_reports, [(repo, "deepseek-v3") for repo in sample_repos])
 
     for repo in sample_repos:
-        #collect_reports(repo, model="gpt-4o")
         collect_reports(repo, model="deepseek-v3")
 
-        # generate_surveys(repo)
+    # generate_surveys(repo)
 
     logging.info("Done!")
 
