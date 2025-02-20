@@ -26,10 +26,24 @@ For TypeScript projects, please also install Node.js and ensure `node` is on the
 
 ## Basic Usage
 
-```shell
-$ poetry run python -m abandabot [-h] --github GITHUB --dep DEP \
-    --model {gpt-4o-mini,deepseek-v3,llama-v3p1,llama-v3p3,claude-3-5,gemini-2.0} \
-    [--overwrite] [--include-reasoning] [--include-context] [--complex-reasoning]
+```
+$ poetry run python -m abandabot -h
+usage: __main__.py [-h] --github GITHUB --dep DEP --model
+                   {gpt-4o-mini,gpt-4o,deepseek-v3,llama-v3p1,llama-v3p3,claude-3-5,gemini-2.0} 
+                   [--overwrite] [--include-reasoning] [--include-context] [--complex-reasoning] 
+                   [--summarize]
+
+options:
+  -h, --help            show this help message and exit
+  --github GITHUB       GitHub repository in the format 'owner/repo'
+  --dep DEP             The abandoned dependency to evaluate (e.g. 'lodash')
+  --model {gpt-4o-mini,gpt-4o,deepseek-v3,llama-v3p1,llama-v3p3,claude-3-5,gemini-2.0}
+                        The model to use for dependency evaluation
+  --overwrite           Overwrite the GitHub repository and CodeQL DB if it already exists
+  --include-reasoning   Include multiple dimensions of reasoning for dependency evaluation in the report
+  --include-context     Include project and dependency context information in the report
+  --complex-reasoning   Include complex reasoning for dependency evaluation in the report
+  --summarize           Include a summary of the reasonings in the report
 ```
 
 It will download CodeQL automatically to the abandabot directory. The current CodeQL version used (v2.20.4) may crash on Windows for certain TypeScript projects, so we recommend using Linux or Mac OS instead for running Abandabot.

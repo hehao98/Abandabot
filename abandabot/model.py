@@ -12,6 +12,7 @@ from langchain_openai import ChatOpenAI
 from langchain_fireworks import ChatFireworks
 from langchain_anthropic import ChatAnthropic
 from langchain_google_vertexai import ChatVertexAI
+from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.exceptions import OutputParserException
 from abandabot import REPO_PATH, REPORT_PATH
 
@@ -155,6 +156,17 @@ I provide relevant context as follows:
 """
 
 
+PROMPT_SUMMARY = """
+Based on your responses, please provide a summary of your reasoning for each of the
+four dimensions of importance, integration, alternatives, and likelihood, as well as
+a summary of your overall reasoning for whether the dependency abandabot would be impactful.
+Your response should contain and only contain a parsable JSON document.
+In the top-level "importance_summary", "integration_summary", "alternatives_summary",
+"likelihood_summary", and "reasoning_summary" fields of your JSON document, please provide
+a summary of your reasoning for each of the four dimensions and the overall reasoning, respectively.
+"""
+
+
 class AbandabotReportNoReasoning(TypedDict):
     impactful: bool
 
@@ -175,6 +187,14 @@ class AbandabotReport(TypedDict):
     likelihood: Dimension
     reasoning: str
     impactful: bool
+
+
+class AbandabotReportSummary(TypedDict):
+    importance_summary: str
+    integration_summary: str
+    alternatives_summary: str
+    likelihood_summary: str
+    reasoning_summary: str
 
 
 def get_dir_tree(dir_path: str, prefix: str = "") -> Iterator[str]:
@@ -353,6 +373,7 @@ def generate_report(
     include_reasoning: bool = False,
     include_context: bool = False,
     complex_reasoning: bool = False,
+    summarize: bool = False,
     context: dict[str, dict[str, set[int]]] = dict(),
     context_window: int = 5,
 ) -> None:
@@ -370,7 +391,10 @@ def generate_report(
         complex_reasoning (bool, optional): Whether to include into the prompt
             the four dimensions developers often consider for abandonment
             with detailed JSON formatted reasoning. Defaults to False.
-            If True, include_reasoning and include_conetxt must be True.
+            If True, include_reasoning must be True.
+        summarize: (bool, optional): Whether to summarize the report. Defaults to False.
+            This would leverage LangChain’s memory to save first round of output.
+            May not work for every model. If True, include_reasoning must be True.
         context (dict[str, dict[str, set[int]]]): A dictionary mapping dependencies to files
             and line numbers where the dependency is used Defaults to an empty dict.
         context_window (int, optional): The number of lines to include
@@ -383,20 +407,25 @@ def generate_report(
     prompt_path = os.path.join(report_path, f"prompt-{dep.replace('/', '_')}.txt")
     output_path = os.path.join(report_path, f"report-{dep.replace('/', '_')}.json")
 
+    if not include_reasoning and complex_reasoning:
+        raise ValueError("If complex_reasoning=True, include_reasoning must be True")
+    if not include_reasoning and summarize:
+        raise ValueError("If summarize=True, include_reasoning must be True")
+
     if model_name == "gpt-4o-mini":
-        model = ChatOpenAI(model="gpt-4o-mini")
+        base_model = ChatOpenAI(model="gpt-4o-mini")
     elif model_name == "gpt-4o":
-        model = ChatOpenAI(model="gpt-4o")
+        base_model = ChatOpenAI(model="gpt-4o")
     elif model_name == "deepseek-v3":
-        model = ChatFireworks(model="accounts/fireworks/models/deepseek-v3")
+        base_model = ChatFireworks(model="accounts/fireworks/models/deepseek-v3")
     elif model_name == "llama-v3p1":
-        model = ChatFireworks(model="accounts/fireworks/models/llama-v3p1-70b-instruct")
+        base_model = ChatFireworks(model="accounts/fireworks/models/llama-v3p1-70b-instruct")
     elif model_name == "llama-v3p3":
-        model = ChatFireworks(model="accounts/fireworks/models/llama-v3p3-70b-instruct")
+        base_model = ChatFireworks(model="accounts/fireworks/models/llama-v3p3-70b-instruct")
     elif model_name == "claude-3-5":
-        model = ChatAnthropic(model="claude-3-5-sonnet-20241022")
+        base_model = ChatAnthropic(model="claude-3-5-sonnet-20241022")
     elif model_name == "gemini-2.0":
-        model = ChatVertexAI(model="gemini-2.0-flash")
+        base_model = ChatVertexAI(model="gemini-2.0-flash")
     else:
         raise ValueError(f"Unsupported model: {model_name}")
 
@@ -406,7 +435,7 @@ def generate_report(
             output_format = AbandabotReport
         else:
             output_format = AbandabotReportReasoning
-    model = model.with_structured_output(output_format)
+    model = base_model.with_structured_output(output_format)
 
     logging.info("Generating report for %s using %s", repo, model_name)
     prompt = build_abandabot_prompt(
@@ -432,6 +461,17 @@ def generate_report(
         except openai.RateLimitError as ex:
             logging.error("OpenAI rate limit exceeded: %s", ex)
             time.sleep(10)
+
+    if summarize:
+        summary_model = base_model.with_structured_output(AbandabotReportSummary)
+        summary_output = summary_model.invoke(
+            [
+                HumanMessage(prompt),
+                AIMessage(json.dumps(output, indent=4)),
+                HumanMessage(PROMPT_SUMMARY),
+            ]
+        )
+        output["summary"] = summary_output
 
     with open(output_path, "w") as f:
         f.write(json.dumps(output, indent=2))

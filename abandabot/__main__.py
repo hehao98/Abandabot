@@ -85,6 +85,11 @@ def main():
         action="store_true",
         help="Include complex reasoning for dependency evaluation in the report",
     )
+    parser.add_argument(
+        "--summarize",
+        action="store_true",
+        help="Include a summary of the reasonings in the report",
+    )
 
     args = parser.parse_args()
 
@@ -109,6 +114,7 @@ def main():
         args.include_reasoning,
         args.include_context,
         args.complex_reasoning,
+        args.summarize,
         context,
     )
 

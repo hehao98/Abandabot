@@ -64,6 +64,7 @@ def collect_reports(repo: str, model: str) -> None:
                     "--include-reasoning",
                     "--include-context",
                     "--complex-reasoning",
+                    "--summarize",
                 ],
                 check=True,
                 stdout=subprocess.PIPE,
@@ -184,7 +185,8 @@ def main():
     sample_repos = sorted(candidates.repoSlug.sample(1000, random_state=114514))
 
     for repo in sample_repos:
-        collect_reports(repo, model="llama-v3p3")
+        #collect_reports(repo, model="gpt-4o")
+        collect_reports(repo, model="deepseek-v3")
 
         # generate_surveys(repo)
 
