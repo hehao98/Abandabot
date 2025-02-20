@@ -266,9 +266,11 @@ def main():
         # "claude-3-5", # rate limit too problematic
     ]
     ablations = [
-        "no+context+no+reasoning",
-        "no+context",
-        "no+reasoning",
+        # CoT are basic, do not need in our evaluation
+        "baseline",
+        "reasoning",
+        "context",
+        "reasoning+complex",
         "context+reasoning",
         "context+reasoning+complex",
     ]
@@ -288,8 +290,8 @@ def main():
                                 repo,
                                 dep,
                                 model,
-                                "no+reasoning" not in ablation,
-                                "no+context" not in ablation,
+                                "reasoning" in ablation,
+                                "context" in ablation,
                                 "complex" in ablation,
                                 i,
                             )

@@ -52,6 +52,45 @@ Based on your reasoning, please provide a final impact evaluation, in the boolea
 The project I want to ask is {repo} and the dependency I want to ask is {dep}.
 """
 
+PROMPT_BASE_COMPLEX_REASONING_NO_CONTEXT = """
+You are an expert JavaScript developer building a tool to notify a project's maintainers 
+when one of the project's dependencies becomes abandoned. However, instead of notifying
+them when any of their dependencies are abandoned, you want to only notify them about 
+the abandonment of dependencies that are likely important and impactful to the project,
+so as to minimize notification fatigue. 
+
+I am going to ask you important dependency management questions regarding whether 
+a dependency's future hypothetical abandonment is likely to be impactful and therefore 
+noteworthy to the project. I want you to answer the following four questions:
+
+1. How important is the functionality provided by the dependency to the project? 
+2. How difficult is it to replace the dependency, considering the depth of its 
+    integration in the project's code base?
+3. How difficult is it to replace the dependency, considering the availability of 
+    alternative packages that could serve as suitable replacements and provide the 
+    same functionality?
+4. How likely is it that external environmental changes will force the project to act 
+    on the dependency's abandonment?
+
+For each question, I want you to provide a score on a scale from 1 to 5, where 
+1 is the least important, difficult, or likely, and 5 is the most important, 
+difficult, or likely. Along with the score, please provide detailed, specific reasoning 
+behind the score. Your response for each question should be placed in the top-level "importance", 
+"integration", "alternatives", and "likelihood" fields of your JSON response, respectively.
+For each of these fields, you should provide a "score" field with the score you assigned
+to the question, and a "reasoning" field with your detailed, specific reasoning.
+
+Cnsidering all your above answers, please provide detailed, specific reasoning for
+whether the dependency abandabot would be impactful, in the top-level "reasoning" 
+field of your JSON response. Finally, provide a final impact 
+evaluation, in the boolean top-level "impactful" field of your JSON response:
+
+1. true: The dependencies' abandonment would likely be directly impactful to the project
+2. false: The dependencies' abandonment would not likely be directly impactful to the project 
+
+The project I want to ask is {repo} and the dependency I want to ask is {dep}.
+"""
+
 PROMPT_BASE_COMPLEX_REASONING = """
 You are an expert JavaScript developer building a tool to notify a project's maintainers 
 when one of the project's dependencies becomes abandoned. However, instead of notifying
@@ -225,9 +264,6 @@ def build_abandabot_prompt(
     repo_path = os.path.join(REPO_PATH, repo.replace("/", "_"))
     encoding = {"encoding": "utf-8", "errors": "ignore"}
 
-    if complex_reasoning and (not include_context or not include_reasoning):
-        raise ValueError("include_context/reasoning must be True for complex reasoning")
-
     if include_context:
         context_msg = "given the context of their dependency usage,"
     else:
@@ -236,7 +272,9 @@ def build_abandabot_prompt(
 
     if include_reasoning and not complex_reasoning:
         prompt = PROMPT_BASE_REASONING.format(repo=repo, dep=dep, context=context_msg)
-    if include_reasoning and complex_reasoning:
+    elif include_reasoning and not include_context and complex_reasoning:
+        prompt = PROMPT_BASE_COMPLEX_REASONING_NO_CONTEXT.format(repo=repo, dep=dep)
+    elif include_reasoning and include_context and complex_reasoning:
         prompt = PROMPT_BASE_COMPLEX_REASONING.format(repo=repo, dep=dep)
     else:
         prompt = PROMPT_BASE_NO_REASONING.format(
