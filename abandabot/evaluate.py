@@ -266,10 +266,10 @@ def main():
         # "claude-3-5", # rate limit too problematic
     ]
     ablations = [
-        # CoT are basic, do not need in our evaluation
-        "baseline",
+        # chain-of-thought is basic, do not need in our evaluation
+        # "baseline",
         "reasoning",
-        "context",
+        # "context",
         "reasoning+complex",
         "context+reasoning",
         "context+reasoning+complex",
