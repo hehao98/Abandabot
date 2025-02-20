@@ -270,9 +270,9 @@ def main():
         # "baseline",
         "reasoning",
         # "context",
-        "reasoning+complex",
+        "reasoning+theory",
         "context+reasoning",
-        "context+reasoning+complex",
+        "context+reasoning+theory",
     ]
     n_runs = 10
     perf_summ = defaultdict(list)
@@ -292,7 +292,7 @@ def main():
                                 model,
                                 "reasoning" in ablation,
                                 "context" in ablation,
-                                "complex" in ablation,
+                                "theory" in ablation,
                                 i,
                             )
                             for repo, dep in zip(df["repo"], df["dep"])
@@ -302,9 +302,9 @@ def main():
                 summ = collect_reports(
                     df,
                     model,
-                    "no+reasoning" not in ablation,
-                    "no+context" not in ablation,
-                    "complex" in ablation,
+                    "reasoning" in ablation,
+                    "context" in ablation,
+                    "theory" in ablation,
                     i,
                 )
                 pd.DataFrame(summ).to_csv(
