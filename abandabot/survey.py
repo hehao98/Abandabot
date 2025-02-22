@@ -68,7 +68,7 @@ def collect_reports(repo: str, model: str) -> None:
                     "--summarize",
                 ],
                 check=True,
-                stdout=subprocess.PIPE,
+                #stdout=subprocess.PIPE,
             )
         except subprocess.CalledProcessError as e:
             logging.error("Error: %s", e)
@@ -184,9 +184,10 @@ def main():
 
     candidates = pd.read_csv("survey_repos.csv")
     sample_repos = sorted(candidates.repoSlug.sample(2000, random_state=114514))
+    random.shuffle(sample_repos)
 
-    #with mp.Pool(8) as pool:
-    #    pool.starmap(collect_reports, [(repo, "deepseek-v3") for repo in sample_repos])
+    with mp.Pool(4) as pool:
+        pool.starmap(collect_reports, [(repo, "deepseek-v3") for repo in sample_repos])
 
     for repo in sample_repos:
         collect_reports(repo, model="deepseek-v3")

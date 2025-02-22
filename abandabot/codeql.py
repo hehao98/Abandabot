@@ -66,48 +66,61 @@ def create_database(
         return
 
     logging.info("Creating CodeQL database at %s for repo %s", database_path, repo_path)
-    subprocess.run(
-        [
-            CODEQL_CLI_PATH,
-            "database",
-            "create",
-            database_path,
-            "--source-root",
-            repo_path,
-            f"--language={language}",
-            "--overwrite",
-        ],
-        check=True,
-        stdout=subprocess.PIPE,
-    )
+    try:
+        subprocess.run(
+            [
+                CODEQL_CLI_PATH,
+                "database",
+                "create",
+                database_path,
+                "--source-root",
+                repo_path,
+                f"--language={language}",
+                "--overwrite",
+            ],
+            check=True,
+            stdout=subprocess.PIPE,
+            timeout=7200,
+        )
+    except subprocess.CalledProcessError as e:
+        logging.error("Error creating CodeQL database: %s", e.output)
+    except subprocess.TimeoutExpired:
+        logging.error("CodeQL database creation timed out")
 
 
 def execute_query(
     query_path: str, database_path: str, output_path: str, decode_path: str
 ) -> None:
     logging.info("Executing CodeQL query %s on database %s", query_path, database_path)
-    subprocess.run(
-        [
-            CODEQL_CLI_PATH,
-            "query",
-            "run",
-            f"--database={database_path}",
-            f"--output={output_path}",
-            query_path,
-        ],
-        check=True,
-        stdout=subprocess.PIPE,
-    )
-    subprocess.run(
-        [
-            CODEQL_CLI_PATH,
-            "bqrs",
-            "decode",
-            f"--output={decode_path}",
-            "--format=csv",
-            output_path,
-        ],
-        check=True,
-        stdout=subprocess.PIPE,
-    )
-    logging.info("CodeQL query results saved to %s", output_path)
+
+    try:
+        subprocess.run(
+            [
+                CODEQL_CLI_PATH,
+                "query",
+                "run",
+                f"--database={database_path}",
+                f"--output={output_path}",
+                query_path,
+            ],
+            check=True,
+            stdout=subprocess.PIPE,
+            timeout=7200,
+        )
+        subprocess.run(
+            [
+                CODEQL_CLI_PATH,
+                "bqrs",
+                "decode",
+                f"--output={decode_path}",
+                "--format=csv",
+                output_path,
+            ],
+            check=True,
+            stdout=subprocess.PIPE,
+        )
+        logging.info("CodeQL query results saved to %s", output_path)
+    except subprocess.CalledProcessError as e:
+        logging.error("Error executing CodeQL query: %s", e.output)
+    except subprocess.TimeoutExpired:
+        logging.error("CodeQL query execution timed out")

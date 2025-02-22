@@ -127,6 +127,10 @@ def find_dep_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
         decode_path=os.path.join(report_path, "dep-usage.csv"),
     )
 
+    if not os.path.exists(dep_usage_path):
+        logging.error("No dependency usage found")
+        return None
+
     return pd.read_csv(dep_usage_path)
 
 
@@ -159,6 +163,10 @@ def find_api_usage_codeql(repo: str, overwrite: bool) -> Optional[pd.DataFrame]:
         output_path=os.path.join(report_path, "api-usage.bqrs"),
         decode_path=os.path.join(report_path, "api-usage.csv"),
     )
+
+    if not os.path.exists(api_usage_path):
+        logging.error("No API usage found")
+        return None
 
     return pd.read_csv(api_usage_path)
 
