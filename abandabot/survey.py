@@ -35,18 +35,17 @@ def generate_reports(repo: str, model: str) -> None:
 
     logging.info("repo %s: %s", repo, all_deps)
 
-    if len(all_deps) >= 20:
-        logging.info("Too many dependencies, sampling 20")
-        all_deps = random.sample(all_deps, 20)
+    if len(all_deps) >= 10:
+        logging.info("Too many dependencies, sampling 10")
+        all_deps = random.sample(all_deps, 10)
 
     for dep in all_deps:
         with pymongo.MongoClient(MONGO_URI) as client:
             collection = client.abandabot.survey_reports
-            query = {"repo": repo, "dep": dep, "model": model}
-            if collection.count_documents(query) > 0:
-                logging.info("Report %s %s %s already exist", repo, dep, model)
-                continue
-
+            query = {"repo": repo, "model": model}
+            if collection.count_documents(query) >= 10:
+                logging.info("Reports from %s %s already suffice", repo, model)
+                break
         try:
             subprocess.run(
                 [
@@ -160,7 +159,7 @@ def main():
 
     logging.info("Start!")
 
-    random.seed(114514)
+    random.seed(1145141919810)
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--run", action="store_true")
@@ -179,8 +178,7 @@ def main():
             )
 
         candidates = pd.read_csv("survey_repos.csv")
-        sample_repos = sorted(candidates.repoSlug.sample(2000, random_state=114514))
-        random.shuffle(sample_repos)
+        sample_repos = sorted(candidates.repoSlug.sample(2000))
 
         with mp.Pool(4) as pool:
             pool.starmap(
