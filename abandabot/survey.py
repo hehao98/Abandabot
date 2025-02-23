@@ -4,15 +4,14 @@ import random
 import dotenv
 import logging
 import pymongo
+import argparse
 import subprocess
 import pandas as pd
 import multiprocessing as mp
 
 from typing import Optional
+from collections import defaultdict, Counter
 from github import Github
-from apiclient import discovery
-from httplib2 import Http
-from oauth2client import client, file, tools
 
 from abandabot import REPORT_PATH, MONGO_URI
 
@@ -28,7 +27,7 @@ def get_repo_pkg_json(repo: str) -> Optional[dict]:
         return None
 
 
-def collect_reports(repo: str, model: str) -> None:
+def generate_reports(repo: str, model: str) -> None:
     pkg_json = get_repo_pkg_json(repo)
     all_deps = list(pkg_json.get("dependencies", {}).keys()) + list(
         pkg_json.get("devDependencies", {}).keys()
@@ -68,7 +67,7 @@ def collect_reports(repo: str, model: str) -> None:
                     "--summarize",
                 ],
                 check=True,
-                #stdout=subprocess.PIPE,
+                # stdout=subprocess.PIPE,
             )
         except subprocess.CalledProcessError as e:
             logging.error("Error: %s", e)
@@ -88,77 +87,68 @@ def collect_reports(repo: str, model: str) -> None:
     return
 
 
-def generate_surveys(repo: str) -> None:
-    # create a banket survey for the repo in Google Form
-    SCOPES = "https://www.googleapis.com/auth/forms.body"
-    DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
+def collect_surveys() -> None:
+    with pymongo.MongoClient(MONGO_URI) as client:
+        all_repos = list(client.abandabot.survey_reports.distinct("repo"))
+        reports = list(client.abandabot.survey_reports.find())
 
-    store = file.Storage("token.json")
-    creds = None
-    if not creds or creds.invalid:
-        flow = client.flow_from_clientsecrets("credentials.json", SCOPES)
-        creds = tools.run_flow(flow, store)
+    dep_counter = defaultdict(Counter)
+    for report in reports:
+        dep_counter[report["dep"]][report["report"]["impactful"]] += 1
+    context_deps = {
+        dep
+        for dep, counter in dep_counter.items()
+        if len(counter) > 1 and counter[True] >= 1 and counter[False] >= 1
+    }
+    logging.info("%d deps with context_specifc judgements", len(context_deps))
 
-    form_service = discovery.build(
-        "forms",
-        "v1",
-        http=creds.authorize(Http()),
-        discoveryServiceUrl=DISCOVERY_DOC,
-        static_discovery=False,
-    )
+    survey_candidates = []
+    for repo in all_repos:
+        with pymongo.MongoClient(MONGO_URI) as client:
+            reports = list(client.abandabot.survey_reports.find({"repo": repo}))
 
-    # Request body for creating a form
-    NEW_FORM = {
-        "info": {
-            "title": "Quickstart form",
+        all_deps = {report["dep"] for report in reports}
+        impacful_deps = {
+            report["dep"] for report in reports if report["report"]["impactful"]
         }
-    }
-
-    # Request body to add a multiple-choice question
-    NEW_QUESTION = {
-        "requests": [
-            {
-                "createItem": {
-                    "item": {
-                        "title": (
-                            "In what year did the United States land a mission on"
-                            " the moon?"
-                        ),
-                        "questionItem": {
-                            "question": {
-                                "required": True,
-                                "choiceQuestion": {
-                                    "type": "RADIO",
-                                    "options": [
-                                        {"value": "1965"},
-                                        {"value": "1967"},
-                                        {"value": "1969"},
-                                        {"value": "1971"},
-                                    ],
-                                    "shuffle": True,
-                                },
-                            }
-                        },
-                    },
-                    "location": {"index": 0},
+        non_impactful_deps = all_deps - impacful_deps
+        logging.info(
+            "%s: %d deps, %d impactful, %d non-impactful, %d context-specific",
+            repo,
+            len(all_deps),
+            len(impacful_deps),
+            len(non_impactful_deps),
+            len(context_deps & all_deps),
+        )
+        if (
+            len(context_deps & all_deps) >= 3
+            and len(impacful_deps) > 0
+            and len(non_impactful_deps) > 0
+        ):
+            dep1 = random.choice(list(impacful_deps))
+            dep2 = random.choice(list(non_impactful_deps))
+            dep3 = random.choice(list((context_deps & all_deps) - {dep1, dep2}))
+            survey_candidates.append(
+                {
+                    "repo": repo,
+                    "dep1": dep1,
+                    "dep2": dep2,
+                    "dep3": dep3,
+                    "dep1_report": next(
+                        r["report"] for r in reports if r["dep"] == dep1
+                    ),
+                    "dep2_report": next(
+                        r["report"] for r in reports if r["dep"] == dep2
+                    ),
+                    "dep3_report": next(
+                        r["report"] for r in reports if r["dep"] == dep3
+                    ),
                 }
-            }
-        ]
-    }
+            )
 
-    # Creates the initial form
-    result = form_service.forms().create(body=NEW_FORM).execute()
-
-    # Adds the question to the form
-    question_setting = (
-        form_service.forms()
-        .batchUpdate(formId=result["formId"], body=NEW_QUESTION)
-        .execute()
-    )
-
-    # Prints the result to show the question has been added
-    get_result = form_service.forms().get(formId=result["formId"]).execute()
-    print(get_result)
+    with open("survey_candidates.json", "w") as f:
+        json.dump(survey_candidates, f, indent=2)
+    logging.info("%d survey candidates saved", len(survey_candidates))
 
 
 def main():
@@ -172,27 +162,32 @@ def main():
 
     random.seed(114514)
 
-    with pymongo.MongoClient(MONGO_URI) as client:
-        client.abandabot.survey_reports.create_index(
-            [
-                ("repo", 1),
-                ("dep", 1),
-                ("model", 1),
-            ],
-            unique=True,
-        )
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--run", action="store_true")
+    parser.add_argument("--collect", action="store_true")
+    args = parser.parse_args()
 
-    candidates = pd.read_csv("survey_repos.csv")
-    sample_repos = sorted(candidates.repoSlug.sample(2000, random_state=114514))
-    random.shuffle(sample_repos)
+    if args.run:
+        with pymongo.MongoClient(MONGO_URI) as client:
+            client.abandabot.survey_reports.create_index(
+                [
+                    ("repo", 1),
+                    ("dep", 1),
+                    ("model", 1),
+                ],
+                unique=True,
+            )
 
-    with mp.Pool(4) as pool:
-        pool.starmap(collect_reports, [(repo, "deepseek-v3") for repo in sample_repos])
+        candidates = pd.read_csv("survey_repos.csv")
+        sample_repos = sorted(candidates.repoSlug.sample(2000, random_state=114514))
+        random.shuffle(sample_repos)
 
-    for repo in sample_repos:
-        collect_reports(repo, model="deepseek-v3")
-
-    # generate_surveys(repo)
+        with mp.Pool(4) as pool:
+            pool.starmap(
+                generate_reports, [(repo, "deepseek-v3") for repo in sample_repos]
+            )
+    elif args.collect:
+        collect_surveys()
 
     logging.info("Done!")
 
