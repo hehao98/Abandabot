@@ -106,10 +106,8 @@ def collect_surveys() -> None:
         with pymongo.MongoClient(MONGO_URI) as client:
             reports = list(client.abandabot.survey_reports.find({"repo": repo}))
 
-        all_deps = {report["dep"] for report in reports}
-        impacful_deps = {
-            report["dep"] for report in reports if report["report"]["impactful"]
-        }
+        all_deps = {r["dep"] for r in reports}
+        impacful_deps = {r["dep"] for r in reports if r["report"]["impactful"]}
         non_impactful_deps = all_deps - impacful_deps
         logging.info(
             "%s: %d deps, %d impactful, %d non-impactful, %d context-specific",
@@ -147,7 +145,11 @@ def collect_surveys() -> None:
 
     with open("survey_candidates.json", "w") as f:
         json.dump(survey_candidates, f, indent=2)
-    logging.info("%d survey candidates saved", len(survey_candidates))
+    logging.info(
+        "%d candidates from %d repos saved",
+        len(survey_candidates),
+        len(all_repos),
+    )
 
 
 def main():
