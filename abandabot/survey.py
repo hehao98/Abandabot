@@ -103,8 +103,19 @@ def collect_surveys() -> None:
     }
     logging.info("%d deps with context_specifc judgements", len(context_deps))
 
-    survey_candidates = []
-    for repo in all_repos:
+    if os.path.exists("survey_candidates.json"):
+        with open("survey_candidates.json", "r") as f:
+            survey_candidates = json.load(f)
+        logging.info(
+            "%d candidates loaded from previous survey_candidates.json",
+            len(survey_candidates),
+        )
+    else:
+        survey_candidates = []
+
+    remaining = set(all_repos) - {c["repo"] for c in survey_candidates}
+    logging.info("%d repos left to collect", len(remaining))
+    for repo in remaining:
         with pymongo.MongoClient(MONGO_URI) as client:
             reports = list(client.abandabot.survey_reports.find({"repo": repo}))
 
@@ -172,7 +183,7 @@ def main():
 
     logging.info("Start!")
 
-    random.seed(1145141919810)
+    random.seed(1145141919)
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--run", action="store_true")
