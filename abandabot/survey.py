@@ -190,8 +190,6 @@ def main():
 
     logging.info("Start!")
 
-    random.seed(11451419)
-
     parser = argparse.ArgumentParser()
     parser.add_argument("--run", action="store_true")
     parser.add_argument("--collect", action="store_true")
