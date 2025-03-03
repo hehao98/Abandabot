@@ -1,0 +1,66 @@
+{
+  "repo": "app-sre/visual-qontract",
+  "dep1": "patternfly-react",
+  "dep2": "source-map-explorer",
+  "dep3": "eslint-plugin-import",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The dependency 'patternfly-react' is crucial for the project 'visual-qontract' as it provides the UI framework components that are extensively used throughout the application. The project's README explicitly mentions the use of PatternFly 3 as the UI framework, and the dependency usage overview shows that 'patternfly-react' components are used in multiple pages and components, including tables, cards, and navigation elements. This widespread usage indicates that the functionality provided by 'patternfly-react' is integral to the project's user interface and overall functionality.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of 'patternfly-react' in the project is deep, as evidenced by the numerous imports and usage across various components and pages. The dependency is not just used in a few isolated instances but is a foundational part of the project's UI layer. Replacing it would require significant refactoring of the UI components, which would be a complex and time-consuming task.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are other UI frameworks and component libraries available for React, finding a suitable replacement that offers the same set of components and styling as 'patternfly-react' could be challenging. The project is specifically built using PatternFly 3, and migrating to another framework would not only require finding a library with similar components but also adapting the project's styling and possibly its design principles to fit the new framework. This makes the availability of direct alternatives limited.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While the project currently relies on 'patternfly-react', the broader PatternFly ecosystem is actively maintained, and there is a newer version (PatternFly 4) that the project could potentially migrate to if necessary. However, such a migration would still require significant effort and resources.",
+      "score": 3
+    },
+    "reasoning": "Given the critical role of 'patternfly-react' in providing the UI framework for the project, its deep integration across the codebase, the challenges in finding suitable alternatives, and the moderate likelihood of being forced to act due to external changes, the abandonment of this dependency would likely be directly impactful to the project. The project would face significant challenges in maintaining its current UI functionality and user experience without 'patternfly-react'.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The source-map-explorer is listed as a devDependency in the project's package.json and is used in the 'analyze' script. This suggests it is used for analyzing the build output, which is important for debugging and optimizing the project's bundle size. However, it is not directly involved in the core functionality of the application, which is to serve as a web UI for the qontract-server. Therefore, while it is useful, it is not critical to the project's main purpose.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The source-map-explorer is used in a single script ('analyze') in the project's package.json. This indicates a shallow integration with the project, as it is not deeply embedded in the codebase or used across multiple scripts or components. Its usage is limited to post-build analysis, which suggests that replacing it would not require extensive changes to the project's codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that can analyze and visualize JavaScript bundle sizes, such as webpack-bundle-analyzer and bundle-wizard. These alternatives provide similar functionality and could serve as suitable replacements for source-map-explorer. The availability of these alternatives makes it relatively easy to replace source-map-explorer if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The source-map-explorer is a tool for development and debugging, and its abandonment would not directly impact the production environment or the core functionality of the application. Additionally, the availability of alternative packages reduces the risk of being forced to act due to abandonment.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis, the abandonment of source-map-explorer would not likely be directly impactful to the project. It is a useful tool for development and debugging but is not critical to the application's core functionality. The shallow integration and availability of alternatives further reduce the potential impact of its abandonment.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The eslint-plugin-import is used to enforce proper import/export syntax and prevent issues with misspelling of file paths and import names. While it is important for maintaining code quality, it does not directly impact the core functionality of the visual-qontract project, which is a web UI for data served by qontract-server. Therefore, its importance to the project is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The eslint-plugin-import is integrated into the project's linting process, as indicated by its presence in the package.json file and the 'lint:js' script. However, it is not deeply integrated into the core functionality or the build process of the project. Replacing it would require updating the linting configuration but would not significantly affect the project's main features.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to eslint-plugin-import, such as eslint-plugin-node, eslint-plugin-jsdoc, and others that can enforce similar rules regarding imports and exports. These alternatives could serve as suitable replacements, making it relatively easy to switch if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The eslint-plugin-import is widely used and maintained by a large community, reducing the risk of abandonment. Additionally, the project's reliance on it is not critical, as it is primarily used for linting purposes.",
+      "score": 1
+    },
+    "reasoning": "Given the moderate importance of eslint-plugin-import to the project, its relatively shallow integration, the availability of suitable alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of this dependency would not likely be directly impactful to the project.",
+    "impactful": false
+  }
+}

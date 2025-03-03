@@ -1,0 +1,66 @@
+{
+  "repo": "k0swe/adif-parser-ts",
+  "dep1": "rollup-plugin-typescript2",
+  "dep2": "rollup-plugin-sourcemaps",
+  "dep3": "ts-node",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The rollup-plugin-typescript2 is used to compile TypeScript files in the project. Given that the project is a TypeScript project, this functionality is crucial for the build process. Without it, the project would not be able to compile TypeScript into JavaScript, which is essential for the project's operation.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the project's build process through the rollup configuration file. It is used directly in the plugins array of the rollup configuration, indicating a direct and essential integration into the build process. Replacing it would require finding a compatible plugin that can handle TypeScript compilation within Rollup, which could be non-trivial.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are alternatives to rollup-plugin-typescript2, such as rollup-plugin-typescript or using Babel with TypeScript. However, each alternative has its own set of configurations and potential compatibility issues. The availability of alternatives does provide some flexibility, but the specific features and compatibility of rollup-plugin-typescript2 with the project's current setup make it a preferred choice.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. TypeScript and Rollup are both widely used and supported, but changes in their ecosystems or the emergence of new, more efficient tools could potentially make the current setup obsolete. However, such changes would likely be gradual and provide time for adaptation.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of the dependency to the project's build process, the depth of its integration, the availability of alternatives, and the likelihood of external changes, the abandonment of rollup-plugin-typescript2 would be impactful to the project. It plays a crucial role in the build process, and while there are alternatives, finding a suitable replacement that integrates as seamlessly would require significant effort.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The rollup-plugin-sourcemaps is used in the build process of the project to handle source maps. While source maps are important for debugging and development, the core functionality of the project, which is parsing ADIF format for amateur radio logs, does not directly depend on the source maps. Therefore, the functionality provided by rollup-plugin-sourcemaps is of moderate importance to the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The integration of rollup-plugin-sourcemaps in the project is limited to the build configuration file (rollup.config.ts). It is used as one of the plugins in the Rollup build process. Given its usage is confined to the build process and not deeply integrated into the core logic or functionality of the project, replacing it would not be highly difficult.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives available for handling source maps in Rollup, such as using the inputSourceMap option in rollup-plugin-babel or other Rollup plugins designed for source map handling. The availability of these alternatives makes it relatively easy to replace rollup-plugin-sourcemaps if needed.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The project's core functionality is not dependent on the source map handling, and the build process can be adapted to use alternative solutions if necessary.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of the functionality provided by rollup-plugin-sourcemaps, its limited integration in the project, the availability of alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of this dependency would not likely be directly impactful to the project.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The ts-node package is used in the project's development scripts, such as for running tests with Jest. It is essential for the development workflow but not directly used in the production build. Therefore, while important for development, its absence would not directly impact the production functionality of the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "ts-node is integrated into the project's development scripts, particularly in the Jest configuration for transforming TypeScript files. However, it is not deeply integrated into the core functionality of the project. Replacing it would require updating the Jest configuration and possibly other development scripts, but it would not require extensive changes to the project's core code.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to ts-node, such as esbuild, swc, and babel, which can also compile TypeScript to JavaScript. These alternatives are widely used and could serve as suitable replacements, potentially with some configuration changes. The availability of these alternatives makes replacing ts-node feasible.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on ts-node's abandonment is low. The project is not directly dependent on ts-node for its core functionality, and the development environment can be updated or changed with relatively low impact. However, changes in the TypeScript ecosystem or Node.js could indirectly affect the need for ts-node.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of ts-node to the development workflow, the ease of integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of ts-node would not likely be directly impactful to the project. It would require updates to the development environment but would not affect the production build or core functionality.",
+    "impactful": false
+  }
+}

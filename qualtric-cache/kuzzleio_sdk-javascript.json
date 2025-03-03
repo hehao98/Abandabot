@@ -1,0 +1,66 @@
+{
+  "repo": "kuzzleio/sdk-javascript",
+  "dep1": "@babel/preset-env",
+  "dep2": "semantic-release-slack-bot",
+  "dep3": "nyc",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @babel/preset-env dependency is crucial for the project as it allows the use of the latest JavaScript features while ensuring compatibility with older environments. This is particularly important for a JavaScript SDK like kuzzleio/sdk-javascript, which needs to support a wide range of environments and browsers. The dependency is listed in the devDependencies, indicating its role in the build process, which is essential for the project's development and maintenance.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "@babel/preset-env is integrated into the project's build process, as indicated by its presence in the devDependencies and the build scripts in package.json. However, its integration is not deeply embedded in the core functionality of the SDK itself but rather in the tooling that supports the development and build process. This makes it somewhat easier to replace, as changes would primarily affect the build configuration rather than the SDK's core code.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to @babel/preset-env, such as directly using Babel without preset-env or using other transpilers like TypeScript's tsc. However, @babel/preset-env is widely used and supported, making it a preferred choice for many projects. The availability of alternatives does provide some flexibility, but the transition might require adjustments to the build process and testing across different environments.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While Babel and its presets are widely used and supported, the JavaScript ecosystem is fast-evolving, and changes in browser standards or Node.js versions could impact the need for certain transpilation features. However, given the project's current setup and the stability of the JavaScript ecosystem, such changes are not imminent.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of @babel/preset-env in the project's build process and its role in ensuring compatibility across environments, its abandonment would be impactful. However, the impact is mitigated by the dependency's role in the development tooling rather than the core SDK functionality, the availability of alternatives, and the moderate likelihood of external changes forcing action.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The semantic-release-slack-bot is used for sending notifications to Slack about the success or failure of releases. While this functionality is useful for keeping the team informed, it is not critical to the core functionality of the Kuzzle Javascript SDK, which is to provide a way to interact with a Kuzzle server from Javascript applications. The SDK's core features, such as multiprotocol support and promise-based methods, are not dependent on the Slack notifications. Therefore, the functionality provided by semantic-release-slack-bot is of moderate importance to the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The semantic-release-slack-bot is integrated into the project as part of the semantic-release configuration in the package.json file. It is listed as a devDependency and is used in the release process to send notifications. The integration is not deeply embedded in the project's codebase; it is used in a specific part of the development workflow. Replacing or removing this dependency would require changes to the release process configuration but would not affect the core functionality of the SDK.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages and methods for sending notifications to Slack, including custom webhook implementations and other npm packages designed for Slack notifications. These alternatives could provide similar functionality to semantic-release-slack-bot. The availability of these alternatives makes it relatively easy to replace semantic-release-slack-bot if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The semantic-release-slack-bot is a well-maintained package with a clear purpose, and there is no immediate indication that it will be abandoned. Additionally, the project's reliance on this dependency is limited to the release notification process, which is not critical to the SDK's core functionality.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of the functionality provided by semantic-release-slack-bot, its shallow integration in the project, the availability of alternative packages, and the low likelihood of external changes forcing action on its abandonment, the abandonment of this dependency would not likely be directly impactful to the project. The project could continue to function and release updates without this dependency, albeit with a less automated notification process.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The 'nyc' package is used for code coverage in the project. While code coverage is important for maintaining code quality, it is not directly related to the core functionality of the Kuzzle Javascript SDK. The SDK would still function without it, albeit with less insight into test coverage.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The 'nyc' package is integrated into the project's test scripts, as seen in the package.json file. It is used in the 'test:unit' script to generate coverage reports. However, it is not deeply integrated into the core codebase of the SDK, as it is only used during testing.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to 'nyc' for code coverage in JavaScript projects, such as 'c8', 'istanbul', and 'jest'. These alternatives provide similar functionality and could be used as replacements if 'nyc' were to be abandoned.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. Code coverage tools are generally stable and do not frequently undergo significant changes that would necessitate immediate action.",
+      "score": 1
+    },
+    "reasoning": "Given that 'nyc' is used for code coverage and not directly related to the core functionality of the Kuzzle Javascript SDK, its abandonment would not be directly impactful to the project. There are also several alternatives available that could serve as suitable replacements. Therefore, the dependency's abandonment would not likely be directly impactful to the project.",
+    "impactful": false
+  }
+}

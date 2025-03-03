@@ -1,0 +1,66 @@
+{
+  "repo": "trezor/trezor-suite",
+  "dep1": "@babel/preset-env",
+  "dep2": "version-bump-prompt",
+  "dep3": "@babel/plugin-proposal-class-properties",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "@babel/preset-env is crucial for the project as it allows the use of the latest JavaScript features while ensuring compatibility with target environments. It is used across multiple configurations and test setups, indicating its integral role in the development and testing processes.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is deeply integrated into the project's build and test configurations, as evidenced by its presence in Jest configurations, Webpack setups, and Storybook configurations. Replacing it would require significant changes across these configurations.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives to @babel/preset-env, such as directly using TypeScript's compiler or other transpilers, they may not offer the same level of compatibility and ease of use. The project's reliance on Babel's ecosystem makes finding a suitable replacement challenging.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "Given the stability and widespread use of @babel/preset-env, the likelihood of its abandonment is low. However, changes in JavaScript standards or the emergence of new tools could potentially force the project to reconsider its dependency on Babel.",
+      "score": 2
+    },
+    "reasoning": "Considering the critical role of @babel/preset-env in the project's build and test processes, its deep integration, and the challenges in finding suitable alternatives, the abandonment of this dependency would be highly impactful to the project.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The version-bump-prompt dependency is used in the project's development scripts, specifically in the list-outdated-dependencies script. This indicates its role is more related to development and maintenance rather than core functionality of the Trezor Suite applications. Its absence would not directly impact the end-user experience or the core features of the applications.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "The dependency is used in a specific script for listing outdated dependencies, which suggests a limited and isolated integration within the project. Replacing it would require finding an alternative tool for version bumping and updating the script accordingly, which is a manageable task given its narrow scope of use.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives available for version bumping in Node.js projects, such as standard-version, release-it, and npm version command itself. These alternatives offer similar or even enhanced functionalities, making it relatively easy to find a suitable replacement.",
+      "score": 1
+    },
+    "likelihood": {
+      "reasoning": "Given the nature of the dependency as a development tool and the availability of alternatives, it is unlikely that external environmental changes would force the project to act on its abandonment. The project could switch to an alternative tool with minimal disruption.",
+      "score": 1
+    },
+    "reasoning": "Considering the limited importance of version-bump-prompt to the project's core functionality, its isolated integration, the availability of several alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of this dependency would not likely be directly impactful to the project.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The @babel/plugin-proposal-class-properties plugin is used in the project's build configuration files, specifically in webpack configurations for both the connect-popup and suite-build packages. This indicates that it plays a role in the build process, which is crucial for the development and deployment of the project. However, its functionality is somewhat specialized and may not be directly visible in the end-user experience.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The plugin is integrated into the project's build process, as evidenced by its inclusion in webpack configuration files. While this indicates a certain level of integration, it is not deeply embedded in the core functionality of the project. Replacing it would require adjustments to the build configuration but would not necessitate extensive changes to the project's codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are alternative Babel plugins and tools that can provide similar functionality, such as @babel/plugin-transform-class-properties. The availability of these alternatives suggests that replacing @babel/plugin-proposal-class-properties would not be overly difficult, provided that the alternatives are compatible with the project's existing build setup.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. Babel plugins are generally stable, and the specific functionality provided by @babel/plugin-proposal-class-properties is not likely to be affected by external changes in the near future.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance, integration, alternatives, and likelihood, the abandonment of @babel/plugin-proposal-class-properties would not likely be directly impactful to the project. While it plays a role in the build process, it is not deeply integrated into the core functionality, and there are suitable alternatives available. Additionally, the likelihood of external changes forcing action on this dependency is low.",
+    "impactful": false
+  }
+}

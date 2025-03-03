@@ -159,13 +159,20 @@ def collect_surveys() -> None:
             del survey_candidates[-1]["dep2_report"]["summary"]
             del survey_candidates[-1]["dep3_report"]["summary"]
 
-    with open("survey_candidates.json", "w") as f:
-        json.dump(survey_candidates, f, indent=2)
+    os.makedirs("qualtric-cache", exist_ok=True)
+    for candidate in survey_candidates:
+        with open(
+            f"qualtric-cache/{candidate['repo'].replace('/', '_')}.json", "w"
+        ) as f:
+            json.dump(candidate, f, indent=2)
 
-    json_data = json.dumps(survey_candidates, indent=2)
-    compressed_data = base64.b64encode(gzip.compress(json_data.encode())).decode()
-    with open("survey_candidates_compressed.txt", "w") as f:
-        f.write(compressed_data)
+    # with open("survey_candidates.json", "w") as f:
+    #    json.dump(survey_candidates, f, indent=2)
+
+    # json_data = json.dumps(survey_candidates, indent=2)
+    # compressed_data = base64.b64encode(gzip.compress(json_data.encode())).decode()
+    # with open("survey_candidates_compressed.txt", "w") as f:
+    #    f.write(compressed_data)
 
     logging.info(
         "%d candidates from %d repos saved",

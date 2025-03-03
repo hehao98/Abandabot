@@ -1,0 +1,66 @@
+{
+  "repo": "wikimedia/mediawiki",
+  "dep1": "eslint-config-wikimedia",
+  "dep2": "@wdio/local-runner",
+  "dep3": "karma",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The eslint-config-wikimedia package is crucial for maintaining code quality and consistency across the MediaWiki project. It enforces coding standards and best practices, which are essential for a large, collaborative project like MediaWiki. The dependency is used in the linting process, which is a key part of the development workflow, ensuring that code adheres to the project's guidelines before it is merged.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The eslint-config-wikimedia package is deeply integrated into the MediaWiki project's development workflow. It is used in the 'lint' script within the package.json file, which is executed as part of the 'test' script. This indicates that the package is a fundamental part of the project's testing and quality assurance processes. Replacing it would require significant changes to the project's configuration and potentially the codebase to adapt to a different linting configuration.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "While there are alternative ESLint configurations available, finding one that matches the specific needs and coding standards of the MediaWiki project could be challenging. The eslint-config-wikimedia package is tailored to the project's requirements, including MediaWiki-specific rules. Although alternatives exist, they may not provide the same level of customization or adherence to the project's guidelines, making the replacement process more difficult.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. The eslint-config-wikimedia package is maintained by the Wikimedia Foundation, which is closely aligned with the MediaWiki project. However, if the package were to be abandoned, it could lead to issues with code quality and consistency, especially if new JavaScript features or standards emerge that are not supported by the abandoned package.",
+      "score": 2
+    },
+    "reasoning": "Given the importance of eslint-config-wikimedia to the MediaWiki project's code quality and consistency, its deep integration into the development workflow, and the challenges associated with finding a suitable replacement, the abandonment of this dependency would likely be impactful. However, the likelihood of such an event is relatively low, given the close alignment between the package's maintainers and the project.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @wdio/local-runner is used in the project's npm scripts for running Selenium tests. Given that MediaWiki is a large-scale project with a significant need for reliable testing, the functionality provided by @wdio/local-runner is crucial for ensuring the quality and stability of the software. However, it is a devDependency, which means it is not directly involved in the production build of the project.",
+      "score": 4
+    },
+    "integration": {
+      "reasoning": "The @wdio/local-runner is integrated into the project's npm scripts, specifically for running Selenium tests. While it is used in the testing process, its integration is not deeply embedded in the core codebase of MediaWiki. Replacing it would require changes to the npm scripts and possibly the test configuration, but it would not necessitate extensive modifications to the main application code.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to @wdio/local-runner for running Selenium tests, such as Karma, Jest, and Mocha. These alternatives are well-maintained and widely used in the JavaScript community, making them suitable replacements. The availability of these alternatives reduces the difficulty of replacing @wdio/local-runner.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While the JavaScript ecosystem is fast-moving, the project could continue to use an abandoned version of @wdio/local-runner for some time, especially since it is a devDependency. However, security vulnerabilities or compatibility issues with newer versions of Node.js or other dependencies could eventually necessitate a change.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of @wdio/local-runner in the project's testing process, the moderate level of integration, the availability of suitable alternatives, and the moderate likelihood of external environmental changes forcing action, the abandonment of @wdio/local-runner would be somewhat impactful but not critically so. The project could transition to an alternative testing runner with a reasonable amount of effort.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "Karma is used for running JavaScript tests in real browsers, which is crucial for ensuring the functionality and compatibility of the MediaWiki project across different environments. Given the scale and importance of MediaWiki, maintaining high-quality, browser-tested code is essential. Therefore, the functionality provided by Karma is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "Karma is integrated into the project's build and test processes, as evidenced by its usage in the Gruntfile.js for running QUnit tests. However, the integration appears to be modular and not deeply embedded in the core functionality of MediaWiki. This suggests that while Karma is important for testing, replacing it might not require extensive changes to the core codebase.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "The Karma README mentions several alternatives, including Jest, Web Test Runner, and Vitest, which are suitable for browser-based unit testing. Given the availability of these alternatives, replacing Karma is feasible. However, the transition would require some effort to adapt the existing test suites to work with a new test runner.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "Given that Karma is already deprecated and the web testing ecosystem has evolved, it is likely that external environmental changes, such as the need for more modern testing tools or the discontinuation of support for Karma, could force the project to act on Karma's abandonment.",
+      "score": 4
+    },
+    "reasoning": "Considering the importance of Karma for testing in real browsers, its moderate level of integration, the availability of alternatives, and the likelihood of external changes necessitating action, the abandonment of Karma would likely be impactful to the MediaWiki project. However, the impact is mitigated by the availability of alternative testing tools and the modular nature of Karma's integration.",
+    "impactful": true
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "repo": "bcgov/mds",
+  "dep1": "dompurify",
+  "dep2": "react-quill",
+  "dep3": "html-react-parser",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The DOMPurify library is used to sanitize HTML content in the project, specifically in the RenderRichTextEditor and HelpGuide components. This functionality is crucial for preventing XSS attacks and ensuring that user-generated content is safe to render. Given the project's focus on regulatory information and public-facing content, the security provided by DOMPurify is highly important.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "DOMPurify is integrated into the project in a straightforward manner, primarily used within two components to sanitize HTML content before rendering. The integration is not deeply embedded into the core functionality of the project, making it relatively easy to replace if necessary. However, the specific use cases where it is applied are critical for security.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to DOMPurify, such as sanitize-html and xss, which also provide HTML sanitization capabilities. These alternatives are well-maintained and could serve as suitable replacements. However, the choice of DOMPurify might be due to its specific features or performance characteristics, which could make the transition to an alternative non-trivial.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on DOMPurify's abandonment is moderate. While DOMPurify is a well-maintained library with a strong security focus, the broader ecosystem of web security is constantly evolving. Changes in browser security models or the emergence of new XSS attack vectors could necessitate a reevaluation of the library's use.",
+      "score": 3
+    },
+    "reasoning": "Given the critical role of DOMPurify in ensuring the security of user-generated content in a public-facing and regulatory-focused project, its abandonment would likely be impactful. The importance of the functionality it provides, combined with the moderate difficulty of replacing it and the availability of alternatives, suggests that the project would need to take action to maintain its security posture.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The react-quill dependency is used in the RenderRichTextEditor component to provide rich text editing capabilities. Given the context of the Mines Digital Services (MDS) project, which focuses on modernization, transparency, and efficiency in mining services, the ability to edit and display rich text is important for user interfaces that require formatted text input, such as forms or content management systems. However, the specific use case within the project is not detailed enough to determine if this functionality is critical to the core operations of MDS. Therefore, the importance is rated as moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The integration of react-quill in the project appears to be limited to a single component, RenderRichTextEditor, which suggests a shallow level of integration. The component uses react-quill for its rich text editing capabilities, but there is no evidence of deep integration or extensive customization within the project's codebase. This indicates that replacing react-quill would likely not require significant changes to the project's codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available for rich text editing in React applications, such as Draft.js, Slate.js, and TinyMCE. These alternatives offer similar or even enhanced functionalities compared to react-quill. The availability of these alternatives suggests that finding a suitable replacement for react-quill would not be difficult, provided that the replacement meets the project's requirements for rich text editing.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on react-quill's abandonment is considered low. React-quill is a well-maintained library with a stable user base, and there is no immediate indication of it becoming abandoned. However, the dynamic nature of the JavaScript ecosystem means that the risk, while low, cannot be entirely dismissed.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of react-quill to the project, its shallow level of integration, the availability of suitable alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of react-quill would not likely be directly impactful to the Mines Digital Services project. The project could transition to an alternative rich text editing library with relative ease if necessary.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The html-react-parser dependency is used in the project to parse HTML strings into React elements. It is utilized in multiple components within the 'common' service, specifically for rendering rich text content and help guides. Given its role in rendering content that is likely to be user-facing and part of the core functionality of the Mines Digital Services (MDS) project, its functionality is important for maintaining the user interface and experience. However, it is not directly tied to the core data processing or business logic of the application, which slightly reduces its criticality.",
+      "score": 4
+    },
+    "integration": {
+      "reasoning": "The integration of html-react-parser within the project appears to be limited to specific components related to rendering HTML content. It is used in conjunction with DOMPurify for sanitizing HTML input, indicating a focused use case rather than a deep integration across the codebase. The dependency is not deeply embedded in the core logic of the application, making it relatively easier to replace or remove if necessary.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that can parse HTML into React elements, such as 'react-html-parser' and 'html-to-react'. These alternatives offer similar functionality and could potentially serve as suitable replacements for html-react-parser. The availability of these alternatives reduces the difficulty of replacing the dependency, provided that the project's specific requirements and use cases are compatible with the alternatives.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. The html-react-parser package is actively maintained, as indicated by its recent updates and the presence of a community around it. Additionally, the specific use cases of the dependency within the project are not highly susceptible to external changes, such as shifts in web standards or security vulnerabilities, that would necessitate immediate action.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of html-react-parser in rendering user-facing content, its limited integration depth, the availability of alternative packages, and the low likelihood of external changes forcing action, the abandonment of this dependency would not likely be directly impactful to the project. The project could transition to an alternative package with moderate effort, and the core functionality of the application would remain unaffected.",
+    "impactful": false
+  }
+}

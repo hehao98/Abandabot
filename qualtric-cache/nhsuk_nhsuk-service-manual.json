@@ -1,0 +1,66 @@
+{
+  "repo": "nhsuk/nhsuk-service-manual",
+  "dep1": "iframe-resizer",
+  "dep2": "axios",
+  "dep3": "browser-sync",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The iframe-resizer dependency is used in multiple parts of the project, including in the design example wrapper and in the main app.js file. It is crucial for resizing iframes dynamically, which is a key functionality for the design examples in the NHS digital service manual. Given its widespread use and the importance of the functionality it provides, it scores high on importance.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The iframe-resizer is integrated into the project through static asset serving in app.js and is directly imported and used in the design-example.js file. It is also included in multiple Nunjucks templates. This indicates a moderate level of integration, as it is used in several places but does not appear to be deeply embedded in the core logic of the application.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to iframe-resizer available in the npm ecosystem, such as iframe-resizer-react and iframe-resizer-content. These alternatives provide similar functionality and could potentially serve as suitable replacements. The availability of these alternatives makes it less difficult to replace iframe-resizer.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. The iframe-resizer package is stable and widely used, and there are no immediate signs of it being abandoned. However, the possibility cannot be entirely ruled out, especially if the maintainers decide to stop supporting it.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of the iframe-resizer functionality to the project, its moderate level of integration, the availability of alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of iframe-resizer would likely be impactful but not critically so. The project could transition to an alternative with some effort, but the functionality it provides is crucial for the design examples.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "Axios is used to make HTTP requests to retrieve page content for indexing in the NHS digital service manual. This functionality is crucial for the search feature, which relies on fetching and indexing content from various pages. Given the importance of the search feature for user navigation and content discovery, the functionality provided by Axios is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "Axios is integrated into the project's middleware for page indexing, where it is used to fetch content from multiple pages based on the sitemap. The integration involves making multiple HTTP requests and handling their responses, which is a core part of the indexing process. While the integration is significant, it is confined to a specific part of the application (the search functionality), and the rest of the application does not directly depend on Axios.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available for making HTTP requests in Node.js, such as 'node-fetch', 'got', and 'superagent'. These alternatives could potentially serve as suitable replacements for Axios, providing similar functionality. The availability of these alternatives makes it less difficult to replace Axios, although some adjustments to the codebase would be necessary to accommodate a different library.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on Axios's abandonment is relatively low. Axios is a widely used and well-maintained library with a large community and active development. While any open-source project can potentially be abandoned, the risk is mitigated by the library's popularity and the availability of alternatives.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of Axios to the project's search functionality, the depth of its integration, the availability of alternatives, and the low likelihood of its abandonment, the abandonment of Axios would not likely be directly impactful to the project. The project could transition to an alternative HTTP request library with some effort, and the core functionality of the application would remain unaffected.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The browser-sync dependency is used in the development environment to keep multiple browsers and devices in sync when building websites. This functionality is crucial for ensuring that the website looks and behaves consistently across different browsers and devices during development. However, it is not used in the production environment, which limits its overall importance to the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "browser-sync is integrated into the project's development workflow, specifically in the app.js file where it is configured to watch for changes in the views and public directories. While it is integrated into the development process, its usage is limited to this specific context and does not deeply permeate the project's codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to browser-sync that provide similar functionality, such as LiveReload and Webpack Dev Server. These alternatives could serve as suitable replacements and provide the same or similar functionality, making it relatively easy to replace browser-sync if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on browser-sync's abandonment is low. The dependency is used only in the development environment, and there are no indications that changes in the broader ecosystem would necessitate a replacement.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance, integration, availability of alternatives, and likelihood of external changes, the abandonment of browser-sync would not likely be directly impactful to the project. It plays a role in the development process but is not critical to the project's overall functionality or success.",
+    "impactful": false
+  }
+}

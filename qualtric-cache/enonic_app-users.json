@@ -1,0 +1,66 @@
+{
+  "repo": "enonic/app-users",
+  "dep1": "enonic-admin-artifacts",
+  "dep2": "@types/q",
+  "dep3": "q",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The dependency 'enonic-admin-artifacts' provides core rules and definitions for styles of Enonic applications, which is crucial for maintaining the visual consistency and functionality of the project. Given its role in defining styles and common variables, its functionality is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the project's styles through a single import statement in the main stylesheet. This indicates a shallow level of integration, making it relatively easy to replace or remove without extensive codebase changes.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "While there may be alternative packages for defining styles and common variables in Less, finding a package that perfectly matches the specific needs and conventions of Enonic applications could be challenging. However, the task is not impossible, suggesting a moderate level of difficulty in finding suitable alternatives.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The dependency is specific to Enonic applications and does not directly depend on external services or APIs that could change or become unavailable.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of 'enonic-admin-artifacts' to the project's styling and the moderate difficulty in finding suitable alternatives, its abandonment would be impactful. However, the shallow level of integration and low likelihood of external changes forcing action mitigate the overall impact.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The dependency @types/q provides TypeScript definitions for the 'q' library, which is used for promises in JavaScript. Given that the project uses TypeScript (as indicated by the presence of TypeScript in devDependencies and the build:typecheck script), having accurate type definitions is crucial for type safety and developer experience. However, the 'q' library itself is not directly listed in the dependencies, suggesting that its usage might be minimal or indirect. Therefore, while important for TypeScript development, the direct impact on the project's functionality might be limited.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The integration of @types/q appears to be minimal, as it is a TypeScript definition file and not a runtime dependency. The project's package.json does not list 'q' as a direct dependency, indicating that if 'q' is used, it might be through another library or in a very limited capacity. Replacing or removing @types/q would likely require minimal changes to the codebase, primarily affecting TypeScript type checking rather than runtime behavior.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to the 'q' library for handling promises in JavaScript, such as native Promises, async/await, and other promise libraries like Bluebird. Since @types/q is just the TypeScript definitions for 'q', and given the availability of these alternatives, finding a replacement or adjusting the code to not rely on 'q' would be relatively straightforward. The transition might require some refactoring but is unlikely to be complex.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the abandonment of @types/q is low. TypeScript definition files are generally stable and do not require frequent updates unless the underlying library they describe changes significantly. Additionally, the 'q' library itself is mature and widely used, reducing the risk of sudden abandonment. However, the TypeScript ecosystem is dynamic, and changes in TypeScript or the 'q' library could necessitate updates to @types/q.",
+      "score": 2
+    },
+    "reasoning": "Considering the analysis, the abandonment of @types/q would have a limited impact on the enonic/app-users project. The dependency is important for TypeScript development but is not deeply integrated into the project's codebase. There are readily available alternatives, and the likelihood of external changes forcing action is low. Therefore, while it is important to monitor the status of @types/q, its abandonment would not likely be directly impactful to the project.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The dependency 'q' is used extensively throughout the project for handling asynchronous operations, including managing user permissions, loading data, and handling UI interactions. Its functionality is crucial for the project's operation, especially in managing asynchronous workflows and ensuring smooth user interactions.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The 'q' library is deeply integrated into the project, with its usage spread across multiple files and components. It is used for promise handling in various critical operations, including data loading, user management, and UI updates. Replacing it would require significant refactoring of the codebase to adapt to a different promise handling mechanism.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to 'q' for promise handling in JavaScript, such as native Promises, async/await, and other libraries like Bluebird. These alternatives are widely used and supported, making them suitable replacements. However, transitioning to these alternatives would still require careful consideration and testing to ensure compatibility and performance.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "Given the maturity and stability of the 'q' library, the likelihood of it being abandoned in the near future is low. However, the JavaScript ecosystem evolves rapidly, and changes in the environment or the emergence of more efficient libraries could potentially make 'q' obsolete.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of 'q' in handling asynchronous operations, its deep integration into the project, and the availability of suitable alternatives, the abandonment of 'q' would be impactful but manageable. The project would need to undergo significant refactoring to replace 'q', but the existence of alternatives and the low likelihood of abandonment mitigate the overall impact.",
+    "impactful": false
+  }
+}

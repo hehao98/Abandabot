@@ -1,0 +1,66 @@
+{
+  "repo": "iobroker-community-adapters/ioBroker.ical",
+  "dep1": "cloneextend",
+  "dep2": "json-schema",
+  "dep3": "@iobroker/adapter-dev",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The cloneextend dependency is used for deep cloning objects within the ioBroker.ical project, specifically for handling calendar events and their recurrences. This functionality is crucial for ensuring that events are correctly processed and managed, especially when dealing with recurring events and their modifications. Given the project's focus on calendar data and event handling, the ability to accurately clone and manage event objects is of high importance.",
+      "score": 4
+    },
+    "integration": {
+      "reasoning": "The cloneextend dependency is integrated into the project's main logic for handling calendar events, particularly in the processing of event recurrences. It is used in critical sections of the code where event data needs to be cloned to prevent data corruption or unintended side effects. The dependency is directly used in the main event processing loop, indicating a deep integration into the project's core functionality.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to cloneextend for deep cloning objects in JavaScript, such as lodash's cloneDeep function or the structuredClone API available in modern JavaScript environments. These alternatives provide similar functionality and could potentially serve as suitable replacements. However, the ease of replacement would depend on the specific use cases and the extent to which cloneextend's unique features (like handling circular references) are utilized in the project.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While the project is actively maintained and dependencies are regularly updated, the specific functionality provided by cloneextend (deep cloning with support for circular references) is not frequently subject to changes in the JavaScript ecosystem. However, the project's dependency on Node.js and the broader npm ecosystem means that changes in these environments could indirectly impact the dependency's viability.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of the functionality provided by cloneextend, its deep integration into the project's core logic, the availability of suitable alternatives, and the moderate likelihood of external changes forcing action, the abandonment of cloneextend would likely be impactful to the ioBroker.ical project. The project would need to invest time and resources into finding and integrating a suitable replacement, which could affect its development timeline and stability.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The json-schema dependency is used for validating JSON structures, which is a critical functionality for ensuring data integrity in the ioBroker.ical adapter. Given the adapter's focus on parsing and handling iCalendar files, which are structured in JSON format, the validation of these structures is essential for the correct operation of the adapter. Therefore, the functionality provided by json-schema is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The json-schema dependency is likely integrated at a foundational level within the ioBroker.ical adapter, given its role in JSON structure validation. Replacing it would require significant changes to the codebase, especially in parts that handle data validation and parsing. This deep integration makes the replacement of json-schema difficult.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that provide JSON schema validation, such as ajv and tv4. These alternatives are actively maintained and offer similar or enhanced functionality compared to json-schema. The availability of these alternatives makes it less difficult to replace json-schema, provided that the project is willing to invest time in testing and integration.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While json-schema is considered 'finished' and stable, the broader ecosystem's shift towards more modern and actively maintained JSON schema validation libraries could eventually necessitate a change. However, this is not an immediate concern given the current stability of json-schema.",
+      "score": 3
+    },
+    "reasoning": "Considering the critical role of json-schema in validating JSON structures within the ioBroker.ical adapter, its abandonment would be impactful. However, the availability of alternative packages and the current stability of json-schema mitigate the immediate impact. The project would need to consider a transition plan in the long term, but the abandonment is not likely to be directly impactful in the short term.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The @iobroker/adapter-dev dependency is crucial for the development and maintenance of ioBroker adapters, including ioBroker.ical. It provides essential tools for translation management, building, and compiling adapter files. Given that ioBroker.ical is an adapter for the ioBroker platform, the functionality provided by @iobroker/adapter-dev is directly tied to the adapter's ability to be developed, maintained, and updated. This makes the dependency highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The @iobroker/adapter-dev dependency is integrated into the project's development workflow, as evidenced by its inclusion in the devDependencies section of the package.json file and its use in the scripts section for tasks like translation and building. However, its integration is primarily at the development level rather than deeply embedded in the core functionality of the ioBroker.ical adapter itself. This means that while it is important for development, replacing it would not require extensive changes to the adapter's core code.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "While there may be alternative tools and libraries available for tasks like translation management and building TypeScript or React projects, @iobroker/adapter-dev is specifically tailored for ioBroker adapter development. This specificity reduces the availability of suitable alternatives that provide the same level of integration and functionality for ioBroker adapters. Therefore, finding and integrating an alternative that matches the functionality and ease of use provided by @iobroker/adapter-dev could be challenging.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. The @iobroker/adapter-dev package is maintained by the ioBroker community, which is closely aligned with the needs of ioBroker adapter developers. However, if the package were to be abandoned, it could impact the development workflow of ioBroker.ical, especially if new features or updates require changes that the abandoned package no longer supports.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of @iobroker/adapter-dev to the development and maintenance of ioBroker.ical, its specific integration into the project's development workflow, the challenges in finding suitable alternatives, and the relatively low likelihood of external changes forcing action on its abandonment, the abandonment of this dependency would likely be impactful to the project. It would directly affect the project's ability to be developed, maintained, and updated efficiently.",
+    "impactful": true
+  }
+}

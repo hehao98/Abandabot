@@ -1,0 +1,66 @@
+{
+  "repo": "app-sre/qontract-server",
+  "dep1": "jsonpointer",
+  "dep2": "prom-client",
+  "dep3": "eslint-plugin-import",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The jsonpointer dependency is used in the project to resolve references within datafiles. This functionality is crucial for the project's ability to handle and process datafiles correctly. Without it, the project would struggle to manage and query data effectively, impacting its core functionality.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The jsonpointer dependency is integrated into the project at a specific point in the codebase, primarily within the `src/db.ts` file. Its usage is limited to resolving references within datafiles, indicating a moderate level of integration. While it plays a critical role in the functionality it supports, it does not permeate the entire codebase, making its replacement manageable but not trivial.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that provide similar functionality to jsonpointer, such as jsonpath and json-query. These alternatives offer comparable features for navigating and querying JSON data, making the replacement of jsonpointer feasible. However, the specific implementation details and API differences may require some adjustments to the codebase.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. JSON Pointer is a well-established standard (RFC 6901), and the jsonpointer package is a stable implementation of this standard. While the package could theoretically be abandoned, the standard it implements ensures that alternatives will always be available, reducing the urgency of any potential abandonment.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of the jsonpointer dependency to the project's core functionality, its moderate level of integration, the availability of suitable alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of jsonpointer would be impactful but not critically so. The project could transition to an alternative with some effort, but the dependency's role in datafile reference resolution means its loss would be felt.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The prom-client dependency is used to expose Prometheus metrics for the qontract-server. This functionality is crucial for monitoring the health and performance of the server, as indicated by the custom metrics defined in the project (e.g., qontract_server_reloads_total, qontract_server_datafiles). Monitoring is a key aspect of SRE practices, making this dependency highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The prom-client is integrated into the project through the creation of custom metrics and the use of its API to expose these metrics via an endpoint (/metrics). The dependency is used in multiple parts of the codebase, including the metrics.ts and server.ts files, indicating a moderate level of integration. However, the integration is not deeply embedded into the core functionality of the server, as it primarily serves a monitoring purpose.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available for exposing Prometheus metrics in Node.js applications, such as prometheus-client and express-prometheus-middleware. These alternatives offer similar functionality and could potentially serve as suitable replacements. However, the ease of replacement would depend on the specific features and API used by the project. Given the availability of alternatives, the difficulty of replacement is considered moderate.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is considered low. Prometheus is a widely adopted monitoring solution, and prom-client is a popular choice for Node.js applications. While the dependency could become abandoned, the ecosystem around Prometheus monitoring in Node.js is robust, reducing the likelihood of being forced to act due to external changes.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of monitoring in SRE practices, the prom-client dependency is highly important to the qontract-server project. However, its integration is not deeply embedded into the core functionality, and there are several alternatives available. The likelihood of external environmental changes forcing action is low. Therefore, while the abandonment of prom-client would be impactful, it is not likely to be directly impactful to the project's core functionality.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The eslint-plugin-import is used for linting ES2015+ import/export syntax, which is crucial for maintaining code quality and preventing issues with misspelling of file paths and import names. Given that the project is a GraphQL API server implemented in TypeScript, maintaining code quality and ensuring correct import/export syntax is essential. Therefore, the functionality provided by eslint-plugin-import is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of eslint-plugin-import in the project is through the ESLint configuration, which is a standard practice for TypeScript projects. The plugin is used in the linting process, which is a part of the development and build scripts. Replacing it would require updating the ESLint configuration and potentially the linting rules, but it does not deeply integrate into the core functionality of the project. Therefore, replacing the dependency is moderately difficult.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to eslint-plugin-import, such as eslint-plugin-node, eslint-plugin-promise, and others that can handle import/export syntax linting. However, eslint-plugin-import is widely used and has comprehensive support for ES2015+ import/export syntax. While alternatives exist, finding one that matches the functionality and community support of eslint-plugin-import could be challenging. Therefore, replacing the dependency with an alternative is moderately difficult.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. eslint-plugin-import is a well-maintained plugin with a large user base, and its abandonment would be unexpected. However, if it were to be abandoned, the project would need to find an alternative to ensure continued code quality. Therefore, the likelihood is low but not negligible.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of eslint-plugin-import to the project's code quality, the moderate difficulty of replacing it, the availability of alternatives, and the low likelihood of its abandonment, the abandonment of eslint-plugin-import would be impactful to the project. However, given the current state of the plugin and its community support, the impact is manageable with a replacement strategy.",
+    "impactful": true
+  }
+}

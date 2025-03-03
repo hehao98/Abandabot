@@ -1,0 +1,66 @@
+{
+  "repo": "alphagov/notifications-admin",
+  "dep1": "eslint-plugin-jest",
+  "dep2": "rollup-plugin-copy",
+  "dep3": "sass",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The eslint-plugin-jest is used to enforce best practices and maintain code quality in Jest tests. Given that the project relies heavily on Jest for testing, the functionality provided by eslint-plugin-jest is crucial for ensuring that tests are written correctly and consistently. This directly impacts the reliability and maintainability of the project's test suite.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of eslint-plugin-jest in the project is relatively straightforward, as it is primarily used in the eslint configuration file (eslint.config.mjs) to apply specific rules to test files. The configuration is minimal and does not deeply intertwine with the project's core logic or other dependencies. Therefore, replacing or removing this dependency would not require extensive changes to the codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to eslint-plugin-jest, such as eslint-plugin-mocha or eslint-plugin-jasmine, which provide similar linting capabilities for different testing frameworks. However, since the project uses Jest, these alternatives would not be directly applicable. Other Jest-specific linting tools might exist, but they would likely offer similar functionality, making the replacement process more about configuration than finding a suitable alternative.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. Jest is a widely used and actively maintained testing framework, and eslint-plugin-jest is a key tool in the Jest ecosystem. While it's possible for any dependency to become abandoned, the active community and widespread use of Jest and its associated tools reduce the risk of this happening in the near future.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of eslint-plugin-jest in maintaining the quality of the project's test suite, its abandonment would be impactful. However, the relatively shallow integration and the availability of alternatives mitigate the impact. The low likelihood of abandonment further reduces the urgency of addressing this potential issue.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The rollup-plugin-copy is used to copy static assets such as images, fonts, and error pages during the build process. While this functionality is important for the project's build process, it is not directly related to the core functionality of the notifications-admin application, which is to manage and send notifications. Therefore, the importance of this dependency to the project is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The rollup-plugin-copy is integrated into the project's build process, specifically in the rollup.config.mjs file. It is used to copy various static assets to the distribution directory. While it is integrated into the build process, it is not deeply intertwined with the core application logic. Replacing it would require changes to the build configuration but would not affect the application's runtime behavior.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that provide similar functionality to rollup-plugin-copy, such as copy-webpack-plugin for Webpack or cpy-cli for command-line usage. These alternatives could serve as suitable replacements and provide the same functionality. Therefore, replacing rollup-plugin-copy is relatively easy considering the availability of alternative packages.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The functionality provided by rollup-plugin-copy is relatively stable and not subject to frequent changes in the external environment. Additionally, the project could continue to use the last stable version of the plugin even if it were abandoned, as it does not require frequent updates.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance, integration, alternatives, and likelihood of external environmental changes, the abandonment of rollup-plugin-copy would not likely be directly impactful to the project. The functionality it provides is important but not critical to the core application, it is not deeply integrated into the application logic, there are suitable alternatives available, and the likelihood of external changes forcing action is low.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The sass dependency is used for processing SCSS files into CSS, which is a critical part of the project's frontend development workflow. It is used in the rollup configuration for styles and directly in SCSS files for custom styles and extensions. Given its role in styling, which is essential for the user interface, its functionality is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "Sass is integrated into the project's build process through rollup and is directly used in SCSS files for custom styles. However, its usage is limited to specific parts of the project, and there are no complex integrations or deep dependencies on Sass-specific features. Replacing it would require changes to the build configuration and SCSS files, but the overall impact on the codebase would be moderate.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to Sass, such as PostCSS, Less, and Stylus, which can also process CSS preprocessor syntax. These alternatives are widely used and supported, making them suitable replacements. However, transitioning to an alternative would require some effort to adjust the build process and rewrite any Sass-specific features.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on Sass's abandonment is low. Sass is a well-established tool with a large community and is unlikely to be abandoned suddenly. Additionally, the project's current usage of Sass does not heavily rely on features that are at risk of deprecation or removal.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of Sass in the project's styling workflow, its moderate level of integration, the availability of suitable alternatives, and the low likelihood of external changes forcing action, the abandonment of Sass would have a moderate impact on the project. However, it would not be directly impactful enough to cause significant disruption, given the alternatives and the current usage patterns.",
+    "impactful": false
+  }
+}

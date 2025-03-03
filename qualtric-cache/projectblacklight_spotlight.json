@@ -1,0 +1,66 @@
+{
+  "repo": "projectblacklight/spotlight",
+  "dep1": "sortablejs",
+  "dep2": "leaflet-iiif",
+  "dep3": "@rollup/plugin-commonjs",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The SortableJS library is used extensively in the project for managing nested sortable elements, which is a core functionality for the admin interface of the Spotlight project. The library is directly imported and used in multiple files, indicating its importance in the project's architecture.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "SortableJS is deeply integrated into the project, with its functionality being used in several key components of the admin interface. The library is not just a utility but a fundamental part of the user interface, making its replacement non-trivial.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are other libraries available for drag-and-drop functionality, such as Draggable.js or interact.js, SortableJS is specifically designed for sortable lists and has features tailored for this use case. Finding a library that matches SortableJS's feature set and ease of integration could be challenging.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While SortableJS is actively maintained, the JavaScript ecosystem is fast-moving, and changes in browser standards or the emergence of a significantly better alternative could necessitate a switch.",
+      "score": 3
+    },
+    "reasoning": "Given the deep integration of SortableJS into the project's admin interface and its importance in providing a core functionality, the abandonment of this dependency would likely be directly impactful to the project. The project would need to find a suitable alternative and undertake significant refactoring to replace SortableJS, making the dependency's abandonment noteworthy.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The leaflet-iiif dependency is used for viewing IIIF images, which is a core functionality for a project like Spotlight that showcases collections and objects from a digital repository. Given the project's focus on digital collections, the ability to view and interact with high-quality images is crucial. Therefore, the functionality provided by leaflet-iiif is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of leaflet-iiif in the project appears to be minimal, as it is only referenced in the base layout file for including the JavaScript file. There is no evidence of deep integration or extensive usage throughout the codebase. This suggests that replacing leaflet-iiif would not be overly difficult from a code integration perspective.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to leaflet-iiif for viewing IIIF images, such as OpenSeadragon, which is already a dependency in the project. Given the availability of suitable alternatives that provide similar functionality, replacing leaflet-iiif would not be particularly difficult.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The IIIF community is active and supportive, and there are multiple libraries available for IIIF image viewing. Additionally, the project already includes an alternative (OpenSeadragon), reducing the urgency to act on abandonment.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of the functionality provided by leaflet-iiif to the project, its minimal integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of leaflet-iiif would not likely be directly impactful to the project. The project could transition to an alternative IIIF viewer with relative ease.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The @rollup/plugin-commonjs is used in the project to convert CommonJS modules to ES6, which is essential for the project's build process. Given that the project is a Rails engine and uses Rollup for bundling JavaScript assets, the functionality provided by this plugin is crucial for ensuring compatibility and efficient bundling of JavaScript modules.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The plugin is integrated into the project's build process through the rollup.config.js file. It is listed as a plugin in the Rollup configuration, indicating that it plays a role in the bundling process. However, its usage seems to be limited to this configuration file, suggesting that its integration depth is moderate. Replacing it would require adjustments to the Rollup configuration but would not necessitate extensive changes across the codebase.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are alternative plugins and tools available that can convert CommonJS modules to ES6, such as Babel with the appropriate plugins. However, @rollup/plugin-commonjs is specifically designed for use with Rollup, which is the bundler used by the project. While alternatives exist, finding one that integrates as seamlessly with Rollup and meets the project's specific needs could be challenging.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While the JavaScript ecosystem is fast-moving, Rollup and its ecosystem have shown stability. However, if Rollup itself were to deprecate or significantly change, it could impact the necessity of this plugin. Additionally, if the project's requirements for module bundling change, it might need to reconsider its dependencies.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of @rollup/plugin-commonjs to the project's build process, its moderate level of integration, the availability of alternatives, and the likelihood of external changes, the abandonment of this dependency would be impactful. The project relies on it for converting CommonJS modules to ES6, which is a critical step in the bundling process. While alternatives exist, finding a suitable replacement that integrates as well with Rollup could be challenging. Therefore, the abandonment of this dependency would likely be directly impactful to the project.",
+    "impactful": true
+  }
+}

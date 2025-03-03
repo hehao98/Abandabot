@@ -1,0 +1,66 @@
+{
+  "repo": "tatumio/tatum-js",
+  "dep1": "typedi",
+  "dep2": "undici",
+  "dep3": "ts-jest",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The `typedi` dependency is used extensively throughout the project for dependency injection, which is a core architectural pattern in the Tatum SDK. It is used in various services and components, including RPC services, wallet providers, and more. Given its widespread use and the critical role it plays in the project's architecture, the functionality provided by `typedi` is highly important.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "`typedi` is deeply integrated into the project's codebase. It is used in numerous files and components, including core services like RPC handling, wallet providers, and more. The dependency injection pattern facilitated by `typedi` is a fundamental part of the project's architecture, making it difficult to replace without significant refactoring.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are other dependency injection libraries available for TypeScript/JavaScript, such as `inversify` and `tsyringe`, replacing `typedi` would require significant changes to the project's codebase. The project's architecture is tightly coupled with `typedi`, and switching to an alternative would involve extensive refactoring and testing.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on `typedi`'s abandonment is moderate. While `typedi` is a stable and widely used library, the JavaScript/TypeScript ecosystem is dynamic, and changes in the ecosystem or the library itself could necessitate action. However, given its current stability and the project's reliance on it, the likelihood is not the highest.",
+      "score": 3
+    },
+    "reasoning": "Given the critical role of `typedi` in the project's architecture, its deep integration, and the difficulty of replacing it, the abandonment of `typedi` would likely be directly impactful to the project. The project would need to undergo significant refactoring to replace `typedi`, and the process would be complex and time-consuming.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The dependency 'undici' is used in the project to replace the global fetch and Headers objects in the testing environment. This is crucial for ensuring that the tests run in an environment that mimics the browser's fetch API, which is essential for testing the Tatum SDK's functionality that relies on HTTP requests. However, its usage is limited to the testing setup and does not directly impact the core functionality of the Tatum SDK.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "The integration of 'undici' in the project is minimal and limited to the testing setup. It is used to replace the global fetch and Headers objects in the jest.setup.ts file. This means that 'undici' is not deeply integrated into the project's codebase and its removal or replacement would not require significant changes to the project's core functionality.",
+      "score": 1
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that could serve as suitable replacements for 'undici' in the context of providing a fetch API for testing environments. Examples include 'node-fetch' and 'cross-fetch', which are widely used and provide similar functionality. The availability of these alternatives makes it relatively easy to replace 'undici' if necessary.",
+      "score": 1
+    },
+    "likelihood": {
+      "reasoning": "Given that 'undici' is primarily used in the testing environment and not in the core functionality of the Tatum SDK, the likelihood of external environmental changes forcing the project to act on 'undici's abandonment is low. The project could easily switch to an alternative fetch API implementation for testing without affecting its core functionality.",
+      "score": 1
+    },
+    "reasoning": "Considering the limited and non-critical role of 'undici' in the project, its abandonment would not likely be directly impactful to the Tatum SDK. The dependency is used only in the testing setup, and there are readily available alternatives that could be used as replacements without significant changes to the project's core functionality.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The ts-jest dependency is crucial for the project as it allows for testing TypeScript code with Jest. Given that the project is a TypeScript/JavaScript library, having a reliable testing framework is essential for maintaining code quality and ensuring that new changes do not introduce regressions. The project's package.json includes ts-jest as a devDependency, and it is used in the jest.config.js file to transform TypeScript files for testing. This indicates that ts-jest is integrated into the project's testing workflow, making it an important dependency.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "ts-jest is integrated into the project's testing workflow through the jest.config.js file, where it is specified as the transformer for TypeScript files. This level of integration suggests that replacing ts-jest would require changes to the project's testing configuration. However, since the integration is limited to the testing setup and does not deeply affect the core functionality of the project, the difficulty of replacement is moderate.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are alternatives to ts-jest for testing TypeScript code with Jest, such as using Babel with the @babel/preset-typescript preset. However, ts-jest offers specific advantages, including support for TypeScript's type-checking during tests. While alternatives exist, they may not provide the same level of integration and features as ts-jest, making the replacement somewhat challenging but not impossible.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on ts-jest's abandonment is relatively low. ts-jest is a well-maintained project with a strong community and support from its maintainers. However, the JavaScript/TypeScript ecosystem is fast-moving, and changes in Jest or TypeScript could potentially impact ts-jest's compatibility or relevance.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of ts-jest to the project's testing workflow, the moderate difficulty of replacing it, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of ts-jest would likely be impactful but not critically so. The project could transition to an alternative testing solution if necessary, but the process would require some effort and adjustment.",
+    "impactful": true
+  }
+}

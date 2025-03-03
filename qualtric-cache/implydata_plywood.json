@@ -1,0 +1,66 @@
+{
+  "repo": "implydata/plywood",
+  "dep1": "druid-query-toolkit",
+  "dep2": "@typescript-eslint/parser",
+  "dep3": "axios",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The druid-query-toolkit is used extensively in the Plywood project for parsing and modeling Druid SQL queries, handling query results, and introspecting Druid metadata. Given Plywood's role as a query planner and executor for Druid, the functionality provided by druid-query-toolkit is crucial for the project's core operations. The dependency is directly involved in key functionalities such as SQL parsing, query result handling, and metadata introspection, which are essential for Plywood's interaction with Druid.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The druid-query-toolkit is deeply integrated into the Plywood project, as evidenced by its usage across multiple files and functionalities. It is used in SQL expression parsing, query result handling, and metadata introspection. The dependency is not just a peripheral utility but is embedded in the core operations of Plywood, making its replacement a complex task that would require significant refactoring of the codebase.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there may be other libraries or tools that offer similar functionalities for SQL parsing and query handling, the specific features and integration points of druid-query-toolkit with Druid make it uniquely suited for Plywood's needs. Finding a replacement that offers the same level of compatibility and functionality with Druid, as well as the same ease of integration into Plywood's codebase, would be challenging.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While Druid itself is a stable and widely used data store, changes in its ecosystem or the broader data processing landscape could necessitate changes in how Plywood interacts with Druid. However, given the specific and focused nature of druid-query-toolkit's functionality, such changes are not highly likely in the short term.",
+      "score": 3
+    },
+    "reasoning": "Given the critical role of druid-query-toolkit in Plywood's core functionalities, its deep integration into the project, and the challenges in finding a suitable replacement, the abandonment of this dependency would likely be directly impactful to the project. The project would face significant challenges in maintaining its current level of functionality and integration with Druid without this dependency.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @typescript-eslint/parser is a devDependency used for linting TypeScript code. While it is important for maintaining code quality and consistency, it does not directly impact the core functionality of the Plywood library, which is focused on data visualization and query planning. Therefore, its importance to the project is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The @typescript-eslint/parser is integrated into the project's build and linting process, as seen in the 'scripts' section of the package.json file. However, it is not deeply embedded in the core codebase or the main functionality of Plywood. Replacing it would require adjustments to the linting configuration but would not necessitate significant changes to the core code.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative TypeScript linting tools available, such as TSLint (though it is deprecated), ESLint with different parsers, or even custom linting solutions. The availability of these alternatives makes it relatively easy to replace @typescript-eslint/parser if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The @typescript-eslint/parser is a tool for code quality and does not directly affect the runtime or deployment of Plywood. Changes in the ecosystem or the abandonment of the package would not immediately impact the project's functionality.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis, the abandonment of @typescript-eslint/parser would not be directly impactful to the Plywood project. It is a devDependency used for linting, and while important for code quality, it does not affect the core functionality of the library. There are also readily available alternatives, and the likelihood of external changes forcing action is low.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "Axios is used in the project for handling HTTP requests, specifically for canceling requests in the test suite. While it is not directly used in the core functionality of Plywood, it plays a crucial role in testing scenarios, especially for ensuring that requests can be canceled as expected. This functionality is important for maintaining the reliability and robustness of the test suite.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "Axios is integrated into the project's test suite, specifically in the cancelFunctional.mocha.js file. It is used to create a cancel token and to check if a request was canceled. The integration is limited to the test environment and does not affect the core functionality of Plywood. Therefore, replacing Axios would require updating the test files where it is used, but it would not require extensive changes to the main codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to Axios for handling HTTP requests in JavaScript, such as Fetch API, node-fetch, and superagent. These alternatives provide similar functionality and could be used as replacements. However, the specific use case in the project involves canceling requests, which may require additional implementation or configuration when using some of these alternatives. Despite this, the availability of suitable alternatives makes the replacement feasible.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on Axios's abandonment is low. Axios is a widely used and well-maintained library with a large community and active development. While any open-source project can potentially be abandoned, the risk of this happening with Axios in the near future is minimal. Additionally, the project's use of Axios is limited to the test suite, reducing the impact of any potential abandonment.",
+      "score": 1
+    },
+    "reasoning": "Given the analysis, Axios's abandonment would not likely be directly impactful to the Plywood project. Its use is confined to the test suite, and there are feasible alternatives available. The importance of Axios to the project is moderate, and its integration is limited, making the overall impact of its abandonment low.",
+    "impactful": false
+  }
+}

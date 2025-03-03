@@ -1,0 +1,66 @@
+{
+  "repo": "OpenEnergyDashboard/OED",
+  "dep1": "pg-promise",
+  "dep2": "morgan",
+  "dep3": "axios",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "pg-promise is used as the PostgreSQL interface for Node.js in the Open Energy Dashboard (OED) project. It is directly involved in database operations, including query execution and connection management. Given that OED is a data-driven application that relies heavily on database interactions for displaying energy information, the functionality provided by pg-promise is crucial for the project's core operations.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "pg-promise is integrated into the project's database models, specifically in the database.js file where it is used for managing database connections and executing SQL queries. The integration includes setting up custom type formatting for Moment.js objects and Point types, indicating a deep integration into the project's data handling and processing logic.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "While there are other PostgreSQL libraries for Node.js, such as node-postgres, pg-promise offers additional features like automatic connections, transactions, and a powerful query-formatting engine. These features, along with the project's existing implementation and customization around pg-promise, make finding a suitable replacement that provides the same level of functionality and integration challenging.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on pg-promise's abandonment is moderate. While the library is actively maintained and widely used, the Node.js ecosystem is dynamic, and changes in PostgreSQL or Node.js could potentially impact the library's compatibility or performance. However, given the library's current stability and the project's specific use case, such a scenario is not highly probable in the near term.",
+      "score": 3
+    },
+    "reasoning": "Considering the critical role of pg-promise in the Open Energy Dashboard's database operations, its deep integration into the project, the challenges in finding a suitable replacement, and the moderate likelihood of external changes necessitating action, the abandonment of pg-promise would likely be impactful to the project. The project would need to invest significant effort in finding and integrating an alternative library, potentially affecting development timelines and stability.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The morgan dependency is used for logging HTTP requests in the Open Energy Dashboard (OED) project. While logging is important for monitoring and debugging, the functionality provided by morgan is not critical to the core functionality of the project, which is to display energy information. The project could still function without detailed HTTP request logs, albeit with reduced debugging capabilities. Therefore, the importance of morgan to the project is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "morgan is integrated into the project as a middleware in the Express.js application, specifically for logging HTTP requests. Its usage is straightforward and limited to a few lines of code in the app.js file. Replacing morgan would require finding an alternative logging middleware and integrating it into the existing codebase, which is a relatively simple task given the modular nature of Express.js middleware. Therefore, the depth of integration is low, making it relatively easy to replace.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available for logging HTTP requests in Node.js applications, such as winston, bunyan, and pino. These alternatives offer similar or even enhanced functionality compared to morgan, including support for different log levels, log formatting, and output destinations. Given the availability of suitable alternatives, replacing morgan would not be difficult.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on morgan's abandonment is low. Morgan is a well-established package with a large user base, and there is no immediate indication that it will be abandoned. Even if morgan were to be abandoned, the impact on the project would be minimal due to the availability of alternative logging packages and the non-critical nature of HTTP request logging to the project's core functionality.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of morgan to the project, the low depth of its integration, the availability of alternative logging packages, and the low likelihood of external environmental changes forcing action, the abandonment of morgan would not likely be directly impactful to the Open Energy Dashboard project.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "Axios is used extensively throughout the project for making HTTP requests, including fetching data from external APIs and internal server endpoints. It is a critical dependency for the project's functionality, especially for data retrieval and communication with external services.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "Axios is integrated into multiple parts of the project, including server-side models and client-side utilities. It is used for both simple and complex HTTP requests, indicating a deep integration within the project's codebase.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives to Axios, such as the Fetch API or other HTTP request libraries like 'request' or 'node-fetch', Axios's promise-based API and wide range of features make it a preferred choice. However, switching to an alternative would require significant refactoring of the codebase.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "Given Axios's popularity and active maintenance, the likelihood of it being abandoned is low. However, if it were to be abandoned, the project would need to find a suitable replacement to ensure continued functionality.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of Axios to the project's functionality, its deep integration, and the availability of alternatives, the abandonment of Axios would be impactful. However, the likelihood of such an event is low, mitigating the overall impact.",
+    "impactful": true
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "repo": "nervosnetwork/ckb-explorer-frontend",
+  "dep1": "@ckb-lumos/common-scripts",
+  "dep2": "@microlink/react-json-view",
+  "dep3": "husky",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @ckb-lumos/common-scripts dependency is used in the project to calculate the size of transactions, which is a critical functionality for a blockchain explorer. This functionality is directly related to the core feature of exploring and analyzing blockchain transactions. Given its role in transaction size calculation, it is highly important for the project's functionality.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the project's codebase through a specific utility function (calculateTransactionSize) that directly uses it. However, its usage is limited to this single function, indicating a relatively shallow integration. This suggests that replacing the dependency would not require extensive changes across the codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "Given the specific functionality provided by @ckb-lumos/common-scripts (transaction size calculation), finding a direct alternative that offers the same level of integration and reliability might be challenging. The dependency is part of the @ckb-lumos suite, which is specifically designed for the Nervos CKB blockchain, making it less likely that a direct alternative exists outside of this ecosystem.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While the dependency is crucial for the project's functionality, the Nervos CKB ecosystem is relatively stable, and the dependency is actively maintained as part of the @ckb-lumos suite. However, any significant changes in the Nervos CKB blockchain or the @ckb-lumos suite could impact the project.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of the functionality provided by @ckb-lumos/common-scripts to the project, the moderate difficulty in finding alternatives, and the relatively shallow integration, the abandonment of this dependency would likely be impactful. The project relies on it for a critical feature (transaction size calculation), and while integration is not deeply embedded, the lack of direct alternatives within the Nervos CKB ecosystem increases the potential impact.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @microlink/react-json-view dependency is used in the RawTransactionView component to display transaction data in a user-friendly JSON format. Given the nature of the CKB Explorer project, which is a blockchain explorer, the ability to clearly and effectively display JSON data is important for user experience. However, the functionality provided by this dependency is not core to the application's primary features, such as blockchain exploration or Bitcoin interoperability. Therefore, while important, it is not critical.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The dependency is used in a single component (RawTransactionView) to display JSON data. Its integration is limited to this specific use case, and it does not appear to be deeply embedded in the project's codebase. Replacing it would require changes to this component but would not have a widespread impact on the project.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available for displaying and editing JSON in React applications, such as react-json-tree and react-json-pretty. These alternatives offer similar functionality and could serve as suitable replacements. The availability of these alternatives makes it less difficult to replace @microlink/react-json-view.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The dependency is used for a specific, non-core feature, and there are multiple alternatives available. Additionally, the project does not seem to rely on any unique features of @microlink/react-json-view that would make it particularly vulnerable to external changes.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis, the abandonment of @microlink/react-json-view would not likely be directly impactful to the CKB Explorer project. The dependency is important for enhancing user experience in displaying JSON data but is not critical to the core functionality of the application. Its limited integration and the availability of suitable alternatives further reduce the potential impact of its abandonment.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "Husky is used to manage Git hooks, specifically for running lint-staged and tests before commits. While this is a useful tool for maintaining code quality, it is not directly related to the core functionality of the CKB Explorer, which is blockchain exploration and data visualization. Therefore, its importance to the project is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "Husky is integrated into the project through the .husky/pre-commit file, which is a straightforward setup. The integration is not deeply embedded into the project's core codebase, making it relatively easy to replace or remove if necessary.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to Husky for managing Git hooks, such as pre-commit, lefthook, and simple npm scripts. These alternatives can provide similar functionality, making it relatively easy to replace Husky if needed.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on Husky's abandonment is low. Git hooks are a stable feature of Git, and changes in the environment are unlikely to directly impact the use of Husky or its alternatives.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of Husky to the project, its shallow integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of Husky would not likely be directly impactful to the CKB Explorer project.",
+    "impactful": false
+  }
+}

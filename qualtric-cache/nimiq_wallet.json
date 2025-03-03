@@ -1,0 +1,66 @@
+{
+  "repo": "nimiq/wallet",
+  "dep1": "@nimiq/electrum-client",
+  "dep2": "promise.allsettled",
+  "dep3": "@typescript-eslint/parser",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @nimiq/electrum-client dependency is used in multiple critical parts of the Nimiq Wallet project, including Bitcoin transaction handling and swap functionality. Its usage in `BtcHtlcDetection.ts`, `Swaps.ts`, and `BtcTransactions.ts` indicates that it plays a significant role in the project's core functionalities related to Bitcoin transactions and swaps. Given its integration into these essential components, the functionality provided by @nimiq/electrum-client is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is deeply integrated into the project, as evidenced by its usage across multiple files and its direct involvement in Bitcoin transaction handling and swap functionalities. The project has specific setup and initialization code for the @nimiq/electrum-client in `electrum.ts`, indicating a tailored integration. This deep integration suggests that replacing the dependency would require significant changes to the project's codebase.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are other Electrum clients available, the @nimiq/electrum-client is specifically tailored for the Nimiq ecosystem, as indicated by its usage of Nimiq's `GenesisConfig` and custom options. Finding an alternative that provides the same level of integration and functionality within the Nimiq ecosystem could be challenging. However, the core functionality of an Electrum client is somewhat standardized, which might allow for the use of other clients with some adaptation.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While the dependency is crucial for the project's Bitcoin-related functionalities, the broader Electrum protocol is well-established, and changes that would necessitate immediate action are less likely. However, specific features or optimizations provided by @nimiq/electrum-client might be hard to replicate with other clients, increasing the potential impact of its abandonment.",
+      "score": 3
+    },
+    "reasoning": "Given the critical role of @nimiq/electrum-client in the Nimiq Wallet project, particularly in Bitcoin transaction handling and swap functionalities, its abandonment would likely be impactful. The dependency is deeply integrated into the project, and while there are alternatives, they may not offer the same level of integration and functionality within the Nimiq ecosystem. Therefore, the abandonment of @nimiq/electrum-client would necessitate significant changes to the project, making it directly impactful.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The dependency 'promise.allsettled' provides a shim for the Promise.allSettled method, which is used to handle multiple promises and get their results regardless of whether they are fulfilled or rejected. In the context of the Nimiq Wallet project, it is used in the TransactionExport.ts file, which suggests it plays a role in handling transactions. However, the functionality provided by 'promise.allsettled' is relatively straightforward and could be implemented manually if necessary. Therefore, while it is useful, it is not critical to the core functionality of the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The dependency 'promise.allsettled' is imported and used in a single file (TransactionExport.ts) within the project. This indicates a shallow level of integration, as it is not deeply embedded across multiple parts of the codebase. Replacing or removing this dependency would likely require minimal changes to the project's code.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to 'promise.allsettled' that provide similar functionality, including native implementations in modern JavaScript environments and other polyfill libraries. The availability of these alternatives makes it relatively easy to replace 'promise.allsettled' if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The functionality provided by 'promise.allsettled' is stable and widely supported, and the dependency itself is not tied to any rapidly changing external systems or technologies.",
+      "score": 1
+    },
+    "reasoning": "Considering the scores and reasoning provided for importance, integration, alternatives, and likelihood, the abandonment of 'promise.allsettled' would not likely be directly impactful to the Nimiq Wallet project. The dependency is useful but not critical, it is not deeply integrated into the project, there are readily available alternatives, and the likelihood of external changes forcing action is low.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The @typescript-eslint/parser is used for linting TypeScript code in the project. While linting is important for maintaining code quality, it is not directly related to the core functionality of the Nimiq Wallet, which is a cryptocurrency wallet. Therefore, the functionality provided by this dependency is of moderate importance to the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The @typescript-eslint/parser is integrated into the project's linting process, as specified in the .eslintrc.js file. However, its integration is limited to the development environment and does not affect the production build or the core functionality of the wallet. Replacing it would require updating the linting configuration but would not necessitate extensive changes to the codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available for linting TypeScript code, such as eslint-plugin-typescript and tslint. These alternatives could serve as suitable replacements for @typescript-eslint/parser, providing similar functionality. The availability of these alternatives makes it relatively easy to replace the dependency if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. Linting tools are generally stable and do not frequently undergo significant changes that would necessitate immediate action. Additionally, the project could continue to use the current version of @typescript-eslint/parser even if it were abandoned, as long as it remains compatible with the project's TypeScript version.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of the @typescript-eslint/parser to the project, its limited integration, the availability of alternative packages, and the low likelihood of external environmental changes forcing action, the abandonment of this dependency would not likely be directly impactful to the Nimiq Wallet project.",
+    "impactful": false
+  }
+}

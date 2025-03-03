@@ -1,0 +1,66 @@
+{
+  "repo": "iobroker-community-adapters/ioBroker.fronius",
+  "dep1": "he",
+  "dep2": "@types/proxyquire",
+  "dep3": "eslint",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The dependency 'he' is used for decoding HTML entities in the project. This functionality is crucial for handling data received from the Fronius inverter API, ensuring that any HTML entities in the data are correctly decoded before being processed or stored. Given its role in data handling, the functionality provided by 'he' is of high importance to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The 'he' dependency is integrated into the project's main processing logic, specifically in the handling of API responses. It is used multiple times within the main.js file to decode HTML entities in the received data. This indicates a moderate level of integration, as it is not deeply embedded into the core functionality but is used in a critical part of the data processing pipeline.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that provide similar functionality for decoding HTML entities, such as 'html-entities' and 'entities'. These alternatives are well-maintained and could serve as suitable replacements for 'he'. The availability of these alternatives makes it relatively easy to replace 'he' if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The functionality provided by 'he' is stable and well-established, and there are no immediate signs of changes in the external environment that would necessitate a replacement. However, the project should monitor the dependency's status to be prepared for any future changes.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of the functionality provided by 'he', its integration into the project's data processing logic, the availability of alternative packages, and the low likelihood of external environmental changes forcing action, the abandonment of 'he' would likely be impactful to the project. The project relies on 'he' for a critical part of its data handling process, and while there are alternatives, replacing 'he' would require changes to the codebase.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The dependency @types/proxyquire is a TypeScript type definition for the proxyquire package, which is used for testing purposes. Given that the project ioBroker.fronius is an adapter for a Fronius PV inverter and its core functionality revolves around interacting with the inverter's API, the testing utilities provided by proxyquire and its type definitions are not central to the main functionality of the project. They are important for ensuring the quality and reliability of the code through testing, but they do not directly impact the core functionality of the adapter. Therefore, the importance of @types/proxyquire to the project is considered moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The integration of @types/proxyquire in the project is limited to the development and testing environment. It is used in conjunction with other testing libraries like mocha, chai, and sinon to facilitate unit testing. The depth of its integration is not extensive, as it is primarily used for mocking dependencies in tests rather than being deeply embedded in the project's main codebase. Replacing @types/proxyquire would require updating the test files where it is used, but it would not necessitate significant changes to the core functionality of the adapter.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to proxyquire for mocking dependencies in Node.js and TypeScript projects, such as sinon, jest, and ts-mockito. These alternatives offer similar functionality and could serve as suitable replacements for proxyquire in the project's testing suite. The availability of these alternatives makes it relatively easy to replace @types/proxyquire if necessary. The transition would involve updating the test files to use the chosen alternative's syntax and features, but it would not be overly complex.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the abandonment of @types/proxyquire is low. The TypeScript type definitions for testing libraries are generally stable and do not frequently undergo significant changes that would necessitate immediate action. Additionally, the project's reliance on @types/proxyquire is limited to the testing environment, which is less susceptible to external changes compared to the core functionality of the adapter. Therefore, it is unlikely that the project would be forced to act on the abandonment of @types/proxyquire due to external environmental changes.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis of the importance, integration, alternatives, and likelihood of external environmental changes, the abandonment of @types/proxyquire would not likely be directly impactful to the project ioBroker.fronius. The dependency is important for testing but not central to the core functionality of the adapter. Its integration is limited to the testing environment, and there are several viable alternatives available. Additionally, the likelihood of external changes forcing action on this dependency is low. Therefore, the impact of its abandonment would be minimal.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "ESLint is used for linting JavaScript code, which is crucial for maintaining code quality and consistency. However, in the context of the ioBroker.fronius project, which is focused on integrating with Fronius PV inverters, the core functionality does not directly depend on ESLint. ESLint's role is more about development practices rather than the operational functionality of the adapter. Therefore, while important for code quality, its direct impact on the project's core functionality is limited.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "ESLint is integrated into the project's development workflow, as evidenced by its presence in the package.json file and the existence of .eslintrc.json and .eslintignore files. However, its integration is not deeply embedded into the core codebase of the project. It is primarily used during development and testing phases, and its removal or replacement would not affect the runtime behavior of the adapter.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to ESLint for JavaScript linting, such as JSHint, JSLint, and Prettier. These tools offer similar functionality and could serve as suitable replacements. The availability of these alternatives makes it relatively easy to replace ESLint if necessary.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on ESLint's abandonment is low. ESLint is a widely used and actively maintained tool with a large community and corporate backing. While any open-source project can potentially be abandoned, the risk of this happening with ESLint in the near future is minimal.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis, ESLint's abandonment would not likely be directly impactful to the ioBroker.fronius project. Its role is important for maintaining code quality but is not critical to the core functionality of the adapter. The availability of alternatives and the low likelihood of ESLint's abandonment further support this conclusion.",
+    "impactful": false
+  }
+}

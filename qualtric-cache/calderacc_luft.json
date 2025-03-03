@@ -1,0 +1,66 @@
+{
+  "repo": "calderacc/luft",
+  "dep1": "core-js",
+  "dep2": "leaflet-extra-markers",
+  "dep3": "regenerator-runtime",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The core-js dependency provides essential polyfills for ECMAScript features, which are crucial for ensuring compatibility across different JavaScript environments. Given that the project relies on modern JavaScript features for its functionality, the absence of core-js could lead to compatibility issues, especially in older browsers. This makes the functionality provided by core-js highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "core-js is integrated into the project as a development dependency, primarily used during the build process to ensure compatibility. While it is not directly referenced in the project's codebase, its role in the build process means that its integration is deep but not necessarily complex to replace, as it does not directly affect the runtime code.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are alternatives to core-js, such as babel-polyfill, which can provide similar functionality. However, transitioning to an alternative would require adjustments to the build process and potentially some code changes, depending on the specific features used. The availability of alternatives makes replacement feasible but not trivial.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on core-js's abandonment is moderate. While core-js is a widely used library, the JavaScript ecosystem is dynamic, and changes in browser support or the emergence of new standards could reduce the need for polyfills. However, such changes would likely be gradual, giving the project time to adapt.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of core-js to the project's compatibility and the availability of alternatives, the abandonment of core-js would be impactful but not critically so. The project could transition to an alternative polyfill solution with some effort, and the gradual nature of environmental changes in the JavaScript ecosystem would provide time for such a transition.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The leaflet-extra-markers dependency is used in the Map.js module and is integrated into the project's CSS for styling markers on the map. Given that the project, Luft.jetzt, is focused on displaying air pollution data, the visual representation of data points (markers) on the map is crucial for user interaction and data interpretation. Therefore, the functionality provided by leaflet-extra-markers is important for the project's core feature set.",
+      "score": 4
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the project's JavaScript and CSS files, specifically in the Map.js module and extramarkers.css. It is also referenced in the webpack configuration for asset management. This indicates a moderate level of integration, as it is used in specific parts of the project but does not appear to be deeply embedded across the entire codebase.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to leaflet-extra-markers, such as Leaflet.awesome-markers and other custom marker solutions for Leaflet.js. These alternatives offer similar functionalities, including customizable icons and styles for markers. The availability of these alternatives makes it less difficult to replace leaflet-extra-markers, provided that the project's specific marker requirements can be met by another library.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. Leaflet.js, the core mapping library, is actively maintained, and the ecosystem around it is robust. However, if leaflet-extra-markers were to be abandoned, the project might need to consider alternatives if critical bugs or security issues arise that are not addressed.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of the functionality provided by leaflet-extra-markers to the project's core feature set, the moderate level of integration, the availability of alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of leaflet-extra-markers would not likely be directly impactful to the project. The project could transition to an alternative library if necessary, with a reasonable amount of effort.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The regenerator-runtime is a crucial dependency for projects that use async functions and generators, especially when targeting older JavaScript environments. Given that the project uses modern JavaScript features and is built with Symfony and Webpack, it's likely that regenerator-runtime is used to ensure compatibility across different environments. However, the direct impact on the project's core functionality (displaying pollution data) is minimal, as it's more of a utility for ensuring code compatibility.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The regenerator-runtime is integrated at a low level, primarily used by the build system (Webpack) and possibly by Babel for transpiling modern JavaScript features. Its usage is not deeply embedded in the project's business logic or core functionality. Replacing or removing it would require adjustments in the build configuration but would not necessitate extensive changes to the application code.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are alternatives to regenerator-runtime, such as using Babel's polyfills or directly targeting environments that natively support async functions and generators. However, these alternatives might require significant changes to the build process and could introduce compatibility issues. The availability of alternatives is moderate, but the effort to switch might be non-trivial.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The JavaScript ecosystem evolves rapidly, but the core functionality provided by regenerator-runtime (support for async functions and generators) is now widely supported natively in modern environments. The project could gradually phase out its dependency on regenerator-runtime by updating its build targets.",
+      "score": 2
+    },
+    "reasoning": "Considering the analysis, regenerator-runtime plays a supportive role in ensuring compatibility across different JavaScript environments rather than being central to the project's core functionality. Its abandonment would not directly impact the project's ability to display pollution data. However, it would require some adjustments in the build process to maintain compatibility. Given the availability of alternatives and the low likelihood of external changes forcing action, the abandonment of regenerator-runtime would not be directly impactful to the project.",
+    "impactful": false
+  }
+}

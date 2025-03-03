@@ -1,0 +1,66 @@
+{
+  "repo": "carloscuesta/gitmoji-cli",
+  "dep1": "lint-staged",
+  "dep2": "jest-mock-process",
+  "dep3": "@types/jest",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The functionality provided by lint-staged is crucial for maintaining code quality in the project. It ensures that code formatting and linting are applied consistently across the codebase before commits are made. This is particularly important in a project like gitmoji-cli, which is a tool for developers and likely to be used in various development environments. The integration of lint-staged in the pre-commit hook indicates its importance in the development workflow.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "lint-staged is integrated into the project's pre-commit hook, which is a significant part of the development workflow. However, its integration is relatively straightforward and limited to running linting and formatting tasks on staged files. The configuration in the package.json file is minimal, indicating that while it is integrated, it does not deeply intertwine with the project's core functionality.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to lint-staged that provide similar functionality, such as Husky with custom scripts, pre-commit, and Lefthook. These alternatives can also automate the running of linting and formatting tasks on staged files. The availability of these alternatives makes it less difficult to replace lint-staged, provided that the project is willing to invest time in setting up and configuring a new tool.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on lint-staged's abandonment is relatively low. While the tool is important for maintaining code quality, its abandonment would not directly affect the project's functionality or its users. The project could continue to operate without immediate changes, although it would eventually need to find a replacement to maintain code quality standards.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of lint-staged in maintaining code quality, its integration into the pre-commit hook, the availability of alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of lint-staged would be impactful but not critically so. The project could continue to function in the short term, but would need to find a replacement to ensure long-term code quality maintenance.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The jest-mock-process dependency is used for mocking NodeJS process properties in Jest tests. Given that gitmoji-cli is a command-line tool, testing its interaction with the process (e.g., exit codes, stdout, stderr) is crucial. However, the core functionality of gitmoji-cli, which is to facilitate the use of gitmojis in commit messages, does not directly depend on jest-mock-process. The dependency is more about ensuring the quality and reliability of the tests rather than the core functionality of the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "jest-mock-process is integrated into the project's test suite, specifically for mocking process-related functionalities in Jest tests. While it is used in the tests, it is not deeply integrated into the main codebase of gitmoji-cli. Replacing or removing this dependency would primarily affect the test suite rather than the core functionality of the project.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives available for mocking process properties in Jest tests, such as jest-mock and jest-mock-extended. These alternatives can provide similar functionalities and could be used as replacements for jest-mock-process. The availability of these alternatives makes it less difficult to replace jest-mock-process.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The dependency is used for testing purposes, and changes in the testing environment are less likely to have a direct impact on the project's core functionality. Additionally, the availability of alternatives reduces the risk associated with the dependency's abandonment.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis, jest-mock-process is important for the project's test suite but not critical to the core functionality of gitmoji-cli. The dependency is not deeply integrated into the main codebase, and there are suitable alternatives available. The likelihood of external changes forcing action on the dependency's abandonment is low. Therefore, the abandonment of jest-mock-process would not likely be directly impactful to the project.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The @types/jest dependency provides TypeScript definitions for Jest, which is a testing framework used in the project. Given that the project includes a significant amount of TypeScript code and relies on Jest for testing, the functionality provided by @types/jest is crucial for ensuring type safety and developer experience during testing.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The @types/jest dependency is integrated into the project's testing setup, as indicated by the presence of Jest in the devDependencies and the configuration in the package.json file. However, its integration is limited to the testing phase and does not deeply affect the core functionality of the project.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are alternative TypeScript definition packages for Jest, such as those provided by DefinitelyTyped, which could serve as suitable replacements. The availability of these alternatives makes it relatively easy to replace @types/jest if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. Jest is a widely used and actively maintained testing framework, and its TypeScript definitions are also actively maintained. The project's reliance on Jest and its TypeScript definitions is unlikely to be disrupted by external changes.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of @types/jest for the project's testing setup, the moderate level of integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of @types/jest would not likely be directly impactful to the project. The project could relatively easily switch to alternative TypeScript definitions for Jest if necessary.",
+    "impactful": false
+  }
+}

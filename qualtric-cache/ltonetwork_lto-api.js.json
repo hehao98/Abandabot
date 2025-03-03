@@ -1,0 +1,66 @@
+{
+  "repo": "ltonetwork/lto-api.js",
+  "dep1": "@scure/base",
+  "dep2": "@typescript-eslint/eslint-plugin",
+  "dep3": "crypto-js",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @scure/base dependency is used extensively across the project for encoding and decoding operations, particularly in transaction handling and cryptographic functions. Its functionality is crucial for the correct operation of the blockchain client, as it ensures data integrity and security through proper encoding standards.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "@scure/base is deeply integrated into the project, with its functions being called in multiple transaction types, utility functions, and cryptographic operations. Replacing it would require significant changes across the codebase, affecting transaction serialization, deserialization, and cryptographic validations.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternative libraries for base encoding and decoding, @scure/base is chosen for its minimal, audited, and secure implementation. Finding a replacement that matches its security, performance, and compatibility with the project's needs would be challenging.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "Given the dependency's focus on security and its audited status, the likelihood of it being abandoned is low. However, the blockchain and cryptographic fields are rapidly evolving, and external changes could necessitate updates or replacements.",
+      "score": 2
+    },
+    "reasoning": "Considering the critical role of @scure/base in the project's transaction handling and cryptographic operations, its abandonment would have a significant impact. The dependency's deep integration and the lack of straightforward alternatives make it a key component of the project. However, the likelihood of abandonment is low due to its focus on security and audited status.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @typescript-eslint/eslint-plugin is a development dependency used for linting TypeScript code. While it is important for maintaining code quality and consistency, it does not directly impact the core functionality of the LTO API library. Therefore, its importance to the project is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The @typescript-eslint/eslint-plugin is integrated into the project's development workflow, specifically in the linting process. However, it is not deeply integrated into the core codebase or the runtime functionality of the library. Replacing it would primarily involve updating the linting configuration and potentially some linting rules.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative linting tools and plugins available for TypeScript, such as TSLint (though it is deprecated), ESLint with other TypeScript plugins, or even custom linting configurations. These alternatives could serve as suitable replacements with some adjustments to the linting setup.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The @typescript-eslint/eslint-plugin is maintained by a reputable organization and is widely used in the TypeScript community. While abandonment is always a possibility, it is not highly likely in the near future.",
+      "score": 1
+    },
+    "reasoning": "Considering the @typescript-eslint/eslint-plugin's role in the project, its abandonment would not be directly impactful to the core functionality of the LTO API library. It is a development tool that aids in maintaining code quality but does not affect the runtime behavior or the features provided by the library. Therefore, while it is important for development, its abandonment would not be highly impactful.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The crypto-js library is used for AES encryption in the project, specifically in the ECDSA.ts and encrypt-seed.ts files. AES encryption is a critical component for securing data, especially in a blockchain context where security is paramount. The functionality provided by crypto-js is essential for the project's security features.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "crypto-js is integrated into the project for AES encryption, as seen in the ECDSA.ts and encrypt-seed.ts files. However, the integration appears to be limited to specific functionalities rather than being deeply woven into the core of the project. This suggests that while important, the dependency is not extensively integrated across the project.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to crypto-js for AES encryption, including the native crypto module in Node.js and other libraries like forge or node-forge. These alternatives can provide similar or even enhanced functionalities. The availability of suitable alternatives makes the replacement of crypto-js feasible.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "Given that crypto-js has been officially discontinued and the project already uses other cryptographic libraries like @noble/hashes, it is likely that external environmental changes, such as security vulnerabilities or the need for more modern cryptographic practices, could force the project to act on the dependency's abandonment.",
+      "score": 4
+    },
+    "reasoning": "Considering the importance of AES encryption for the project's security, the moderate level of integration, the availability of alternatives, and the likelihood of external changes necessitating action, the abandonment of crypto-js would be impactful. However, the impact is mitigated by the existence of suitable alternatives and the dependency's limited integration depth.",
+    "impactful": true
+  }
+}

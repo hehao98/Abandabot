@@ -1,0 +1,66 @@
+{
+  "repo": "schibsted/account-sdk-browser",
+  "dep1": "node-fetch",
+  "dep2": "jest-junit",
+  "dep3": "regenerator-runtime",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The node-fetch dependency is used in the RESTClient class for making HTTP requests to the Schibsted account API. This functionality is crucial for the SDK's operation, as it enables communication with the Schibsted account service for authentication and user management tasks. Given its role in facilitating core functionalities of the SDK, the importance of node-fetch is high.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "node-fetch is integrated into the RESTClient class, which is a fundamental part of the SDK. It is used for making all HTTP requests, indicating a deep integration within the project's codebase. Replacing it would require significant changes to the RESTClient class and potentially other parts of the SDK that depend on it.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to node-fetch, such as axios, isomorphic-fetch, and the native fetch API in modern browsers. These alternatives provide similar functionality and could serve as suitable replacements. However, switching to an alternative would still require code changes and testing to ensure compatibility and performance.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on node-fetch's abandonment is moderate. While node-fetch is widely used, the JavaScript ecosystem is dynamic, and shifts in best practices or the emergence of more efficient libraries could influence the need for a replacement. Additionally, changes in browser support for the native fetch API could also impact the necessity to switch.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of node-fetch to the SDK's core functionality, its deep integration within the project, the availability of suitable alternatives, and the moderate likelihood of external changes necessitating action, the abandonment of node-fetch would likely be impactful to the project. However, the impact could be mitigated by the availability of alternatives and the project's ability to adapt to changes.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The jest-junit dependency is used for generating JUnit XML reports from Jest test results. While this functionality is useful for continuous integration and test reporting, it is not critical to the core functionality of the Schibsted account SDK for browsers, which focuses on user authentication and session management. Therefore, the importance of jest-junit to the project is relatively low.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "jest-junit is integrated into the project as a Jest reporter, which is a common and straightforward integration pattern for Jest projects. Replacing it would involve updating the Jest configuration to use a different reporter, which is a relatively simple task. The integration depth is shallow, and the dependency does not permeate the core codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available for generating JUnit XML reports from Jest test results, such as jest-sonar-reporter and jest-html-reporter. These alternatives provide similar functionality and could serve as suitable replacements for jest-junit. The availability of these alternatives makes it easier to replace jest-junit if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the abandonment of jest-junit is low. The dependency is used for test reporting, which is a non-critical aspect of the project. Changes in the testing or CI/CD landscape that would necessitate a replacement of jest-junit are unlikely in the near future.",
+      "score": 1
+    },
+    "reasoning": "Given the low importance of jest-junit to the core functionality of the Schibsted account SDK for browsers, the shallow integration depth, the availability of alternative packages, and the low likelihood of external environmental changes forcing action, the abandonment of jest-junit would not likely be directly impactful to the project.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The regenerator-runtime is used to support async/await and generator functions in the project, which are essential for modern JavaScript development. The project's README mentions the use of modern JavaScript syntax, including async/await, indicating that regenerator-runtime plays a crucial role in enabling these features. Therefore, the functionality provided by regenerator-runtime is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The regenerator-runtime is integrated into the project by being required in multiple core files (src/es5/payment.js, src/es5/identity.js, src/es5/index.js, src/es5/monetization.js). This indicates a deep integration within the project's codebase. Replacing it would require changes across these files, making the process somewhat difficult.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are alternatives to regenerator-runtime, such as Babel's polyfill or core-js, which can also provide support for async/await and generator functions. However, switching to an alternative would require testing and potential adjustments in the project's build and transpilation process. The availability of alternatives makes the replacement feasible but not trivial.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While regenerator-runtime is widely used, the JavaScript ecosystem evolves rapidly, and new standards or tools could emerge that reduce the need for such runtime support. However, given the current reliance on async/await and generator functions, the immediate need for action is not high.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of regenerator-runtime to the project's functionality, its deep integration, the availability of alternatives, and the moderate likelihood of external changes forcing action, the abandonment of regenerator-runtime would be impactful but not critically so. The project could transition to an alternative with some effort, but the functionality it provides is essential.",
+    "impactful": true
+  }
+}

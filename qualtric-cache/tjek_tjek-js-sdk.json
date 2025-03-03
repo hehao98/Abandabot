@@ -1,0 +1,66 @@
+{
+  "repo": "tjek/tjek-js-sdk",
+  "dep1": "eslint",
+  "dep2": "inquirer",
+  "dep3": "npm-run-all",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "ESLint is a crucial tool for maintaining code quality and consistency in JavaScript projects. It helps in identifying problematic patterns and enforcing coding standards. Given that the project uses ESLint for linting both JavaScript and TypeScript files, its functionality is integral to the development process, ensuring that the codebase remains clean and error-free.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The project has integrated ESLint deeply into its development workflow, as evidenced by the extensive configuration in the .eslintrc file and its inclusion in the test scripts in package.json. Replacing ESLint would require significant effort to reconfigure the linting setup and potentially adapt to a different tool's configuration and rules.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives to ESLint, such as JSHint and TSLint (for TypeScript), ESLint's extensive plugin ecosystem and its ability to lint both JavaScript and TypeScript make it a preferred choice. The availability of alternatives does not necessarily make the replacement process straightforward, as each tool has its own set of rules and configurations that may not directly translate from ESLint.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on ESLint's abandonment is relatively low. ESLint is widely used and supported by a large community, including major companies. However, changes in the JavaScript ecosystem or the emergence of a significantly better tool could potentially influence this.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of ESLint in maintaining code quality, its deep integration into the project, and the availability of alternatives, the abandonment of ESLint would be impactful but not critically so. The project could transition to an alternative, though it would require effort. The likelihood of such a scenario is low, given ESLint's strong community support.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The inquirer package is used in the publish-npm.mjs script to prompt the user for input during the publishing process. This functionality is crucial for the publishing workflow, as it allows the user to make decisions about how and what to publish. Without inquirer, the publishing process would be less interactive and more error-prone, potentially leading to incorrect or unintended publishes.",
+      "score": 4
+    },
+    "integration": {
+      "reasoning": "Inquirer is integrated into the publish-npm.mjs script at multiple points, where it is used to prompt the user for various inputs such as the publish tag, packages to publish, and OTP codes. While it is used in several places, the integration is not deeply embedded into the core functionality of the SDK itself but rather is a part of the publishing utility. Replacing inquirer would require modifying these specific parts of the script but would not affect the SDK's core functionality.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to inquirer, such as enquirer, prompts, and vorpal, which offer similar functionality for command-line prompts. These alternatives could potentially serve as suitable replacements, providing the same or similar interactive prompt capabilities. The availability of these alternatives makes it less difficult to replace inquirer if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on inquirer's abandonment is relatively low. Inquirer is a well-established package with a large user base, and its abandonment would likely be gradual, giving users time to migrate to alternatives. Additionally, since inquirer is used in a non-core part of the project (the publishing script), the impact of its abandonment would be less severe compared to a core dependency.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of inquirer in the publishing process, the moderate level of integration, the availability of alternatives, and the low likelihood of forced action due to external changes, the abandonment of inquirer would have a moderate impact on the project. While it would require some effort to replace, the impact would be manageable and not critical to the core functionality of the SDK.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The npm-run-all package is used in the project's scripts section to run multiple npm scripts in parallel or sequentially. It simplifies the process of running multiple scripts, which is a common task in build and test processes. However, the functionality it provides, while convenient, is not critical to the core functionality of the Tjek JavaScript SDK. The SDK's main functionality is to provide a client-side and server-side SDK for interacting with the Tjek API, which does not directly depend on npm-run-all.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "npm-run-all is integrated into the project's npm scripts, specifically in the 'test' script where it is used to run multiple test scripts in parallel. While this integration is useful for the development workflow, it is not deeply integrated into the core codebase of the SDK. The use of npm-run-all is limited to the scripts section of the package.json file, and replacing it would primarily involve changes to the package.json file rather than extensive changes throughout the codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to npm-run-all that can run multiple npm scripts in parallel or sequentially, such as concurrently, parallelshell, and npm-run-all2. These alternatives provide similar functionality and could serve as suitable replacements. The availability of these alternatives makes it relatively easy to replace npm-run-all if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. npm-run-all is a utility tool for running npm scripts and does not directly interact with external systems or environments. Changes in the external environment are unlikely to directly impact the need for npm-run-all in the project.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis, npm-run-all provides a convenient utility for running multiple npm scripts in parallel or sequentially, but its functionality is not critical to the core operations of the Tjek JavaScript SDK. The dependency is not deeply integrated into the project, and there are several available alternatives that could serve as suitable replacements. Additionally, the likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. Therefore, the abandonment of npm-run-all would not likely be directly impactful to the project.",
+    "impactful": false
+  }
+}

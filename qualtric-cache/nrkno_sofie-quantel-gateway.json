@@ -1,0 +1,66 @@
+{
+  "repo": "nrkno/sofie-quantel-gateway",
+  "dep1": "koa-router",
+  "dep2": "@types/koa-router",
+  "dep3": "typescript",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The koa-router dependency is used extensively throughout the project's server.ts file to define routes and handle HTTP requests. It is a core component of the project's HTTP API, which is essential for the Quantel Gateway's functionality. Without it, the project would not be able to handle incoming requests or route them to the appropriate handlers.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The koa-router is deeply integrated into the project, with numerous routes defined across the server.ts file. Replacing it would require a significant refactoring effort, as each route definition and handler would need to be updated to work with a new routing library.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative routing libraries available for Koa, such as koa-route and koa-tree-router. However, koa-router is one of the most popular and widely used, with a large community and extensive documentation. While alternatives exist, finding one that matches koa-router's feature set and ease of use could be challenging.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on koa-router's abandonment is relatively low. Koa-router is a stable and mature library with a large user base, and there is no immediate indication that it will be abandoned. However, the risk is not zero, as any open-source project can be abandoned if its maintainers lose interest or are unable to continue supporting it.",
+      "score": 2
+    },
+    "reasoning": "Given the critical role koa-router plays in the project's HTTP API, its deep integration into the codebase, and the challenges associated with finding a suitable alternative, the abandonment of koa-router would likely be directly impactful to the project. However, the current stability and popularity of the library mitigate this risk to some extent.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @types/koa-router package provides TypeScript definitions for the koa-router package, which is used for routing in Koa applications. Given that the project, nrkno/sofie-quantel-gateway, uses Koa for its HTTP server, the koa-router package is essential for defining routes and handling HTTP requests. The TypeScript definitions provided by @types/koa-router are crucial for ensuring type safety and developer productivity in a TypeScript project. Therefore, the functionality provided by @types/koa-router is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The @types/koa-router package is integrated into the project as a development dependency, providing TypeScript definitions for the koa-router package. While it is not directly used in the production code, its presence is essential during the development phase for type checking and autocompletion. Replacing it would require finding an alternative source of TypeScript definitions for koa-router or switching to a different routing solution, which could involve significant changes to the project's codebase. However, since it's a development dependency, the depth of integration is not as critical as it would be for a production dependency.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are alternative packages and methods to provide TypeScript definitions for koa-router, such as manually writing the definitions or using a different routing library that comes with its own TypeScript support. However, @types/koa-router is the most straightforward and widely used solution for this purpose. While alternatives exist, they may require additional effort to implement and maintain, making the replacement process moderately difficult.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the abandonment of @types/koa-router is relatively low. The package is a TypeScript definition file for koa-router, and as long as koa-router remains actively maintained and compatible with the project's needs, the direct impact of @types/koa-router's abandonment would be minimal. However, if koa-router itself were to undergo significant changes that are not reflected in the TypeScript definitions, or if TypeScript introduces changes that affect how definitions are handled, the project might need to seek alternatives.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of @types/koa-router for type safety and developer productivity, the moderate difficulty of replacing it due to the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of @types/koa-router would not likely be directly impactful to the project. The project could continue to use the existing definitions or switch to alternatives with some effort.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "TypeScript is crucial for the project as it is used to build the main interface module and is integrated into the build process. The project's package.json includes TypeScript as a devDependency, and the build script explicitly uses TypeScript to compile the project. This indicates that TypeScript is essential for the development and maintenance of the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "TypeScript is deeply integrated into the project's build and development process. The project uses TypeScript for its main build command, and the entire project is written in TypeScript, as indicated by the presence of TypeScript configuration files and the use of TypeScript-specific tools like tsc and ts-node. Replacing TypeScript would require rewriting the entire codebase in another language or using a different type-checking and compilation tool, which would be highly complex and time-consuming.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives to TypeScript, such as Babel for JavaScript compilation or Flow for type checking, none of these alternatives provide the same comprehensive feature set as TypeScript, including its type system, compiler, and language service. Additionally, the project's codebase is specifically written in TypeScript, making it difficult to switch to an alternative without significant refactoring.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of TypeScript being abandoned is low, given its widespread adoption and active development by Microsoft. However, if TypeScript were to be abandoned, the project would be forced to act due to its deep integration and reliance on TypeScript for its build process and type checking.",
+      "score": 2
+    },
+    "reasoning": "Given the critical role TypeScript plays in the project's build process and development, its abandonment would be highly impactful. The project is deeply integrated with TypeScript, and finding a suitable alternative would be challenging. Therefore, the abandonment of TypeScript would likely be directly impactful to the project.",
+    "impactful": true
+  }
+}

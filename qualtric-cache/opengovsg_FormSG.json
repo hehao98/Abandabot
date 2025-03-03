@@ -1,0 +1,66 @@
+{
+  "repo": "opengovsg/FormSG",
+  "dep1": "axios",
+  "dep2": "env-cmd",
+  "dep3": "@types/node",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "Axios is used extensively throughout the project for making HTTP requests, including critical functionalities like form submissions, webhook handling, and integrations with external services (e.g., Stripe, Google reCAPTCHA). Its functionality is central to the project's operation, especially in handling form data submissions and external API communications.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "Axios is deeply integrated into the project, with its usage spread across various modules and services. It is used for both frontend and backend operations, including form submissions, API calls, and handling responses. The project has custom error handling and interceptors set up for Axios, indicating a high level of integration.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives to Axios (e.g., Fetch API, node-fetch), replacing it would require significant refactoring due to its widespread use and the custom configurations (e.g., interceptors, error handling) that have been implemented. The project has already started experimenting with Fetch API in some parts, indicating that alternatives are considered but not yet fully adopted.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "Given Axios's popularity and active maintenance, the likelihood of it being abandoned is low. However, the project has already started to explore alternatives (e.g., Fetch API) for certain functionalities, which could reduce the impact if Axios were to be abandoned. The project's proactive approach in experimenting with alternatives also mitigates the risk.",
+      "score": 2
+    },
+    "reasoning": "Considering the critical role Axios plays in the project's operations, its deep integration, and the effort required to replace it, the abandonment of Axios would be highly impactful. However, the project's exploration of alternatives and the low likelihood of Axios being abandoned somewhat mitigate this impact.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The `env-cmd` dependency is used in the project's test scripts to load environment variables from a `.env` file. This functionality is crucial for setting up the test environment correctly, ensuring that tests run with the necessary configurations. Given its role in the testing process, which is a critical part of the development lifecycle, the functionality provided by `env-cmd` is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "`env-cmd` is integrated into the project's test scripts, specifically in the `test:backend`, `test:backend:ci`, and `test:backend:watch` scripts. Its usage is straightforward and limited to loading environment variables for testing purposes. While it is used in multiple test scripts, its integration is not deeply embedded into the core functionality of the project, making it relatively easy to replace or remove if necessary.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that can load environment variables from a file, such as `dotenv`, `cross-env`, and custom scripts. These alternatives can provide similar functionality to `env-cmd` and could be used as replacements. The availability of these alternatives makes it less difficult to replace `env-cmd` if needed.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. `env-cmd` is a utility tool for loading environment variables, and its abandonment would not directly impact the core functionality of the project. The project could continue to function normally, and the impact would be limited to the testing process, which could be mitigated by switching to an alternative package.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of `env-cmd` in the testing process, its relatively shallow integration into the project, the availability of alternative packages, and the low likelihood of external environmental changes forcing action, the abandonment of `env-cmd` would not likely be directly impactful to the project. The project could continue to function normally, and the impact on the testing process could be mitigated by switching to an alternative package.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The @types/node package provides TypeScript definitions for Node.js, which are crucial for TypeScript projects that interact with Node.js APIs. Given that FormSG is a Node.js project that uses TypeScript, the absence of these definitions would lead to a lack of type safety and increased difficulty in development and maintenance. However, since TypeScript can still compile and run without these definitions (albeit with reduced type safety), the importance is not at the highest level.",
+      "score": 4
+    },
+    "integration": {
+      "reasoning": "The @types/node package is deeply integrated into the project as it provides essential type definitions for Node.js APIs used throughout the codebase. Replacing or removing it would require significant effort to either find alternative type definitions or manually define types, impacting the development workflow and potentially introducing bugs.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "There are no direct alternatives to @types/node that provide the same comprehensive TypeScript definitions for Node.js APIs. While it's possible to manually define types or use less comprehensive type definition packages, these alternatives would not offer the same level of coverage and would require substantial effort to implement.",
+      "score": 5
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The Node.js ecosystem is stable, and the TypeScript definitions provided by @types/node are widely used and maintained. However, if the Node.js API changes significantly or if the maintainers of @types/node decide to abandon the project, it could force the FormSG project to find alternatives or contribute to the maintenance of @types/node.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of @types/node to the project's development workflow, the depth of its integration, the lack of suitable alternatives, and the low likelihood of external changes forcing action, the abandonment of @types/node would be impactful to the FormSG project. The project would face increased development challenges and potential type safety issues, making it necessary to address the abandonment directly.",
+    "impactful": true
+  }
+}

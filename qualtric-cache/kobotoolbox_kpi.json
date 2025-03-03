@@ -1,0 +1,66 @@
+{
+  "repo": "kobotoolbox/kpi",
+  "dep1": "lodash.debounce",
+  "dep2": "@types/react-infinite-scroller",
+  "dep3": "react-modal",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The lodash.debounce function is used in multiple components within the project, including search functionality, asset action buttons, language selection, and form editing. This indicates that debouncing is a critical part of the user interface's responsiveness and performance. The functionality provided by lodash.debounce is essential for optimizing user interactions by limiting the rate at which a function can fire, which is particularly important in search and form editing contexts.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "lodash.debounce is integrated into several key components of the project, including the search box, asset action buttons, language selector, and form editor. Its usage is spread across different parts of the application, indicating a deep integration. Replacing it would require identifying and modifying all instances where it's used, which could be time-consuming and error-prone.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to lodash.debounce, including custom debounce implementations and other utility libraries that offer debounce functionality. However, lodash.debounce is widely used and trusted in the JavaScript community, and finding a replacement that offers the same level of reliability and performance might be challenging. Additionally, the project already uses multiple lodash utilities, suggesting a preference for lodash's solutions.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. lodash.debounce is part of the lodash library, which is one of the most popular utility libraries in the JavaScript ecosystem. While the specific lodash.debounce package could be deprecated, the functionality is likely to remain available in the main lodash library or through other means.",
+      "score": 2
+    },
+    "reasoning": "Given the importance of debouncing in optimizing user interactions and the deep integration of lodash.debounce across multiple components, its abandonment would be impactful to the project. However, the availability of alternatives and the low likelihood of forced action due to external changes mitigate the impact.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @types/react-infinite-scroller package provides TypeScript definitions for the react-infinite-scroller package, which is used for implementing infinite scrolling in React applications. Given that the project, kobotoolbox/kpi, is a frontend interface for KoboToolbox, it likely relies on smooth and efficient data loading and presentation, which infinite scrolling can facilitate. However, the direct impact of the TypeScript definitions on the functionality is minimal compared to the actual implementation of the infinite scrolling feature. Therefore, while important, it is not critical.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The @types/react-infinite-scroller package is a TypeScript definition file, which means its integration into the project is primarily through type checking and development tooling rather than runtime functionality. Replacing or removing these definitions would not affect the runtime behavior of the application but could impact the development experience by losing type safety and autocompletion for the react-infinite-scroller package. The integration depth is thus relatively shallow.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to @types/react-infinite-scroller, including manually writing TypeScript definitions or using other infinite scrolling libraries that come with their own TypeScript definitions. However, finding a direct replacement that perfectly matches the existing implementation's API might require some effort. The availability of alternatives is moderate, but the effort to switch could be non-trivial depending on the project's specific usage of the react-infinite-scroller package.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the abandonment of @types/react-infinite-scroller is low. TypeScript definition files are generally stable and do not require frequent updates unless there are significant changes in the library they define or in TypeScript itself. Additionally, the project could continue to use the existing definitions even if the package is abandoned, as they do not affect runtime behavior.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis, the abandonment of @types/react-infinite-scroller would have a low to moderate impact on the kobotoolbox/kpi project. The package's importance is moderate due to its role in facilitating type safety for the react-infinite-scroller package, but its integration depth is shallow, and there are viable alternatives available. The likelihood of external changes forcing action is low. Therefore, while the abandonment would be noteworthy, it would not be directly impactful to the project's functionality or development process.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The react-modal dependency is used in the project to handle modal dialogs, which are a common UI component in web applications. The project uses react-modal in at least two files, indicating that it is integrated into the core functionality of the application. Modals are essential for user interactions, such as displaying forms, alerts, or additional information without navigating away from the current page. Given its role in user interface and experience, the functionality provided by react-modal is important to the project.",
+      "score": 4
+    },
+    "integration": {
+      "reasoning": "The integration of react-modal into the project is evident from its usage in the koboModal.tsx component and the main.js file. In koboModal.tsx, it is used to create a custom modal component, and in main.js, it is used to set the app element for accessibility purposes. This indicates a moderate level of integration, as it is used in specific components rather than being deeply embedded throughout the entire codebase. However, replacing it would require updates to these components and potentially others that depend on the koboModal component.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available for handling modals in React applications, such as @material-ui/core/Modal, react-overlays, and react-aria-modal. These alternatives offer similar functionality and could serve as suitable replacements for react-modal. The availability of these alternatives makes it relatively easier to replace react-modal, provided that the project's specific requirements and customizations can be accommodated by the chosen alternative.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on react-modal's abandonment is low. React-modal is a stable and widely used package in the React ecosystem, and there is no immediate indication that it will be abandoned. However, the React ecosystem is dynamic, and changes in best practices or the emergence of new, more efficient solutions could potentially make react-modal obsolete in the long term.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of modal dialogs in the user interface, the moderate level of integration, the availability of alternative packages, and the low likelihood of external environmental changes, the abandonment of react-modal would not likely be directly impactful to the project. However, it is important to monitor the health and maintenance status of the dependency to ensure that it continues to meet the project's needs.",
+    "impactful": false
+  }
+}

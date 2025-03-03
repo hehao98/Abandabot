@@ -1,0 +1,66 @@
+{
+  "repo": "IHTSDO/reporting-ui",
+  "dep1": "@angular/platform-browser-dynamic",
+  "dep2": "ngx-toastr",
+  "dep3": "@popperjs/core",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @angular/platform-browser-dynamic package is crucial for bootstrapping Angular applications in the browser. It provides the necessary functionality to compile and launch the application, making it a core dependency for any Angular project. Given that the Reporting UI is an Angular application, the functionality provided by this package is essential for the application's operation.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of @angular/platform-browser-dynamic in the project is deep, as it is used in the main.ts file to bootstrap the Angular application. This is a critical part of the application's lifecycle, and replacing it would require significant changes to the project's architecture.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives to Angular for building web applications, replacing @angular/platform-browser-dynamic specifically would require a complete migration away from Angular, which is not a trivial task. Within the Angular ecosystem, there are no direct alternatives to this package as it provides unique functionality for bootstrapping applications.",
+      "score": 5
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. Angular is a widely used and actively maintained framework, and @angular/platform-browser-dynamic is a core part of it. However, the risk is not zero, as any open-source project can potentially be abandoned.",
+      "score": 2
+    },
+    "reasoning": "Given the critical role of @angular/platform-browser-dynamic in bootstrapping the Angular application, its deep integration into the project, the lack of direct alternatives, and the low likelihood of abandonment, the abandonment of this dependency would be highly impactful to the project.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The ngx-toastr dependency is used for displaying toast notifications in the Reporting UI project. While toast notifications are a common feature in web applications, they are not critical to the core functionality of the Reporting UI, which is to run reports. The project could still function without toast notifications, albeit with a less user-friendly experience. Therefore, the importance of ngx-toastr to the project is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "ngx-toastr is integrated into the project through the app module and is used in at least one component (snomed-navbar). The integration appears to be straightforward, with the ToastrModule being imported and configured in the app module. There is no evidence of deep or complex integration within the codebase, suggesting that replacing ngx-toastr would not be overly difficult.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available for displaying toast notifications in Angular applications, such as angular2-toaster and ng2-toasty. These alternatives provide similar functionality to ngx-toastr, making it feasible to replace ngx-toastr with another package if necessary. The availability of suitable alternatives reduces the difficulty of replacing ngx-toastr.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. ngx-toastr is a well-maintained library with a large user base, and there is no immediate indication that it will be abandoned. However, the possibility cannot be entirely ruled out, especially in the long term.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of ngx-toastr to the project, the relatively straightforward integration, the availability of alternative packages, and the low likelihood of external environmental changes forcing action, the abandonment of ngx-toastr would not likely be directly impactful to the project. The project could continue to function without ngx-toastr, and replacing it with an alternative package would be feasible if necessary.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The @popperjs/core dependency is used for positioning tooltips and popovers, which are common UI elements in modern web applications. Given the project's nature as a reporting UI, it's likely that tooltips and popovers are used to enhance user experience by providing additional information or guidance. However, the core functionality of the reporting UI does not solely depend on these elements. Therefore, while important, the dependency is not critical to the project's primary functionality.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the project through the angular.json file, specifically in the scripts section. This indicates that it is loaded globally and used across the application. However, the integration does not appear to be deeply embedded into the project's core logic or components, suggesting that replacing it would not require extensive changes to the codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to @popperjs/core for positioning tooltips and popovers, such as Tippy.js, which offers similar functionality and is also widely used. The availability of these alternatives makes it feasible to replace @popperjs/core if necessary, although some adjustments to the codebase would be required to accommodate the differences in API and behavior.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. @popperjs/core is a well-maintained library with a large user base, including major frameworks like Bootstrap. While abandonment is always a possibility, the current state of the library and its ecosystem suggest that it is unlikely to be abandoned in the near future.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of the functionality provided by @popperjs/core, the depth of its integration in the project, the availability of alternative packages, and the likelihood of external environmental changes forcing action, the abandonment of this dependency would not likely be directly impactful to the project. The project could continue to function without immediate issues, and there are feasible paths to replacing the dependency if necessary.",
+    "impactful": false
+  }
+}

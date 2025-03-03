@@ -1,0 +1,66 @@
+{
+  "repo": "SocialGouv/fiches-travail-data",
+  "dep1": "unist-util-visit",
+  "dep2": "@types/jsdom",
+  "dep3": "got",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The dependency 'unist-util-visit' is used in the project to traverse and manipulate a tree structure, specifically to find articles within a code. This functionality is crucial for the project's data fetching and processing, as it directly impacts the ability to resolve references accurately. Given its role in the core functionality of the project, the importance of this dependency is high.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of 'unist-util-visit' in the project is limited to a specific part of the codebase, namely in the 'referenceResolver.js' file. It is used in a single function to traverse a tree structure and find articles. While it is a critical part of the function it is used in, its usage is not spread across multiple parts of the project, indicating a moderate level of integration.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that provide similar tree traversal and manipulation functionalities, such as 'unist-util-visit-parents' and 'unist-util-filter'. These alternatives could potentially serve as suitable replacements for 'unist-util-visit'. However, the ease of replacement would depend on the specific requirements of the project and the compatibility of these alternatives with the existing codebase.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The dependency is well-maintained and widely used in the ecosystem, reducing the risk of sudden abandonment. Additionally, the project's specific use case for the dependency is relatively stable and not likely to be affected by external changes.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of 'unist-util-visit' to the project's core functionality, its moderate level of integration, the availability of alternative packages, and the low likelihood of external environmental changes forcing action, the abandonment of this dependency would likely be impactful to the project. However, the impact could be mitigated by the availability of alternatives and the dependency's stable maintenance status.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @types/jsdom package provides TypeScript definitions for the jsdom package, which is used for simulating a web browser environment in Node.js. Given that the project fiches-travail-data is primarily focused on fetching and processing data from a website, the direct importance of @types/jsdom to the core functionality of the project is minimal. It is a development dependency that aids in type checking and development but does not directly impact the runtime functionality or the data processing capabilities of the project.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "The @types/jsdom package is a TypeScript definition package, which means its integration into the project is limited to providing type definitions for the jsdom package. It does not have deep integration into the project's codebase beyond type checking during development. Replacing or removing it would not require significant changes to the project's codebase, as it does not directly affect the runtime behavior or the core functionalities of the project.",
+      "score": 1
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to @types/jsdom, including other TypeScript definition packages for jsdom or even using jsdom without TypeScript definitions. Additionally, the project could switch to using a different package for simulating a web browser environment that comes with its own TypeScript definitions. The availability of these alternatives makes it relatively easy to replace @types/jsdom if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the abandonment of @types/jsdom is low. The package is a development dependency, and its abandonment would not directly impact the runtime functionality of the project. The project could continue to use the existing version of @types/jsdom or switch to an alternative without significant disruption.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis, the abandonment of @types/jsdom would not likely be directly impactful to the project. The package is a development dependency with minimal importance to the core functionality of the project, easy to replace, and its abandonment would not force the project to take immediate action. Therefore, the dependency's abandonment would not likely be directly impactful to the project.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The 'got' dependency is used in the project for making HTTP requests, specifically for fetching data from external sources. This functionality is crucial for the project's core operation of scraping and processing data from the travail-emploi.gouv.fr website. Without it, the project cannot fetch the necessary data, making 'got' highly important.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The 'got' dependency is integrated into the project's codebase for making HTTP requests in the 'scrapUrl.js' and 'parseDom.js' files. It is used for fetching data and handling errors related to HTTP requests. The integration is deep, as it is directly involved in the data fetching process, which is a core functionality of the project.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to 'got' for making HTTP requests in Node.js, such as 'axios', 'node-fetch', and 'superagent'. These alternatives provide similar functionalities and could potentially replace 'got' with some adjustments to the codebase. However, the ease of replacement depends on the specific features used from 'got' and the project's requirements.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While 'got' is a widely used package with a large community, the Node.js ecosystem is dynamic, and changes in the ecosystem or the package itself could necessitate a replacement. However, given its current stability and widespread use, such changes are not immediately foreseeable.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of 'got' to the project's core functionality, its deep integration into the codebase, the availability of alternatives, and the moderate likelihood of external changes forcing action, the abandonment of 'got' would likely be impactful to the project. The project relies on 'got' for fetching data, and while alternatives exist, replacing it would require significant effort.",
+    "impactful": true
+  }
+}

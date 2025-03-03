@@ -1,0 +1,66 @@
+{
+  "repo": "swup/docs",
+  "dep1": "markdown-it-shiki-extra",
+  "dep2": "child_process",
+  "dep3": "concurrently",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The dependency 'markdown-it-shiki-extra' is used for syntax highlighting, line highlighting, and colored diffs in code blocks within the project's documentation. Given that the project is a documentation website for 'swup', the clarity and readability of code examples are crucial for user understanding and engagement. Therefore, the functionality provided by 'markdown-it-shiki-extra' is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the project through the Eleventy configuration file (eleventy.config.cjs). It is used as a plugin for markdown-it, which is a core component for processing markdown files in the project. The integration appears to be straightforward, with the dependency being imported and used in a single location. This suggests that while the dependency is important, its integration is not deeply embedded across multiple parts of the project's codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are alternative packages available that provide similar functionality, such as 'markdown-it-shiki' and 'markdown-it-highlightjs'. These alternatives also offer syntax highlighting capabilities and could potentially serve as suitable replacements. However, 'markdown-it-shiki-extra' provides additional features like line highlighting and colored diffs, which may not be as easily replicated with other packages. The availability of alternatives with similar core functionality suggests that replacing 'markdown-it-shiki-extra' is feasible, though it may require some adjustments to achieve the same level of feature richness.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. The dependency is focused on enhancing markdown processing with syntax highlighting and related features, which are not subject to rapid changes in the external environment. However, if the dependency becomes abandoned and security vulnerabilities are discovered, or if it becomes incompatible with newer versions of markdown-it or Eleventy, the project may need to consider alternatives.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of the functionality provided by 'markdown-it-shiki-extra' to the project's documentation quality, the relatively straightforward integration, the availability of alternative packages, and the low likelihood of external environmental changes forcing action, the abandonment of this dependency would likely be impactful but manageable. The project could transition to an alternative package if necessary, though it may require some effort to replicate all features.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The `child_process` dependency is used in the `eleventy.config.cjs` file to run a command (`npx pagefind --site _site`) after every regeneration of the site. This functionality is crucial for the search feature of the documentation site, as it ensures that the search index is updated with the latest content. Without this, the search functionality would not work correctly, significantly impacting the user experience.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The `child_process` dependency is integrated into the project in a single location within the `eleventy.config.cjs` file, specifically for running a command after site regeneration. This indicates a shallow integration, as it is not deeply embedded across multiple parts of the project's codebase. Replacing or removing this dependency would require changes to this specific part of the code, but it would not necessitate extensive modifications throughout the project.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to `child_process` for executing shell commands in Node.js, such as `execa`, `shelljs`, and `node-cmd`. These alternatives offer similar functionality and could serve as suitable replacements. The availability of these alternatives makes it relatively easy to replace `child_process` if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. `child_process` is a core module in Node.js, and its abandonment is highly unlikely. Even if it were to be deprecated, the project could switch to one of the available alternatives with minimal impact.",
+      "score": 1
+    },
+    "reasoning": "Given the analysis, the `child_process` dependency is important for the search functionality of the documentation site, but it is not deeply integrated into the project, and there are several viable alternatives available. Additionally, the likelihood of its abandonment is low. Therefore, while the dependency is important, its abandonment would not likely be directly impactful to the project.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The 'concurrently' package is used in the 'swup/docs' project to run multiple commands concurrently during development, specifically for watching assets and Eleventy. This functionality is crucial for the development workflow, as it allows developers to see changes in real-time without manually restarting processes. However, it is not directly involved in the production build or the core functionality of the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The 'concurrently' package is integrated into the project's npm scripts, specifically in the 'watch' script. It is used to run 'watch:assets' and 'watch:eleventy' concurrently. While this integration is important for the development process, it is not deeply embedded into the project's codebase. Replacing 'concurrently' would require modifying the npm scripts but would not necessitate extensive changes to the project's core code.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to 'concurrently' that can run multiple commands concurrently, such as 'npm-run-all', 'parallelshell', and 'foreman'. These alternatives offer similar functionality and could serve as suitable replacements. The availability of these alternatives makes it relatively easy to replace 'concurrently' if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. 'concurrently' is a well-maintained package with a large user base, and there is no immediate indication that it will be abandoned. Additionally, the project's reliance on 'concurrently' is limited to the development process, reducing the impact of potential abandonment.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of 'concurrently' to the development workflow, the ease of replacing it with available alternatives, and the low likelihood of its abandonment, the dependency's abandonment would not likely be directly impactful to the project. The project could transition to an alternative package with minimal disruption.",
+    "impactful": false
+  }
+}

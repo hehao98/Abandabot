@@ -1,0 +1,66 @@
+{
+  "repo": "ipfs/npm-go-ipfs",
+  "dep1": "tar-fs",
+  "dep2": "gunzip-maybe",
+  "dep3": "tape",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The tar-fs dependency is used in the project to extract tarballs, which is a critical part of the installation process for the Kubo binary. Given that the project's primary function is to install the Kubo binary, the functionality provided by tar-fs is essential for the project's core operation.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "tar-fs is integrated into the project at a specific point in the download process, where it is used to extract the downloaded tarball. Its usage is limited to this specific functionality, and it does not appear to be deeply integrated throughout the codebase. Therefore, while it is important for the task it performs, its integration is not extensive.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that can handle tarball extraction, such as tar, node-tar, and others. These alternatives provide similar functionality and could potentially serve as suitable replacements for tar-fs. The availability of these alternatives makes it less difficult to replace tar-fs if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. The functionality provided by tar-fs is stable and well-established, and there are no immediate signs of changes in the external environment that would necessitate a replacement. However, the possibility of future changes in the ecosystem or security concerns could impact this assessment.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of tar-fs to the project's core functionality, its limited integration depth, the availability of alternative packages, and the low likelihood of external environmental changes forcing action, the abandonment of tar-fs would likely be impactful but manageable. The project could transition to an alternative package with some effort, but the core functionality would remain unaffected.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The dependency 'gunzip-maybe' is used in the project to handle the decompression of gzipped files. Given that the project is focused on installing Kubo (go-ipfs) binaries, which are likely distributed in compressed formats, the functionality provided by 'gunzip-maybe' is crucial for the installation process. Without it, the project would not be able to decompress and install the necessary binaries.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of 'gunzip-maybe' in the project is relatively straightforward. It is used in a single file (src/download.js) to pipe a stream through the gunzip function before extracting it. This indicates a shallow integration, as replacing it would only require changes in one part of the codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that provide similar functionality to 'gunzip-maybe', such as 'zlib', 'pako', and 'node-gzip'. These alternatives are well-maintained and could serve as suitable replacements, making it relatively easy to switch to another package if needed.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The functionality provided by 'gunzip-maybe' is stable and well-established, and there are no immediate signs of changes in the ecosystem that would necessitate a switch.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of 'gunzip-maybe' in the project's installation process, its shallow integration, the availability of suitable alternatives, and the low likelihood of external changes forcing action, the abandonment of 'gunzip-maybe' would not likely be directly impactful to the project. The project could relatively easily switch to an alternative package without significant disruption.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The dependency 'tape' is used for testing in the project. Testing is crucial for ensuring the reliability and correctness of the code. However, the project's main functionality is not directly dependent on 'tape'. It is used in the development phase to run tests, which is important but not critical for the deployment or operation of the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The integration of 'tape' in the project is limited to test files. It is used in a few test scripts to run tests. The depth of its integration is shallow as it does not affect the main codebase or the functionality of the project. Replacing 'tape' would require updating the test scripts but would not impact the core functionality of the project.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to 'tape' available in the npm ecosystem, such as 'mocha', 'jest', and 'ava'. These alternatives provide similar functionality and could serve as suitable replacements. The availability of these alternatives makes it relatively easy to replace 'tape' if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. 'tape' is a stable and widely used testing library. The project could continue to use an abandoned version of 'tape' for a considerable time without facing issues. However, if security vulnerabilities are discovered in an abandoned version, the project might need to act.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance, integration depth, availability of alternatives, and likelihood of external changes, the abandonment of 'tape' would not likely be directly impactful to the project. The project could continue to use 'tape' or switch to an alternative testing library with minimal effort.",
+    "impactful": false
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "repo": "ebi-webcomponents/nightingale",
+  "dep1": "@storybook/manager-webpack5",
+  "dep2": "jest-canvas-mock",
+  "dep3": "@babel/core",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @storybook/manager-webpack5 dependency is used for managing Storybook's Webpack 5 configuration. Given that Storybook is a key tool for developing and showcasing the components in the nightingale project, the functionality provided by this dependency is crucial for the development and maintenance of the project. It ensures that the Storybook environment is correctly configured and operational, which is essential for component development and documentation.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of @storybook/manager-webpack5 within the project appears to be deep, as it is directly involved in the Storybook setup, which is a central part of the development workflow. The package.json file shows that it is a devDependency, and the project's scripts for running and building Storybook rely on it. Replacing this dependency would require significant changes to the Storybook configuration and potentially other parts of the development setup.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are alternatives to @storybook/manager-webpack5, such as using a different version of Storybook that supports Webpack 4 or other build tools like Vite. However, switching to an alternative would require adjustments to the project's build and development setup, and there might be compatibility issues with other Storybook addons and configurations currently in use. The availability of alternatives does not make the replacement process trivial.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While Webpack 5 is currently widely used, the JavaScript ecosystem evolves rapidly, and there could be shifts towards other build tools or new versions of Storybook that might not support Webpack 5. However, such changes would likely be gradual, giving the project time to adapt.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of Storybook in the development and documentation of the nightingale project, the deep integration of @storybook/manager-webpack5, the availability of alternatives with associated challenges, and the moderate likelihood of external changes forcing action, the abandonment of this dependency would likely be impactful to the project. It plays a crucial role in the development workflow, and replacing it would require significant effort and adjustments.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The jest-canvas-mock dependency is used for mocking canvas in unit tests with Jest. While it is important for testing components that involve canvas, it is not directly involved in the core functionality of the Nightingale project, which is focused on visualization web components for biological data. Therefore, its importance to the project is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "jest-canvas-mock is integrated into the project's testing setup, as indicated by its inclusion in the setupFiles array of the jest.config.js file. However, its integration is limited to the testing environment and does not deeply affect the main codebase or the build process. Replacing it would require updating the testing setup but would not necessitate extensive changes to the project's core code.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives available for mocking canvas in Jest tests, such as jest-electron for a real browser runtime or custom mock implementations. The availability of these alternatives makes it relatively easy to replace jest-canvas-mock if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the abandonment of jest-canvas-mock is low. The dependency is used for testing purposes, and changes in the testing environment are less likely to be driven by external factors compared to changes in the core functionality or dependencies of the project.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of jest-canvas-mock to the project, its limited integration depth, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of jest-canvas-mock would not likely be directly impactful to the Nightingale project.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "@babel/core is a critical tool for modern JavaScript development, especially in projects that use TypeScript or need to support older browsers. Given that nightingale is a monorepo containing visualisation web components for biological data, it likely relies on modern JavaScript features and possibly TypeScript, making @babel/core essential for transpiling and ensuring compatibility across different environments.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "@babel/core is integrated into the build process of the project, as indicated by its presence in the devDependencies of the package.json file. It is used in conjunction with other build tools like rollup and webpack, suggesting a deep integration into the project's build and development workflow. Replacing it would require significant changes to the build configuration and potentially the codebase itself.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives to @babel/core, such as TypeScript's own compiler or other transpilers like esbuild, each comes with its own set of features and limitations. Given the project's specific needs and the existing integration of @babel/core, finding a suitable alternative that provides the same level of functionality and compatibility could be challenging.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on @babel/core's abandonment is moderate. While the JavaScript ecosystem is fast-moving, @babel/core has become a standard tool in the ecosystem. However, changes in browser capabilities or shifts in the ecosystem could eventually necessitate a reevaluation of the project's build tools.",
+      "score": 2
+    },
+    "reasoning": "Considering the critical role of @babel/core in the project's build process and the challenges associated with replacing it, the abandonment of @babel/core would likely be impactful to the project. The project would need to invest significant effort into finding and integrating an alternative, which could disrupt development and affect the project's ability to maintain compatibility across different environments.",
+    "impactful": true
+  }
+}

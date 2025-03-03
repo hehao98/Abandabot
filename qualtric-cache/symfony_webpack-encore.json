@@ -1,0 +1,66 @@
+{
+  "repo": "symfony/webpack-encore",
+  "dep1": "@vue/compiler-sfc",
+  "dep2": "@vue/babel-plugin-jsx",
+  "dep3": "autoprefixer",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @vue/compiler-sfc package is crucial for projects that utilize Vue.js Single File Components (SFCs). It provides the necessary utilities for compiling Vue SFCs into JavaScript, which is a core functionality for Vue.js applications. Given that Webpack Encore is a tool designed to simplify Webpack integration, including support for Vue.js projects, the abandonment of @vue/compiler-sfc could significantly impact projects relying on Vue.js SFCs within the Webpack Encore ecosystem.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of @vue/compiler-sfc within a project using Webpack Encore would be deep, especially if the project heavily relies on Vue.js SFCs. The package is used in the compilation process of Vue components, and replacing it would require significant changes to the build process, including potentially finding and integrating a new compiler for Vue SFCs or rewriting parts of the project to not use SFCs.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives for compiling Vue SFCs, such as directly using the Vue package which includes @vue/compiler-sfc as a deep import, these alternatives may not offer the same level of control or may require adjustments in the project's build configuration. The availability of suitable alternatives is somewhat limited, especially for projects that require specific features or optimizations provided by @vue/compiler-sfc.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While Vue.js is a widely used framework and its core team is active, the JavaScript ecosystem is fast-moving, and dependencies can become abandoned or deprecated. However, given the popularity and active maintenance of Vue.js, the immediate risk is somewhat mitigated.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of @vue/compiler-sfc for projects using Vue.js SFCs, the depth of its integration, the limited availability of direct alternatives, and the moderate likelihood of external changes forcing action, the abandonment of @vue/compiler-sfc would likely be impactful to projects relying on it within the Webpack Encore ecosystem.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @vue/babel-plugin-jsx is used to add Vue JSX support in the project. Given that the project, symfony/webpack-encore, is a tool for integrating Webpack into applications, and considering that Vue is a popular framework for building user interfaces, the functionality provided by @vue/babel-plugin-jsx is important for projects that use Vue with JSX. However, its importance is somewhat mitigated by the fact that it is only used when Vue 3 is specified and JSX is enabled, making it conditionally important rather than universally critical.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The integration of @vue/babel-plugin-jsx into the project is relatively straightforward. It is added as a plugin to the Babel configuration when Vue 3 and JSX are enabled. This indicates a moderate level of integration, as it is not deeply embedded in the core functionality of the project but is instead a conditional addition based on specific project requirements.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are alternative packages and approaches for handling JSX in Vue applications, such as using the Vue 2 compatible @vue/babel-preset-jsx or directly using Vue's template syntax instead of JSX. The availability of these alternatives suggests that replacing @vue/babel-plugin-jsx, if necessary, would not be overly difficult, although it may require some adjustments to the project's Babel configuration and possibly the codebase if switching to a different JSX handling approach.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The Vue ecosystem is stable, and @vue/babel-plugin-jsx is specifically designed for Vue 3, which is a major version with a significant user base. Changes that would necessitate abandoning this plugin are unlikely in the near to medium term.",
+      "score": 1
+    },
+    "reasoning": "Considering the conditional importance of @vue/babel-plugin-jsx to projects using Vue 3 with JSX, its moderate level of integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of this dependency would not likely be directly impactful to the symfony/webpack-encore project. It is more of a convenience for specific use cases rather than a critical dependency.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "Autoprefixer is crucial for adding vendor prefixes to CSS rules, ensuring compatibility across different browsers. Given that Webpack Encore is a tool for bundling and processing assets, including CSS, the functionality provided by Autoprefixer is highly important for the project's ability to deliver cross-browser compatible styles.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "Autoprefixer is integrated into the project through PostCSS, which is a common setup for CSS processing. The integration is straightforward and does not deeply intertwine with the core functionality of Webpack Encore. Replacing Autoprefixer would require changes to the PostCSS configuration but would not significantly impact the overall structure of the project.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to Autoprefixer, such as PostCSS Preset Env, which can also handle vendor prefixing. These alternatives are well-maintained and could serve as suitable replacements, making it relatively easy to switch if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on Autoprefixer's abandonment is low. Autoprefixer is widely used and supported, and its functionality is not likely to become obsolete in the near future. However, the evolving nature of web standards could eventually reduce the need for vendor prefixing.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of Autoprefixer for ensuring cross-browser compatibility, its straightforward integration, the availability of suitable alternatives, and the low likelihood of external changes forcing action, the abandonment of Autoprefixer would not likely be directly impactful to the project. The project could transition to an alternative with minimal disruption.",
+    "impactful": false
+  }
+}

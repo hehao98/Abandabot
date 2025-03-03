@@ -1,0 +1,66 @@
+{
+  "repo": "syntax-tree/hast-util-to-mdast",
+  "dep1": "typescript",
+  "dep2": "c8",
+  "dep3": "hast-util-to-text",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "TypeScript is listed as a devDependency in the package.json file, indicating it is used for development purposes such as type checking and compiling TypeScript code to JavaScript. Given that the project includes TypeScript configuration and aims for 100% type coverage, TypeScript plays a crucial role in ensuring code quality and type safety. However, since it is not directly involved in the runtime functionality of the project, its importance is significant but not critical to the project's core functionality.",
+      "score": 4
+    },
+    "integration": {
+      "reasoning": "The integration of TypeScript in the project is deep, as evidenced by the presence of TypeScript configuration files and the use of TypeScript-specific tools like 'type-coverage'. The project's build process relies on TypeScript for compiling and type checking, indicating a high level of integration. Replacing TypeScript would require significant changes to the build process and potentially the codebase to accommodate a different type system or to remove type checking altogether.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to TypeScript for type checking and compiling JavaScript, such as Flow, Babel with type checking plugins, or even moving to plain JavaScript with JSDoc annotations. However, each alternative comes with its own set of trade-offs in terms of community support, tooling, and integration effort. While alternatives exist, finding one that matches TypeScript's ecosystem and developer experience could be challenging.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on TypeScript's abandonment is relatively low. TypeScript is widely adopted and supported by a large community and major tech companies, making its sudden abandonment unlikely. However, changes in the JavaScript ecosystem or the emergence of a significantly superior alternative could potentially influence the project's decision to switch.",
+      "score": 2
+    },
+    "reasoning": "Considering the analysis, TypeScript's abandonment would be impactful to the project due to its deep integration and the role it plays in ensuring code quality and type safety. However, the likelihood of such an event is low, and there are alternatives available, albeit with potential trade-offs. The project would likely face significant but manageable challenges in adapting to TypeScript's abandonment.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The dependency c8 is used for code coverage in the project. While code coverage is important for ensuring the quality of the code, it is not directly related to the core functionality of the project, which is transforming hast to mdast. Therefore, the functionality provided by c8 is of moderate importance to the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "c8 is used in the project's test scripts to check code coverage. It is not deeply integrated into the core codebase but is rather a tool used during development and testing. Replacing it would require changes to the test scripts but would not affect the main functionality of the project.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to c8 for code coverage in JavaScript projects, such as Istanbul (nyc), Jest, and others. These alternatives provide similar functionality and could serve as suitable replacements. The availability of these alternatives makes it relatively easy to replace c8.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on c8's abandonment is low. Code coverage tools are generally stable and do not frequently undergo significant changes that would necessitate immediate action from dependent projects.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of c8 to the project, its shallow integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of c8 would not likely be directly impactful to the project.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The dependency 'hast-util-to-text' is used in multiple handlers within the project to convert hast nodes to plain text. This functionality is crucial for the project's core operation of transforming hast to mdast, as it directly affects the output format and content. Given its widespread use across different handlers, its importance to the project is high.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into several key handlers within the project, including textarea, inline-code, code, table, input, and select handlers. Its function is directly called within these handlers to process and convert nodes, indicating a deep integration into the project's codebase. Replacing it would require significant changes to these handlers.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives like 'hast-util-to-string' that provide similar functionality, they may not offer the exact same features or behavior as 'hast-util-to-text'. The project's reliance on the specific behavior of 'hast-util-to-text' for accurate text conversion means that finding a suitable replacement that does not require adjustments to the project's logic could be challenging.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "Given the dependency's active maintenance and its role in a widely used ecosystem (unified collective), the likelihood of its abandonment in the near future is low. However, the project's dependency on it for critical functionality means that any potential abandonment would have a significant impact, necessitating immediate action.",
+      "score": 2
+    },
+    "reasoning": "Considering the dependency's high importance to the project's core functionality, deep integration into the codebase, and the challenges in finding a suitable replacement, its abandonment would likely be directly impactful to the project. The project would need to undertake significant effort to replace it, affecting multiple handlers and potentially the project's output quality.",
+    "impactful": true
+  }
+}

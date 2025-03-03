@@ -1,0 +1,66 @@
+{
+  "repo": "ProtonMail/pmcrypto",
+  "dep1": "@openpgp/web-stream-tools",
+  "dep2": "ts-loader",
+  "dep3": "eslint-config-airbnb-typescript",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The dependency @openpgp/web-stream-tools is used in critical parts of the pmcrypto project, such as message encryption, decryption, and utility functions. It provides essential stream handling capabilities that are crucial for the project's core functionality, especially in handling streamed data for encryption and decryption processes. Given its role in these critical operations, the functionality provided by this dependency is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into multiple parts of the project, including message encryption, decryption, and utility functions. It is used for stream handling, which is a fundamental aspect of the project's operations. The depth of its integration is significant, as it is not just a peripheral utility but a core component that affects the project's main functionalities. Replacing it would require substantial changes to the codebase, especially in parts dealing with streamed data.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "While there are other libraries available for stream handling in JavaScript, finding a suitable replacement that matches the specific needs and integration level of @openpgp/web-stream-tools within the pmcrypto project could be challenging. The dependency is tailored for use with OpenPGP.js, which is a core dependency of pmcrypto. This tight integration and specific functionality make it difficult to replace with alternative packages without significant effort and potential compatibility issues.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While the dependency is crucial for the project's current operations, the field of stream handling in JavaScript is well-established, and alternatives do exist. However, the specific integration and functionality provided by @openpgp/web-stream-tools mean that any forced change would still require careful consideration and significant effort to ensure compatibility and maintain functionality.",
+      "score": 3
+    },
+    "reasoning": "Considering the critical role of @openpgp/web-stream-tools in the pmcrypto project, its deep integration into core functionalities, the challenges in finding suitable alternatives, and the moderate likelihood of external changes forcing action, the abandonment of this dependency would likely be impactful to the project. The project would need to invest significant resources to replace or maintain the dependency, affecting its development and maintenance efforts.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The ts-loader is used in the project's karma.conf.js file to handle TypeScript files during testing. However, the project's main functionality, as described in the README, revolves around cryptographic operations and OpenPGP.js integration, which does not directly depend on ts-loader. The ts-loader is a development dependency used for testing purposes, not for the core functionality of the project.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "The ts-loader is integrated into the project's testing configuration (karma.conf.js) to process TypeScript files. Its usage is limited to the testing environment and does not deeply integrate into the main codebase or the core functionalities of the project. Replacing ts-loader would primarily affect the testing setup, not the main application logic.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to ts-loader for handling TypeScript files in webpack, such as babel-loader with the TypeScript preset or fork-ts-checker-webpack-plugin. These alternatives can provide similar functionality for compiling TypeScript files in a webpack environment, making it relatively easy to replace ts-loader if necessary.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on ts-loader's abandonment is low. The project's core functionality does not depend on ts-loader, and its usage is confined to the testing environment. Changes in the TypeScript ecosystem or webpack configuration might necessitate adjustments, but these are unlikely to be critical or urgent.",
+      "score": 1
+    },
+    "reasoning": "Given that ts-loader is only used in the testing environment and not in the core functionality of the project, its abandonment would not likely be directly impactful to the project. There are also viable alternatives available for handling TypeScript files in webpack, further reducing the potential impact.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The dependency `eslint-config-airbnb-typescript` is used for linting TypeScript code in the project. While linting is important for maintaining code quality and consistency, it is not directly related to the core functionality of the project, which is cryptographic operations and email security. Therefore, the functionality provided by this dependency is of moderate importance to the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the project's development workflow through the ESLint configuration. It is used in the `lint` script defined in the `package.json` file. Replacing this dependency would require updating the ESLint configuration and potentially the linting rules, but it does not deeply integrate into the core codebase or affect the runtime behavior of the project.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative ESLint configurations available for TypeScript, such as `eslint-config-standard-with-typescript` and `eslint-config-prettier`. These alternatives could serve as suitable replacements and provide similar functionality. The availability of these alternatives makes it relatively easy to replace `eslint-config-airbnb-typescript` if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The dependency is used for development purposes and does not directly affect the project's runtime or its users. Changes in the ecosystem or the dependency itself are unlikely to have a significant impact on the project.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of the dependency to the project, the ease of replacing it, and the low likelihood of external changes forcing action, the abandonment of `eslint-config-airbnb-typescript` would not likely be directly impactful to the project. It is more of a development tool rather than a core dependency that affects the project's functionality or performance.",
+    "impactful": false
+  }
+}

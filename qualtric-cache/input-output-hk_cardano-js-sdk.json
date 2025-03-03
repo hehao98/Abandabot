@@ -1,0 +1,66 @@
+{
+  "repo": "input-output-hk/cardano-js-sdk",
+  "dep1": "tsx",
+  "dep2": "eslint-plugin-import",
+  "dep3": "eslint-plugin-jest",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The tsx dependency is used in the Dockerfile and init.sh script to run TypeScript files in a Node.js environment. It is crucial for the development and deployment process of the Cardano JS SDK, as it allows for the execution of TypeScript code directly without pre-compilation. This functionality is essential for the development workflow, especially in a Dockerized environment where quick iterations and testing are necessary.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "tsx is integrated into the Dockerfile and init.sh script, which are critical for the deployment and operation of the Cardano JS SDK. Its usage is spread across multiple Docker images, indicating a deep integration into the project's infrastructure. Replacing tsx would require significant changes to the Dockerfile and init.sh script, as well as potentially other parts of the project that rely on its functionality.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are alternatives to tsx, such as ts-node and esbuild, which can also execute TypeScript code in a Node.js environment. However, each alternative has its own set of features and limitations, and switching to an alternative would require testing and potentially modifying the project's code to accommodate the differences. The availability of alternatives makes the replacement feasible but not trivial.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on tsx's abandonment is moderate. While tsx is a popular tool, the JavaScript and TypeScript ecosystem is fast-moving, and tools can become deprecated or abandoned. However, given tsx's current popularity and active maintenance, the immediate risk is low. The project would likely only need to act if tsx were to become deprecated or if a critical security issue were discovered.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of tsx to the project's development and deployment process, its deep integration into the project's infrastructure, the availability of alternatives, and the current low likelihood of external environmental changes forcing action, the abandonment of tsx would be impactful to the project. However, the impact could be mitigated by switching to an alternative tool, though this would require some effort.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The eslint-plugin-import is used for linting ES2015+ import/export syntax, which is crucial for maintaining code quality and preventing issues with misspelling of file paths and import names. Given that the project is a TypeScript-based SDK, ensuring correct import/export syntax is essential for the development and maintenance of the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the project's linting process, as indicated by its presence in the package.json file under devDependencies and its use in the linting scripts. However, its integration is not deeply embedded into the core functionality of the SDK but rather is part of the development toolchain.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are alternative packages available for linting import/export syntax, such as eslint-plugin-node and eslint-plugin-import-order. However, eslint-plugin-import is widely used and has comprehensive support for ES2015+ syntax, making it a preferred choice. The availability of alternatives does not significantly reduce the difficulty of replacement due to the specific features and rules provided by eslint-plugin-import.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The project is a TypeScript-based SDK, and changes in the JavaScript ecosystem that would necessitate a replacement of eslint-plugin-import are unlikely in the near future.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of eslint-plugin-import for maintaining code quality, its integration into the development toolchain, the availability of alternatives, and the low likelihood of external changes necessitating action, the abandonment of this dependency would not likely be directly impactful to the project. The project could transition to an alternative linting tool if necessary, without significant disruption to its core functionality.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The eslint-plugin-jest is used for linting Jest test files, ensuring code quality and consistency in test suites. Given that the project is a TypeScript SDK with multiple packages, maintaining high-quality tests is crucial for reliability and maintainability. However, the core functionality of the SDK does not directly depend on the linting rules provided by eslint-plugin-jest. Therefore, while important for code quality, it is not critical to the core functionality of the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The integration of eslint-plugin-jest is limited to the linting process, specifically for Jest test files. It is not deeply integrated into the core codebase or the build process beyond linting. Replacing it would primarily involve updating the ESLint configuration and potentially modifying some test files to comply with new linting rules.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to eslint-plugin-jest, such as eslint-plugin-mocha or eslint-plugin-jasmine, which could be used for linting test files. Additionally, custom ESLint rules could be developed to enforce specific testing practices. The availability of alternatives makes it relatively easy to replace eslint-plugin-jest if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. ESLint plugins are generally stable, and the community around Jest and ESLint is active, reducing the risk of sudden abandonment. Additionally, the project's focus on TypeScript and Jest is well-established, making it less likely to be affected by changes in the JavaScript ecosystem that would necessitate a change in linting tools.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of eslint-plugin-jest for maintaining code quality in test files, its relatively shallow integration into the project, the availability of alternative linting tools, and the low likelihood of external changes forcing action, the abandonment of eslint-plugin-jest would not likely be directly impactful to the project. The project could transition to an alternative linting tool with minimal disruption.",
+    "impactful": false
+  }
+}

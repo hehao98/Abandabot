@@ -1,0 +1,66 @@
+{
+  "repo": "ppy/osu-notification-server",
+  "dep1": "ws",
+  "dep2": "@typescript-eslint/eslint-plugin",
+  "dep3": "@typescript-eslint/parser",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The ws library is crucial for the osu!notification-server project as it is used to establish WebSocket connections, which are the core functionality of the server. The project relies on WebSocket for real-time communication between the server and clients. The usage of ws is spread across multiple critical parts of the codebase, including handling connections, sending and receiving messages, and managing user sessions. Without ws, the server would not be able to function as intended.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The ws library is deeply integrated into the osu!notification-server project. It is used in various components such as the main server setup, user connection management, and message handling. The library is directly involved in the core operations of the server, including establishing connections, sending and receiving data, and managing the lifecycle of WebSocket connections. Replacing ws would require significant changes to the codebase, affecting multiple components and functionalities.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternative WebSocket libraries available for Node.js, such as socket.io and uWebSockets.js, finding a suitable replacement that offers the same level of performance, reliability, and ease of use as ws could be challenging. Each alternative has its own set of features, limitations, and integration requirements, which may not align perfectly with the needs of the osu!notification-server project. Additionally, migrating to a different library would require thorough testing and potential adjustments to the existing codebase.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. The ws library is widely used and well-maintained, with a strong community and active development. However, the risk cannot be entirely ruled out, as changes in the Node.js ecosystem, security vulnerabilities, or shifts in web standards could potentially impact the library's viability. The project should monitor the library's status and be prepared to take action if necessary.",
+      "score": 2
+    },
+    "reasoning": "Given the critical role of the ws library in the osu!notification-server project, its deep integration into the codebase, and the challenges associated with finding a suitable replacement, the abandonment of ws would likely be directly impactful to the project. The project heavily relies on WebSocket functionality for real-time communication, and any disruption in this area would significantly affect the server's operation and user experience.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @typescript-eslint/eslint-plugin is used for linting TypeScript code, which is crucial for maintaining code quality and consistency in the project. However, linting, while important, is not directly related to the core functionality of the osu!notification server, which is to handle notifications. Therefore, while the plugin is important for development practices, its absence would not directly impact the server's operational capabilities.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The @typescript-eslint/eslint-plugin is integrated into the project's development workflow through the 'lint' script in package.json. It is used during the development phase for code quality checks but is not deeply integrated into the server's runtime or build process. Replacing it would mainly involve updating the linting configuration and possibly the CI/CD pipeline, which is manageable.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to @typescript-eslint/eslint-plugin for linting TypeScript code, such as TSLint (though it's deprecated), ESLint with different plugins, or even custom linting solutions. The availability of these alternatives makes it relatively easy to replace the plugin if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. Linting tools and configurations are generally stable and do not frequently require updates or changes unless there are significant changes in the TypeScript or ESLint ecosystems.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of the @typescript-eslint/eslint-plugin for code quality, its moderate integration into the development workflow, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of this dependency would not be directly impactful to the operational capabilities of the osu!notification server. It would, however, affect the development process and code quality maintenance.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The @typescript-eslint/parser is used for linting TypeScript code in the project. While linting is important for maintaining code quality and consistency, it is not directly related to the core functionality of the osu!notification server, which is to handle notifications. Therefore, the functionality provided by @typescript-eslint/parser is of moderate importance to the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The @typescript-eslint/parser is integrated into the project through the .eslintrc.js configuration file. It is used as the parser for TypeScript files. However, its integration is limited to the linting process and does not deeply affect the core functionality or the build process of the project. Replacing it would require changes to the linting configuration but would not necessitate extensive changes to the codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are alternative parsers and linting tools available for TypeScript, such as ts-lint (though it is deprecated) and eslint with different configurations. However, @typescript-eslint/parser is specifically designed for TypeScript and is widely used in the TypeScript community, making it a preferred choice. While alternatives exist, finding one that matches the specific needs and community support of @typescript-eslint/parser might be challenging.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The @typescript-eslint/parser is maintained by the TypeScript ESLint team, which is a part of the TypeScript ecosystem. Given its importance to the TypeScript community, it is unlikely to be abandoned without a suitable replacement or migration path being provided.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of @typescript-eslint/parser to the project's linting process, its limited integration depth, the availability of alternatives, and the low likelihood of its abandonment, the abandonment of @typescript-eslint/parser would not likely be directly impactful to the osu!notification server project. The project could transition to an alternative linting tool or parser with minimal disruption.",
+    "impactful": false
+  }
+}

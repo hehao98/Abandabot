@@ -1,0 +1,66 @@
+{
+  "repo": "contentful/forma-36",
+  "dep1": "@testing-library/user-event",
+  "dep2": "fast-glob",
+  "dep3": "semver",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @testing-library/user-event package is used extensively across the project for simulating user interactions in tests. It is crucial for ensuring the components behave as expected when interacted with by users. Given its widespread use in testing various components, its functionality is highly important to the project's testing suite.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The package is integrated into the test files of multiple components, indicating a deep integration within the project's testing framework. Replacing it would require updating numerous test files to use a different library for simulating user events, which could be time-consuming and error-prone.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives to @testing-library/user-event for simulating user events in tests, such as directly using @testing-library/react's fireEvent or other libraries like enzyme, these alternatives may not provide the same level of abstraction and ease of use. However, the availability of alternatives does make replacement feasible, albeit with some effort.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The @testing-library/user-event is a well-maintained library within the testing-library ecosystem, which is widely used and supported. However, the possibility of abandonment, while low, cannot be entirely ruled out.",
+      "score": 2
+    },
+    "reasoning": "Given the importance of @testing-library/user-event to the project's testing suite, its deep integration, and the availability of alternatives, the abandonment of this dependency would be impactful but manageable. The project would need to invest time in replacing the dependency, but the existence of alternatives and the low likelihood of abandonment mitigate the impact.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The fast-glob dependency is used in the project to find package.json files within the components directory. This functionality is crucial for the linting process, ensuring that all components adhere to the project's standards. However, its usage is limited to a single script (scripts/lint-packages.js), indicating that while important, it is not critical to the core functionality of the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The integration of fast-glob in the project is minimal, being used only in one script to find package.json files. This limited usage suggests that replacing fast-glob would not be highly difficult, as it does not deeply integrate with the project's core functionalities.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to fast-glob, such as globby, node-glob, and others, which offer similar functionality. The availability of these alternatives makes it relatively easy to replace fast-glob if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The project's usage of fast-glob is not exposed to end-users, and the functionality it provides is not likely to be affected by changes in the external environment.",
+      "score": 1
+    },
+    "reasoning": "Considering the limited usage of fast-glob in the project, the availability of alternatives, and the low likelihood of external environmental changes affecting its functionality, the abandonment of fast-glob would not likely be directly impactful to the project.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The semver package is used in the project for version management, particularly in the context of releases and prereleases. It is used in scripts that handle the generation of releases, prereleases, and updating dependencies. This functionality is crucial for maintaining the project's versioning and ensuring compatibility across different packages.",
+      "score": 4
+    },
+    "integration": {
+      "reasoning": "The semver package is integrated into several key scripts within the project, including those responsible for generating releases, handling prereleases, and updating dependencies. Its usage is spread across different parts of the project, indicating a moderate level of integration. However, it is not deeply embedded in the core functionality of the project's main components.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that provide similar functionality to semver, such as 'compare-versions' and 'version-compare'. These alternatives could potentially serve as suitable replacements, but they may require adjustments in the project's scripts and workflows. The availability of alternatives reduces the difficulty of replacing semver.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The semver package is widely used and maintained, and its abandonment would likely be a gradual process with ample warning. Additionally, the project's reliance on semver is not so critical that it would be immediately impacted by its abandonment.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of semver in managing the project's versioning and releases, its moderate level of integration, the availability of alternative packages, and the low likelihood of external environmental changes forcing action, the abandonment of semver would not likely be directly impactful to the project. However, it would require some effort to replace and adjust the project's scripts and workflows.",
+    "impactful": false
+  }
+}

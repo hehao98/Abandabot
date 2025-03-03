@@ -1,0 +1,66 @@
+{
+  "repo": "ember-template-lint/ember-template-lint",
+  "dep1": "get-stdin",
+  "dep2": "yeoman-environment",
+  "dep3": "micromatch",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The `get-stdin` dependency is used to read input from the standard input (stdin) in the `ember-template-lint` project. This functionality is crucial for the project's ability to lint templates provided via stdin, which is a common use case for linting tools. The dependency is directly used in the main executable file (`bin/ember-template-lint.js`) to handle stdin input, making it an essential part of the project's core functionality.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The `get-stdin` dependency is integrated into the project at a few key points, primarily in the main executable file and in the linter's core functionality. However, its usage is relatively isolated to specific functions that handle stdin input. This means that while it is important, its integration is not deeply woven throughout the entire codebase, making it somewhat easier to replace if necessary.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to `get-stdin` that provide similar functionality for reading stdin in Node.js applications, such as `get-stream` and `readable-stream`. These alternatives are well-maintained and could serve as suitable replacements with minimal changes to the codebase. The availability of these alternatives reduces the difficulty of replacing `get-stdin`.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. `get-stdin` is a simple utility for reading stdin, and its functionality is unlikely to be affected by changes in the Node.js ecosystem or other external factors. However, if the package were to be abandoned, the project might need to consider replacing it to ensure long-term maintainability.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of `get-stdin` to the project's core functionality, its moderate level of integration, the availability of suitable alternatives, and the low likelihood of external changes forcing action, the abandonment of `get-stdin` would be impactful but not critically so. The project could manage the transition to an alternative with reasonable effort.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The `yeoman-environment` dependency is used in the `dev/generate.js` file to facilitate the creation of new rules for the `ember-template-lint` project. This functionality is not part of the core linting process but is crucial for the development and maintenance of the project, allowing for the easy addition of new linting rules. Given its role in project development rather than in the primary functionality of the library, its importance is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The integration of `yeoman-environment` is limited to the `dev/generate.js` file, where it is used to create a new environment and register generators for new rules. This indicates a shallow integration within the project, as it is not woven deeply into the core codebase but rather used in a specific, isolated context for development purposes.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to `yeoman-environment` for scaffolding and generating code, such as `plop` or custom scripts. These alternatives could potentially serve the same purpose of generating new rules for `ember-template-lint`. The availability of these alternatives makes the replacement of `yeoman-environment` feasible, though it would require some effort to adapt the existing code to use a different tool.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. `yeoman-environment` is a stable and widely used tool in the Node.js ecosystem, and its abandonment would likely be gradual, giving the project time to adapt. Additionally, its limited role in the project reduces the urgency of any potential need to replace it.",
+      "score": 2
+    },
+    "reasoning": "Considering the moderate importance of `yeoman-environment` to the project's development process, its shallow integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of `yeoman-environment` would not likely be directly impactful to the `ember-template-lint` project. The project could adapt to its absence with some effort, but it would not significantly disrupt the core functionality or development workflow.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The micromatch package is used in multiple parts of the ember-template-lint project, including CLI helpers, module status cache, editor config resolution, and config processing. It is primarily used for pattern matching and ignoring files based on glob patterns. This functionality is crucial for the project's ability to lint templates effectively by excluding or including files based on specified patterns. Given its widespread use across different components of the project, the functionality provided by micromatch is highly important.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "Micromatch is integrated into several key components of the ember-template-lint project, including CLI helpers, module status cache, editor config resolution, and config processing. Its usage is spread across different files and functionalities, indicating a deep integration within the project's codebase. Replacing micromatch would require significant changes to these components, making the integration depth quite high.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives to micromatch, such as minimatch or globby, these alternatives may not offer the same level of performance or feature parity. Micromatch is known for its speed and comprehensive support for Bash 4.3 specification, which might not be fully matched by other libraries. However, given the existence of alternatives, the difficulty of replacement is somewhat mitigated, but still non-trivial due to potential differences in API and behavior.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on micromatch's abandonment is relatively low. Micromatch is a well-maintained library with a strong community and is widely used in the JavaScript ecosystem. However, the risk is not zero, as any dependency could potentially be abandoned or become incompatible with future Node.js versions or other dependencies.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of micromatch to the ember-template-lint project, its deep integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of micromatch would likely be impactful to the project. The project relies on micromatch for critical functionality, and while alternatives exist, the transition would require significant effort.",
+    "impactful": true
+  }
+}

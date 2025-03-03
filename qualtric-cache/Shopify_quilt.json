@@ -1,0 +1,66 @@
+{
+  "repo": "Shopify/quilt",
+  "dep1": "@types/jest",
+  "dep2": "core-js",
+  "dep3": "@rollup/plugin-node-resolve",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @types/jest package provides TypeScript type definitions for Jest, which is a widely used testing framework. Given that Jest is a core part of the testing strategy for the Shopify/quilt project, as indicated by the project's README, the functionality provided by @types/jest is crucial for ensuring type safety and developer productivity in tests. Therefore, the importance of this dependency is high.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The @types/jest package is integrated into the project's development environment, as seen in the package.json file under devDependencies. It is used across the project for type checking and testing purposes. However, its integration is not deeply embedded into the core functionality of the project but rather supports the development and testing process. Thus, while important, its integration is not as deep as core dependencies.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are alternative packages and methods for providing TypeScript definitions for Jest, such as manually writing type definitions or using other type definition packages. However, @types/jest is the most widely used and maintained package for this purpose, making it the de facto standard. While alternatives exist, they may not offer the same level of completeness or community support.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. Jest is a stable and widely adopted testing framework, and its TypeScript definitions are maintained by the community. While it's possible for the package to be abandoned, the active community and the critical role of Jest in the JavaScript ecosystem make this scenario unlikely.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of @types/jest for type safety and developer productivity in tests, its integration into the development environment, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of @types/jest would be impactful but not critically so. The project could transition to alternative solutions if necessary, though it would require some effort.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The core-js dependency is used in the polyfills package of the Shopify/quilt project, which is crucial for providing polyfills for modern JavaScript features in older environments. Given that the project is no longer maintained and the polyfills package is deprecated, the importance of core-js to the project is reduced. However, for projects still relying on the polyfills package, core-js remains important for ensuring compatibility.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The integration of core-js in the project is limited to the polyfills package, where it is used to provide essential polyfills. The integration is not deeply embedded across the project's codebase, making it relatively straightforward to remove or replace if necessary.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to core-js for providing polyfills, such as polyfill.io or individual polyfill libraries. However, core-js is comprehensive and widely used, making it a preferred choice for many projects. The availability of alternatives does not significantly reduce the difficulty of replacing core-js, especially for projects that rely on its extensive feature set.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "Given that the Shopify/quilt project is no longer maintained and the polyfills package is deprecated, the likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. However, for projects still using the polyfills package, the abandonment of core-js could necessitate action to ensure continued compatibility.",
+      "score": 2
+    },
+    "reasoning": "Considering the reduced importance of core-js to the deprecated polyfills package in the no longer maintained Shopify/quilt project, the abandonment of core-js would not likely be directly impactful to the project. However, for projects still relying on the polyfills package, the abandonment could necessitate action to ensure continued compatibility.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The @rollup/plugin-node-resolve plugin is used to locate modules using the Node resolution algorithm, which is crucial for resolving third-party modules in node_modules. Given that the project is a monorepo with multiple packages, the ability to resolve modules correctly is essential for the build process. However, the project's README indicates that Quilt is no longer maintained, and its packages are deprecated, suggesting that the project might not be actively developed or maintained. This reduces the immediate importance of the dependency for the project's future.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The plugin is integrated into the build configuration of the project, specifically in the rollup.mjs file. It is used alongside other Rollup plugins like @rollup/plugin-babel and @rollup/plugin-commonjs, indicating a moderate level of integration. However, the project's deprecation status suggests that the integration might not be as critical for future development.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to @rollup/plugin-node-resolve, such as webpack's resolve plugin or other module resolution plugins for Rollup. Given the project's deprecation status, finding and integrating an alternative might not be a priority, but the availability of alternatives makes the replacement process less difficult.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "Given that Quilt is no longer maintained, the likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The project is already in a deprecated state, and there might not be active development that would require addressing such changes.",
+      "score": 1
+    },
+    "reasoning": "Considering the project's deprecated status and the moderate importance and integration of the @rollup/plugin-node-resolve dependency, its abandonment would not likely be directly impactful to the project. The availability of alternatives and the low likelihood of external changes necessitating action further support this conclusion.",
+    "impactful": false
+  }
+}

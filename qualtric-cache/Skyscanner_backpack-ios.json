@@ -1,0 +1,66 @@
+{
+  "repo": "Skyscanner/backpack-ios",
+  "dep1": "merge2",
+  "dep2": "eslint-config-prettier",
+  "dep3": "prettier",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The merge2 dependency is used in the gulpfile.js to merge multiple streams for generating SwiftUI and UIKit components. This functionality is crucial for the build process of the Backpack iOS project, as it ensures that the necessary files are correctly generated and placed in the appropriate directories. Without merge2, the build process would likely fail or require significant rework to achieve the same functionality.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "merge2 is integrated into the gulpfile.js at specific points where it is used to merge streams for generating SwiftUI and UIKit components. The integration is not deeply embedded across the entire codebase but is critical for the build process at these specific points. Replacing merge2 would require identifying and modifying these specific sections of the gulpfile.js.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that can merge streams in a similar manner to merge2, such as merge-stream and stream-combiner2. These alternatives provide comparable functionality and could potentially serve as suitable replacements. However, the ease of replacement would depend on the specific requirements and the compatibility of these alternatives with the existing code.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. The functionality provided by merge2 is specific to the build process and does not directly interact with external systems or services. However, if merge2 were to become abandoned and no longer maintained, it could pose a risk if compatibility issues arise with newer versions of Node.js or other dependencies.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of merge2 to the build process, the moderate level of integration, the availability of alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of merge2 would be impactful but not critically so. The project could likely transition to an alternative package with some effort, but the build process would be disrupted in the meantime.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The eslint-config-prettier dependency is used to disable ESLint rules that are unnecessary or might conflict with Prettier. Given that the project uses Prettier for code formatting, eslint-config-prettier plays a crucial role in ensuring that ESLint and Prettier work together without conflicts. This is important for maintaining code quality and consistency in the project.",
+      "score": 4
+    },
+    "integration": {
+      "reasoning": "eslint-config-prettier is integrated into the project's ESLint configuration, as indicated by its presence in the package.json file. It is used to extend the ESLint configuration, which is a common and straightforward integration method. Replacing it would require updating the ESLint configuration, but this is not a deeply integrated or complex process.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are alternative packages and configurations that can be used to achieve similar functionality, such as manually configuring ESLint rules to not conflict with Prettier or using other ESLint plugins that provide similar functionality. However, eslint-config-prettier is specifically designed for this purpose and is widely used, making it a preferred choice.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. ESLint and Prettier are both widely used and well-maintained tools in the JavaScript ecosystem. Any changes that would necessitate action on the part of the project would likely be gradual and well-communicated, giving the project maintainers ample time to respond.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of eslint-config-prettier in ensuring that ESLint and Prettier work together without conflicts, its relatively straightforward integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of eslint-config-prettier would not likely be directly impactful to the project. The project could adapt by using alternative configurations or manually adjusting ESLint rules to avoid conflicts with Prettier.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "Prettier is a code formatter that enforces a consistent style across the codebase. While it is useful for maintaining code quality and readability, it does not directly contribute to the core functionality of the project. The project, Backpack iOS, is a collection of design resources and reusable components, and the primary focus is on the design and functionality of these components rather than the formatting of the code. Therefore, the functionality provided by Prettier, while beneficial, is not critical to the project's success.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "Prettier is integrated into the project as a devDependency, which means it is used during development but not in the production build. It is likely used in scripts for linting and formatting code, as indicated by the presence of eslint-config-prettier and eslint-plugin-prettier in the package.json. However, since it is not deeply integrated into the core codebase and is only used in development scripts, replacing it would not be highly difficult.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative code formatters available that could serve as suitable replacements for Prettier, such as ESLint (which is already used in the project), StandardJS, or Beautify. These alternatives can also enforce a consistent code style and are widely used in the JavaScript ecosystem. Therefore, finding a replacement for Prettier would not be difficult.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on Prettier's abandonment is low. Prettier is a widely used and well-maintained tool, and its abandonment would be unexpected. Additionally, since it is a devDependency, any issues with Prettier would primarily affect the development process rather than the production build. The project could continue to function without immediate action, even if Prettier were to be abandoned.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis, Prettier's abandonment would not likely be directly impactful to the Backpack iOS project. It is a useful tool for maintaining code quality and readability, but it is not critical to the project's core functionality. The project could continue to operate effectively even if Prettier were to be abandoned, and there are several alternative code formatters available that could be used as replacements. Therefore, the abandonment of Prettier would not be highly impactful to the project.",
+    "impactful": false
+  }
+}

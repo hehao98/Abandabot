@@ -1,0 +1,66 @@
+{
+  "repo": "alphagov/miller-columns-element",
+  "dep1": "babel-plugin-transform-custom-element-classes",
+  "dep2": "babel-preset-es2015",
+  "dep3": "mocha",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The babel-plugin-transform-custom-element-classes is crucial for the project as it enables the use of Custom Elements in environments that do not natively support ES6 classes, such as Internet Explorer 11. Given that the project, miller-columns-element, is a custom element itself and aims to support a wide range of browsers including Internet Explorer 11, the functionality provided by this plugin is essential for ensuring compatibility across all targeted browsers.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the project's build process, as indicated by its inclusion in the .babelrc configuration. This suggests that the plugin is used during the transpilation of the project's source code, making it a core part of the build chain. Replacing it would require significant changes to the build configuration and potentially the source code to ensure compatibility with an alternative solution.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are alternative Babel plugins and polyfills that can achieve similar functionality, such as babel-plugin-transform-builtin-classes or using a combination of other plugins and polyfills to support Custom Elements in older browsers. However, these alternatives may require additional configuration and testing to ensure they work seamlessly with the project's existing codebase.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While the project supports a wide range of browsers, the trend is towards modern browsers that natively support ES6 classes and Custom Elements. However, as long as the project aims to support older browsers like Internet Explorer 11, the need for such a plugin remains.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of the babel-plugin-transform-custom-element-classes for ensuring browser compatibility, especially for older browsers like Internet Explorer 11, its abandonment would be impactful to the project. The dependency is deeply integrated into the build process, and while there are alternatives, they would require significant effort to implement and test. Therefore, the abandonment of this dependency would likely be directly impactful to the project.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The babel-preset-es2015 is used in the build process of the project, specifically for transforming ES2015 (ES6) code to a version compatible with older browsers. This is crucial for ensuring the project works across a wide range of browsers, including Internet Explorer 11. Given that the project is a web component intended for use on GOV.UK, broad browser compatibility is essential. Therefore, the functionality provided by babel-preset-es2015 is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the build process, as indicated by the 'build-umd' and 'build-esm' scripts in the package.json file. It is used in conjunction with other Babel plugins and presets. While it is a part of the build chain, replacing it would require adjustments to the build configuration but would not necessitate changes to the core application logic. Thus, the integration is significant but not deeply embedded in the project's codebase.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to babel-preset-es2015, such as babel-preset-env, which is more flexible and automatically determines the Babel plugins and polyfills you need based on your target environments. Given the availability of suitable alternatives that can provide the same or better functionality, replacing babel-preset-es2015 would not be particularly difficult.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. As JavaScript and web standards evolve, there may be a shift towards using more modern tools and presets that offer better performance and compatibility. However, as long as the project's target browsers remain the same, the immediate need to replace babel-preset-es2015 is not high.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of babel-preset-es2015 to the project's build process and browser compatibility, its abandonment would be impactful. However, the availability of suitable alternatives and the moderate likelihood of external changes necessitating a replacement mitigate the impact. Therefore, while the abandonment would be noteworthy, it would not be directly impactful to the project in the short term.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "Mocha is used as a testing framework in the project, which is crucial for ensuring the reliability and correctness of the code. Testing is a fundamental part of the development process, and Mocha provides the necessary infrastructure to write and run tests. Given its role in the project's development workflow, the functionality provided by Mocha is highly important.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "Mocha is integrated into the project's testing setup, as seen in the `karma.config.js` file where it is listed as a framework. However, its integration is limited to the testing environment and does not deeply affect the core functionality or the build process of the project. Replacing Mocha would require adjustments to the testing configuration but would not necessitate extensive changes to the project's main codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative testing frameworks available for JavaScript, such as Jest, Jasmine, and QUnit, which could serve as suitable replacements for Mocha. These alternatives offer similar functionalities and could be integrated into the project with some configuration changes. The availability of these alternatives makes it less difficult to replace Mocha.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on Mocha's abandonment is relatively low. Mocha is a well-established testing framework with a large user base and active maintenance. While the possibility of abandonment cannot be entirely ruled out, it is not a common occurrence for widely-used projects like Mocha.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of Mocha in the project's testing process, its limited integration depth, the availability of alternative testing frameworks, and the low likelihood of its abandonment, the impact of Mocha's hypothetical abandonment on the project would be moderate. While it would require some effort to replace Mocha, the project would not be severely disrupted.",
+    "impactful": false
+  }
+}
