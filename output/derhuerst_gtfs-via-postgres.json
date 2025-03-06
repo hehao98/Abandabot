@@ -1,0 +1,66 @@
+{
+  "repo": "derhuerst/gtfs-via-postgres",
+  "dep1": "@graphile/postgis",
+  "dep2": "sample-gtfs-feed",
+  "dep3": "csv-parser",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @graphile/postgis dependency provides essential geospatial functionality for the project, enabling it to handle geospatial data within PostgreSQL and expose it via GraphQL. Given the project's focus on processing GTFS (General Transit Feed Specification) data, which inherently includes geospatial information, the functionality provided by @graphile/postgis is crucial for the project's core operations.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the project through a single script (scripts/run-postgraphile.js) where it is used to enhance the PostGraphile server with PostGIS support. While this indicates a relatively shallow integration, the functionality it provides is critical for the project's geospatial data handling. The ease of integration suggests that replacing it would not be overly complex, but the critical nature of its functionality means that any replacement would need to be carefully managed.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are alternative packages and plugins that provide geospatial functionality for PostgreSQL and GraphQL, such as PostGIS itself and other GraphQL plugins. However, @graphile/postgis is specifically designed to work seamlessly with PostGraphile, making it a preferred choice for projects using PostGraphile. While alternatives exist, finding one that offers the same level of integration and ease of use with PostGraphile could be challenging.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While the dependency is crucial for the project's geospatial data handling, the broader ecosystem of geospatial tools and libraries is robust. Changes in the geospatial data standards or significant advancements in geospatial technology could necessitate a reevaluation of the dependency, but such changes are not imminent.",
+      "score": 3
+    },
+    "reasoning": "Given the critical role of @graphile/postgis in enabling geospatial data handling within the project, its abandonment would be impactful. However, the relatively shallow integration and the availability of alternatives mitigate the potential impact. The project would need to find a suitable replacement that offers similar functionality and integration with PostGraphile, but the transition could be managed without significant disruption.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The dependency 'sample-gtfs-feed' is used in multiple test scripts and an example script within the project 'gtfs-via-postgres'. It provides a sample GTFS feed for testing purposes, which is crucial for ensuring the functionality and reliability of the project. Given its role in testing, which is a fundamental part of the development process, the functionality provided by this dependency is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the project through various test scripts and an example script. It is used to simulate GTFS feed data for testing different functionalities of the project. However, its usage is limited to testing scenarios and does not deeply integrate into the core functionality of the project. Therefore, while it is integrated into the project, it is not deeply embedded in the core codebase.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "Given that 'sample-gtfs-feed' is a sample dataset for testing, there are likely alternative datasets or methods that could be used for testing GTFS feed processing. The availability of alternative packages or methods to generate or simulate GTFS feed data for testing purposes is high. Therefore, replacing this dependency with an alternative would not be difficult.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. Since 'sample-gtfs-feed' is used for testing purposes, changes in the external environment are less likely to directly impact the necessity of this dependency. The project could adapt by using alternative testing datasets or methods without significant disruption.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of 'sample-gtfs-feed' for testing, its moderate level of integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of this dependency would not likely be directly impactful to the project. The project could adapt by using alternative testing datasets or methods without significant disruption.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The csv-parser dependency is used in the benchmark/as-md.js file to parse CSV data. However, the project's main functionality revolves around processing GTFS data using PostgreSQL, and the csv-parser is only used in a benchmarking script. This suggests that the functionality provided by csv-parser is not central to the core operations of the project.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "The csv-parser is used in a single benchmarking script (benchmark/as-md.js) and is not deeply integrated into the project's main codebase. Its usage is limited to parsing CSV data for benchmarking purposes, indicating a shallow level of integration.",
+      "score": 1
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available for parsing CSV data in Node.js, such as papaparse, fast-csv, and neat-csv. These alternatives offer similar functionality and could serve as suitable replacements for csv-parser if needed.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "Given that csv-parser is only used in a benchmarking script and not in the core functionality of the project, it is unlikely that external environmental changes would force the project to act on the dependency's abandonment. The project could easily switch to an alternative CSV parsing library or remove the benchmarking script without significant impact.",
+      "score": 1
+    },
+    "reasoning": "Considering the limited importance of csv-parser to the project's core functionality, its shallow integration, the availability of alternative packages, and the low likelihood of external environmental changes forcing action, the abandonment of csv-parser would not likely be directly impactful to the project.",
+    "impactful": false
+  }
+}

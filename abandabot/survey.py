@@ -159,15 +159,15 @@ def collect_surveys() -> None:
             del survey_candidates[-1]["dep2_report"]["summary"]
             del survey_candidates[-1]["dep3_report"]["summary"]
 
-    os.makedirs("qualtric-cache", exist_ok=True)
+    os.makedirs("output", exist_ok=True)
     for candidate in survey_candidates:
         with open(
-            f"qualtric-cache/{candidate['repo'].replace('/', '_')}.json", "w"
+            f"output/{candidate['repo'].replace('/', '_')}.json", "w"
         ) as f:
             json.dump(candidate, f, indent=2)
 
-    # with open("survey_candidates.json", "w") as f:
-    #    json.dump(survey_candidates, f, indent=2)
+    with open("survey_candidates.json", "w") as f:
+        json.dump(survey_candidates, f, indent=2)
 
     # json_data = json.dumps(survey_candidates, indent=2)
     # compressed_data = base64.b64encode(gzip.compress(json_data.encode())).decode()
@@ -207,7 +207,8 @@ def main():
             )
 
         candidates = pd.read_csv("survey_repos.csv")
-        sample_repos = sorted(candidates.repoSlug.sample(2000))
+        sample_repos = list(candidates.repoSlug)
+        random.shuffle(sample_repos)
 
         with mp.Pool(4) as pool:
             pool.starmap(

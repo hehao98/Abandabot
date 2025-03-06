@@ -1,0 +1,66 @@
+{
+  "repo": "opengovsg/mockpass",
+  "dep1": "jose",
+  "dep2": "eslint",
+  "dep3": "base-64",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The `jose` library is used extensively in the project for handling JSON Web Tokens (JWT), JSON Web Signature (JWS), and JSON Web Encryption (JWE). It is crucial for the security and functionality of the mock Singpass/Corppass/Myinfo v3/sgID v2 server, as it is involved in signing, verifying, encrypting, and decrypting tokens. Given its role in the core operations of the project, the functionality provided by `jose` is highly important.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The `jose` library is deeply integrated into the project's codebase, as evidenced by its usage across multiple files and functions. It is used for key operations such as importing keys, signing tokens, and encrypting data. The library's functions are embedded in critical paths of the application, making it difficult to replace without significant refactoring.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternative libraries available for handling JWTs, JWS, and JWE (such as `jsonwebtoken` and `node-jose`), `jose` offers a comprehensive and modern API that is well-suited for the project's needs. The availability of alternatives does not necessarily make replacement easy, as each library has its own API and behavior, which would require careful consideration and testing to ensure compatibility and security.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While the `jose` library is actively maintained and widely used, changes in security standards or the emergence of new vulnerabilities could necessitate a switch to a different library. However, such changes are not imminent, and the project could continue using `jose` with appropriate monitoring and updates.",
+      "score": 3
+    },
+    "reasoning": "Given the critical role of the `jose` library in the project's security and functionality, its deep integration into the codebase, and the challenges associated with finding and integrating a suitable alternative, the abandonment of `jose` would likely be directly impactful to the project. The project would need to undertake significant effort to replace the library, which could introduce risks and delays.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "ESLint is used for linting JavaScript code, which is crucial for maintaining code quality and consistency. However, the project 'mockpass' does not seem to heavily rely on complex JavaScript features that would make linting critically important. The usage of ESLint is more of a best practice rather than a core functionality requirement.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "ESLint is integrated into the project through configuration files (eslint.config.mjs and .eslintrc.json) and is used in the 'lint' and 'lint-fix' scripts in package.json. The integration is straightforward and does not deeply intertwine with the core logic of the project, making it relatively easy to replace or remove.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to ESLint for JavaScript linting, such as JSHint, Prettier (for formatting), and TSLint (for TypeScript). These alternatives could serve as suitable replacements, providing similar functionality. The availability of these alternatives makes it less difficult to replace ESLint.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "Given the active development and widespread use of ESLint, the likelihood of it being abandoned in the near future is low. Additionally, the project 'mockpass' does not depend on cutting-edge features that might be affected by external environmental changes.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of ESLint to the project, its level of integration, the availability of alternatives, and the likelihood of abandonment, the abandonment of ESLint would not likely be directly impactful to the project. The project could continue to function without ESLint, and there are viable alternatives available if needed.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The base-64 dependency is used for encoding and decoding data in base64 format, which is a common requirement for handling data in web applications, especially in authentication and data transmission scenarios. Given the project's focus on mocking authentication servers (Singpass/Corppass/Myinfo v3/sgID v2), base64 encoding/decoding is likely used in handling tokens or other encoded data. However, the functionality provided by base-64 is relatively straightforward and could be replaced with native JavaScript functions or other libraries if necessary.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The integration depth of base-64 in the project is not explicitly detailed in the provided context. However, given its common use case for encoding/decoding, it is likely used in specific parts of the codebase related to handling authentication tokens or similar data. The replacement would require identifying all instances where base-64 is used and substituting it with an alternative solution, which could be moderately time-consuming but not overly complex.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to base-64 for encoding and decoding data in base64 format, including native JavaScript functions (btoa() and atob()) and other npm packages like 'js-base64'. These alternatives are readily available and can provide the same functionality with minimal changes to the codebase.",
+      "score": 1
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. Base64 encoding/decoding is a stable and widely used standard, and the base-64 package itself is well-maintained. Changes in the environment that would necessitate a replacement of this dependency are unlikely in the near future.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance, integration depth, availability of alternatives, and likelihood of environmental changes, the abandonment of the base-64 dependency would not likely be directly impactful to the project. The functionality it provides is important but not critical, and there are readily available alternatives that could be used with minimal effort.",
+    "impactful": false
+  }
+}

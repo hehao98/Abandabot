@@ -1,0 +1,66 @@
+{
+  "repo": "mojaloop/ml-testing-toolkit",
+  "dep1": "@hapi/good",
+  "dep2": "nodemon",
+  "dep3": "replace",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @hapi/good dependency is used for process monitoring in the project. Given the project's focus on testing and integration, monitoring is crucial for ensuring the reliability and performance of the testing toolkit. However, the dependency is being deprecated, and the project might already be using or considering alternative logging solutions.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "@hapi/good is integrated into the project as part of the hapi ecosystem, which is used for building the web framework. Given that the project is built around the hapi framework, replacing @hapi/good could require significant changes to the logging and monitoring setup, especially if it's deeply integrated into the application's core functionalities.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative logging plugins available for the hapi framework, as mentioned in the @hapi/good README. This suggests that finding a suitable replacement that provides similar functionality is feasible. The availability of alternatives reduces the difficulty of replacing @hapi/good.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "Given that @hapi/good is explicitly marked for deprecation by the end of 2020, the likelihood of external environmental changes forcing the project to act on its abandonment is high. The project must consider this deprecation in its maintenance and update plans.",
+      "score": 5
+    },
+    "reasoning": "Considering the importance of process monitoring in the project, the depth of @hapi/good's integration, the availability of alternatives, and the high likelihood of needing to act due to its deprecation, the abandonment of @hapi/good is likely to be impactful to the project. The project should plan for its replacement to ensure continued reliability and performance of the testing toolkit.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The dependency 'nodemon' is used in the development environment to automatically restart the Node.js application when file changes are detected. This functionality is crucial during the development phase as it significantly speeds up the development process by eliminating the need to manually restart the server after every change. However, it is not directly involved in the production environment or the core functionality of the Mojaloop Testing Toolkit. Therefore, while important for development, its absence would not directly impact the production capabilities of the project.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "Nodemon is integrated into the project as a development dependency and is used in the 'dev' script within the package.json file. Its usage is straightforward and limited to restarting the Node.js application during development. The integration depth is minimal, as it does not interact with the core logic or other dependencies of the project. Replacing or removing nodemon would require minimal changes, primarily to the development scripts.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to nodemon that provide similar functionality, such as 'pm2', 'forever', and 'node-dev'. These alternatives can also automatically restart Node.js applications upon file changes and are widely used in the Node.js ecosystem. The availability of these alternatives makes it relatively easy to replace nodemon if necessary, with minimal impact on the development workflow.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on nodemon's abandonment is low. Nodemon is a well-established tool with a large user base and active maintenance. Additionally, its role is limited to the development environment, and there are several viable alternatives available. Therefore, it is unlikely that the project would be forced to act on nodemon's abandonment due to external factors.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis, nodemon plays a significant role in the development process by automating the restart of the Node.js application upon file changes. However, its impact is limited to the development environment, and there are several viable alternatives available. The integration depth is minimal, and the likelihood of external environmental changes forcing action on its abandonment is low. Therefore, while nodemon is important for development efficiency, its abandonment would not be directly impactful to the project's production capabilities.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The 'replace' dependency is used in multiple files across the project for string manipulation tasks such as replacing headers, paths, and other string values. These tasks are crucial for the correct functioning of the Mojaloop Testing Toolkit, especially in handling API requests and responses, and in transforming data formats. The functionality provided by 'replace' is integral to the project's operations, making it highly important.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The 'replace' dependency is integrated into various parts of the project's codebase, including HTTP agent management, API route handling, and data transformation logic. Its usage is spread across different modules, indicating a deep integration. Replacing 'replace' would require significant changes to the codebase, affecting multiple functionalities.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that could potentially replace 'replace', such as 'string-replace-async', 'replace-in-file', and 'sed.js'. These alternatives offer similar functionalities for string manipulation and file content replacement. However, the ease of replacement would depend on the specific use cases and the extent of 'replace's integration in the project.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While 'replace' is a widely used package, the JavaScript ecosystem is dynamic, and changes in the ecosystem or the package itself could necessitate a replacement. However, there is no immediate indication that such changes are imminent.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of the 'replace' dependency to the project's functionality, its deep integration into the codebase, the availability of alternative packages, and the moderate likelihood of external changes necessitating action, the abandonment of 'replace' would likely be impactful to the project. The project would need to undertake significant effort to replace 'replace' and ensure that all functionalities continue to work as expected.",
+    "impactful": true
+  }
+}

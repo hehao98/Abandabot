@@ -1,0 +1,66 @@
+{
+  "repo": "IHTSDO/sct-browser-frontend",
+  "dep1": "grunt",
+  "dep2": "grunt-contrib-handlebars",
+  "dep3": "canvg",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "Grunt is used for building the project, including tasks like cleaning, concatenating, uglifying, and copying files. These tasks are essential for preparing the project for deployment. The project's README explicitly mentions running `grunt` to build all widgets and create distribution files, indicating that Grunt plays a critical role in the build process.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "Grunt is deeply integrated into the project's build process, as evidenced by the Gruntfile.js, which configures various tasks such as clean, concat, uglify, and copy. The Dockerfile also includes a step to run Grunt as part of the build process. This deep integration suggests that replacing Grunt would require significant changes to the build process.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to Grunt, such as Gulp, Webpack, and npm scripts, which can perform similar build tasks. However, transitioning to an alternative would require rewriting the build configuration and potentially modifying the project's structure and dependencies. The availability of alternatives does not necessarily make the transition easy, especially for a project with a complex build process.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on Grunt's abandonment is moderate. While Grunt is a widely used tool, the JavaScript ecosystem evolves rapidly, and tools can fall out of favor or become deprecated. However, Grunt has been a stable part of the ecosystem for many years, and its abandonment would likely be a gradual process rather than a sudden event.",
+      "score": 3
+    },
+    "reasoning": "Given Grunt's critical role in the build process and its deep integration into the project, its abandonment would likely be impactful. The project relies on Grunt for essential build tasks, and replacing it would require significant effort. While there are alternatives available, the transition would not be trivial. Therefore, the abandonment of Grunt would likely be directly impactful to the project.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The grunt-contrib-handlebars dependency is used for precompiling Handlebars templates to JST files, which is a crucial step in the build process of the project. Given that the project relies on Grunt for building and the dependency is directly involved in the build task, its functionality is important for the project's build process. However, the project's README does not explicitly detail the criticality of Handlebars templates in the application's runtime, suggesting that while important, it may not be the most critical dependency.",
+      "score": 4
+    },
+    "integration": {
+      "reasoning": "The integration of grunt-contrib-handlebars into the project appears to be straightforward, with its usage limited to the Gruntfile.js for the build process. There is no evidence of deep integration into the project's codebase beyond the build scripts. This suggests that while it is integrated into the build process, it does not deeply intertwine with the application's core logic or runtime behavior.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to grunt-contrib-handlebars for precompiling Handlebars templates, including other Grunt plugins like grunt-handlebars-compiler, or even moving away from Grunt to other build tools like Webpack or Gulp that have their own Handlebars compilation plugins. The availability of these alternatives suggests that replacing grunt-contrib-handlebars, while requiring some effort, is feasible.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While the project currently uses Grunt for its build process, the JavaScript ecosystem is known for its rapid evolution, and there is always a possibility that the project may need to migrate to a more modern build tool in the future. However, there is no immediate indication that such a change is imminent.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of grunt-contrib-handlebars in the build process, its relatively shallow integration into the project, the availability of alternatives, and the moderate likelihood of external changes forcing action, the abandonment of this dependency would have a moderate impact on the project. It would necessitate some effort to replace or migrate away from, but it is not likely to be directly impactful to the project's runtime or core functionality.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The canvg library is used for rendering SVG images on Canvas, which is a specific functionality. However, based on the provided context, it is not clear how central this functionality is to the IHTSDO/sct-browser-frontend project. The project's README does not mention SVG rendering as a core feature, and the usage of canvg is only found in the Gruntfile.js, suggesting it might be used for build or development purposes rather than in the main application logic. Therefore, the importance of canvg to the project is considered low.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "The integration of canvg in the project appears to be minimal. It is only referenced in the Gruntfile.js, which suggests it is used during the build process rather than being deeply integrated into the application's core functionality. This indicates that replacing canvg would likely not require significant changes to the project's codebase.",
+      "score": 1
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative libraries available that can render SVG images on Canvas, such as Fabric.js, Snap.svg, and svg.js. These alternatives provide similar functionality and could serve as suitable replacements for canvg. The availability of these alternatives makes it relatively easy to replace canvg if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The canvg library is used for a specific functionality (SVG rendering on Canvas) that is not central to the project's main features. Additionally, the availability of alternative libraries reduces the risk of being forced to act due to abandonment.",
+      "score": 1
+    },
+    "reasoning": "Considering the low importance of canvg to the project, its minimal integration, the availability of alternative libraries, and the low likelihood of external environmental changes forcing action, the abandonment of canvg would not likely be directly impactful to the IHTSDO/sct-browser-frontend project.",
+    "impactful": false
+  }
+}

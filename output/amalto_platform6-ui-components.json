@@ -1,0 +1,66 @@
+{
+  "repo": "amalto/platform6-ui-components",
+  "dep1": "base-64",
+  "dep2": "@types/react-intl",
+  "dep3": "md5",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The base-64 dependency is used in multiple components for encoding and decoding data, which is a fundamental operation in the project. It is used in the tree component, key-value-editor, and helpers module, indicating its importance across different parts of the application. The functionality provided by base-64 is crucial for handling data in a specific format required by the project.",
+      "score": 4
+    },
+    "integration": {
+      "reasoning": "The base-64 dependency is integrated into several key components and utility functions within the project. It is used directly in the code for encoding and decoding operations, which are essential for the functionality of these components. The depth of its integration suggests that replacing it would require significant changes to the codebase, affecting multiple components and utility functions.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that provide similar base64 encoding and decoding functionality, such as 'js-base64' and 'buffer'. These alternatives are well-maintained and could serve as suitable replacements. However, the ease of replacement would depend on the specific implementation details and how tightly the current base-64 dependency is integrated into the project.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While the base-64 package is currently stable and widely used, changes in the JavaScript ecosystem or security vulnerabilities could necessitate a replacement. However, such changes are not imminent, giving the project some time to plan for a potential transition.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of the base-64 dependency to the project, its deep integration, the availability of alternatives, and the likelihood of external changes, the abandonment of this dependency would be impactful but manageable. The project would need to allocate resources for a potential replacement, but the impact would not be immediate or catastrophic.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The dependency @types/react-intl provides type definitions for react-intl, which is used for internationalization in React applications. Given that the project is a UI components library, internationalization is likely a critical feature to support multiple languages and locales. However, the dependency's README mentions that react-intl provides its own type definitions, making @types/react-intl redundant. This reduces its importance to the project.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "The dependency @types/react-intl is a TypeScript type definition package, which means it is used at compile time and not at runtime. Its integration into the project's codebase is minimal, as it only provides type information. Removing or replacing it would not require significant changes to the project's code.",
+      "score": 1
+    },
+    "alternatives": {
+      "reasoning": "Since react-intl provides its own type definitions, @types/react-intl is not strictly necessary. The project can directly use the type definitions provided by react-intl itself, making the replacement straightforward and eliminating the need for alternative packages.",
+      "score": 1
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The dependency is a TypeScript type definition package, and its abandonment would not directly affect the runtime behavior of the project. Additionally, the project can switch to using the type definitions provided by react-intl itself without any external pressure.",
+      "score": 1
+    },
+    "reasoning": "Given that @types/react-intl is a TypeScript type definition package for react-intl and react-intl provides its own type definitions, the dependency is redundant. Its abandonment would have minimal impact on the project, as the project can easily switch to using the type definitions provided by react-intl itself. The dependency's importance, integration depth, and the availability of alternatives are all low, making its abandonment unlikely to be impactful.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The md5 dependency is used in the project to generate MD5 hashes for email addresses to create Gravatar URLs. This functionality is specific and not core to the main features of the project, which are UI components. The use of md5 is limited to a single function within the helpers module, indicating its role is auxiliary rather than central.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "The md5 dependency is integrated into the project in a minimal way, being used only within a single function (`getGravatarUrl`) in the helpers module. This limited integration suggests that replacing or removing md5 would not require extensive changes to the project's codebase.",
+      "score": 1
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that provide MD5 hashing functionality, such as 'crypto-js/md5' and 'js-md5'. These alternatives are well-maintained and could serve as suitable replacements with minimal changes to the code. The availability of these alternatives makes the replacement of md5 relatively straightforward.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. MD5 hashing is a well-established and stable technology, and the specific use case within the project (generating Gravatar URLs) is unlikely to be affected by external changes.",
+      "score": 1
+    },
+    "reasoning": "Given the limited importance of the md5 dependency to the project, its minimal integration, the availability of suitable alternatives, and the low likelihood of external changes necessitating action, the abandonment of md5 would not likely be directly impactful to the project.",
+    "impactful": false
+  }
+}

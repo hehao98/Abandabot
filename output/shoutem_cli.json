@@ -1,0 +1,66 @@
+{
+  "repo": "shoutem/cli",
+  "dep1": "request-promise-native",
+  "dep2": "mkdirp",
+  "dep3": "decompress",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The dependency `request-promise-native` is used in the project to make HTTP requests to fetch the latest version of a package from npm. This functionality is crucial for the project as it directly impacts the ability to retrieve and work with the latest versions of dependencies, which is a common requirement in development and build processes. Given its role in a critical path of the project's functionality, the importance of this dependency is high.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency `request-promise-native` is integrated into the project in a specific file (`src/services/npmjs.js`) where it is used to make HTTP requests. The integration is not deeply woven into the project's codebase; it is used in a single, isolated context. This makes the dependency relatively easy to replace or remove without significant refactoring of the project's codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that can serve as suitable replacements for `request-promise-native`, such as `axios`, `node-fetch`, and `got`. These alternatives provide similar functionality for making HTTP requests and are actively maintained. The availability of these alternatives makes it relatively easy to replace `request-promise-native` in the project.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "Given that `request-promise-native` is already deprecated and no new changes are expected, the likelihood of external environmental changes forcing the project to act on the dependency's abandonment is high. The deprecation of `request`, on which `request-promise-native` depends, further increases this likelihood. The project may need to consider replacing this dependency to avoid potential security vulnerabilities and compatibility issues in the future.",
+      "score": 5
+    },
+    "reasoning": "Considering the importance of the functionality provided by `request-promise-native` to the project, the ease of replacing it due to its limited integration and the availability of alternatives, and the high likelihood of external environmental changes forcing action, the abandonment of this dependency would likely be impactful to the project. However, the impact can be mitigated by planning and executing a replacement strategy in a timely manner.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The `mkdirp` dependency is used in the Shoutem CLI project to ensure that directories exist before performing operations that require them. This functionality is crucial for the correct execution of the CLI, especially in the `download-cached.js` and `cli-paths.js` files where it is used to create directories for caching and local storage paths. Without `mkdirp`, the CLI might fail to create necessary directories, leading to errors in file operations.",
+      "score": 4
+    },
+    "integration": {
+      "reasoning": "The `mkdirp` dependency is integrated into the Shoutem CLI project in a straightforward manner, primarily used in two files for directory creation. Its usage is not deeply intertwined with the core logic of the CLI but is essential for the correct execution of specific operations. Replacing `mkdirp` would require identifying and updating these specific usages, which is manageable but would require careful attention to ensure no functionality is lost.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to `mkdirp` that provide similar functionality, such as `fs-extra` which includes a `mkdirp` method, and `make-dir`. These alternatives are well-maintained and could serve as suitable replacements. The availability of these alternatives makes it less difficult to replace `mkdirp` if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. `mkdirp` is a well-established package with a stable API, and its functionality is not likely to be affected by changes in the Node.js ecosystem or other external factors. However, the project should still monitor the status of `mkdirp` to ensure continued compatibility and security.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of `mkdirp` to the Shoutem CLI project for directory creation, its moderate level of integration, the availability of suitable alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of `mkdirp` would not likely be directly impactful to the project. However, the project should still consider monitoring the status of `mkdirp` and evaluating alternatives to ensure continued reliability and security.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The `decompress` dependency is used in multiple critical parts of the Shoutem CLI project, including platform archive handling, package management, and platform services. It is essential for extracting archives, which is a core functionality for managing extensions and platforms. Given its widespread use and critical role in the project's operations, the functionality provided by `decompress` is highly important.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "`decompress` is deeply integrated into the Shoutem CLI project, with its usage spread across several services such as platform-archive.js, packer.js, platform.js, and decompress.js. It is used for extracting archives in various contexts, indicating a high level of integration. Replacing it would require significant changes across multiple files and services, making the process difficult.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternative packages available for archive extraction in the Node.js ecosystem, such as `adm-zip` and `yauzl`, finding a suitable replacement that offers the same level of functionality and ease of use as `decompress` could be challenging. The project would need to evaluate these alternatives carefully to ensure they meet all requirements, which adds to the difficulty of replacement.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While `decompress` is a well-maintained library, the Node.js ecosystem is dynamic, and changes in dependencies or security vulnerabilities could necessitate a switch. However, such changes are not imminent, making the likelihood moderate.",
+      "score": 3
+    },
+    "reasoning": "Considering the critical role of `decompress` in the Shoutem CLI project, its deep integration across multiple services, the challenges in finding a suitable replacement, and the moderate likelihood of external changes forcing action, the abandonment of `decompress` would likely be directly impactful to the project.",
+    "impactful": true
+  }
+}

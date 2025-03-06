@@ -1,0 +1,66 @@
+{
+  "repo": "nimiq/hub",
+  "dep1": "patch-package",
+  "dep2": "common-shakeify",
+  "dep3": "webpack-subresource-integrity",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The patch-package dependency is used to apply patches to other dependencies in the project. This functionality is crucial for maintaining the project's stability and ensuring that any necessary fixes to dependencies are applied. Without patch-package, the project would be more vulnerable to bugs and issues in its dependencies, which could significantly impact its functionality and reliability.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of patch-package in the project is relatively straightforward, as it is primarily used in the postinstall script to apply patches after dependencies are installed. This means that its integration is not deeply embedded in the project's codebase, making it easier to replace if necessary. However, the process of applying patches is critical for the project's stability, so any replacement would need to provide a similar level of functionality.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are a few alternatives to patch-package, such as using npm or yarn's native patching features, or forking the dependencies that need patches. However, these alternatives may not be as convenient or as widely supported as patch-package. The availability of alternatives is somewhat limited, and finding a suitable replacement that offers the same ease of use and functionality could be challenging.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. Patch-package is a well-established tool with a strong user base, and it is unlikely to be abandoned without warning. However, the project should still be prepared for the possibility of needing to find a replacement or alternative solution in the future.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of patch-package in applying necessary fixes to dependencies, its abandonment would likely be impactful to the project. However, the relatively straightforward integration and the availability of some alternatives mitigate this impact to some extent. The project should monitor the status of patch-package and be prepared to explore alternatives if necessary.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The common-shakeify plugin is used in the build process of the Nimiq Hub project, specifically for tree shaking in the build:bitcoinjs script. Tree shaking is a technique used to remove unused code from the final bundle, which can significantly reduce the size of the application. However, the project does not heavily rely on this functionality for its core operations, and the impact of its absence would be limited to potentially larger bundle sizes for the BitcoinJS part of the application.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "The integration of common-shakeify in the Nimiq Hub project is minimal and limited to a single build script (build:bitcoinjs). It is not deeply integrated into the core functionality or the main build process of the project. Replacing or removing it would require minimal changes to the build script and would not affect the overall structure or functionality of the project.",
+      "score": 1
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to common-shakeify available in the JavaScript ecosystem, such as rollup, webpack's built-in tree shaking capabilities, and other browserify plugins. These alternatives can provide similar or even better tree shaking functionality. The availability of these alternatives makes it relatively easy to replace common-shakeify if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The project's core functionality does not depend on common-shakeify, and the build process can be easily adapted to use alternative tools. Additionally, the project's build process is not exposed to end-users, reducing the impact of any changes in the build tools.",
+      "score": 1
+    },
+    "reasoning": "Given the minimal importance of common-shakeify to the Nimiq Hub project, its shallow integration, the availability of suitable alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of common-shakeify would not likely be directly impactful to the project. The project can easily adapt its build process to use alternative tools without affecting its core functionality or user experience.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The webpack-subresource-integrity dependency is used to ensure the integrity of subresources loaded by the application, which is crucial for security. Given the nature of the Nimiq Hub as a financial application handling user accounts and transactions, security is of paramount importance. Therefore, the functionality provided by this dependency is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the build process of the project, as indicated by its presence in the devDependencies section of the package.json file. However, without specific code snippets showing its usage, it's difficult to assess the depth of its integration. Given that it's a build tool rather than a core part of the application logic, its integration is likely not deeply embedded in the codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are alternative packages available that can provide similar functionality, such as 'subresource-integrity-webpack-plugin'. These alternatives can also ensure the integrity of subresources, making it feasible to replace webpack-subresource-integrity if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The dependency is related to build-time security features, and changes in the environment that would necessitate a replacement are unlikely.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of the functionality provided by webpack-subresource-integrity for security, its moderate level of integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of this dependency would not likely be directly impactful to the project. The project could transition to an alternative without significant disruption.",
+    "impactful": false
+  }
+}
