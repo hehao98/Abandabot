@@ -1,0 +1,66 @@
+{
+  "repo": "reaviz/reakeys",
+  "dep1": "ctrl-keys",
+  "dep2": "eslint-plugin-react-hooks",
+  "dep3": "vite-plugin-dts",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The ctrl-keys dependency is central to the functionality of reakeys, as it provides the core mechanism for handling keybindings. The project's README explicitly states that reakeys is a 'React Hook for Ctrl-keys Hotkeys', indicating that ctrl-keys is not just a peripheral dependency but a foundational one. The usage of ctrl-keys in the useHotkeys.ts file further underscores its importance, as it is directly involved in registering and removing global and element-specific shortcuts.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of ctrl-keys within reakeys is deep and multifaceted. It is used in various parts of the useHotkeys.ts file to handle different types of key events (keypress, keyup, keydown) and to manage both global and element-specific shortcuts. The dependency is woven into the core logic of the hook, making it difficult to replace without significant refactoring.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are other keybindings libraries available, such as tinykeys, hotkeys, and shortcuts, ctrl-keys offers specific features that are utilized by reakeys, including support for multiple keys sequences and dynamic addition/removal of keybindings. Finding a suitable alternative that provides the same functionality and performance might be challenging, especially considering the specific integration points within reakeys.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. ctrl-keys is a stable and actively maintained library, as indicated by its README and the frequency of updates. However, the risk cannot be entirely ruled out, especially if the maintainer decides to abandon the project or if a critical security vulnerability is discovered.",
+      "score": 2
+    },
+    "reasoning": "Given the central role of ctrl-keys in the functionality of reakeys, its deep integration within the project, and the challenges associated with finding a suitable alternative, the abandonment of ctrl-keys would likely be directly impactful to the project. The project would need to undergo significant refactoring to replace ctrl-keys, and there is a risk of introducing bugs or performance issues during the transition.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The eslint-plugin-react-hooks is a development dependency used for linting React hooks. While it is important for maintaining code quality and preventing common errors in React hooks usage, it does not directly impact the runtime functionality of the reakeys project. Therefore, its importance to the project is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The eslint-plugin-react-hooks is integrated into the project's linting process, as indicated by its presence in the devDependencies section of the package.json file. However, it is not deeply integrated into the core functionality or the runtime code of the project. Replacing it would mainly involve updating the linting configuration.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives available for linting React hooks, such as custom ESLint rules or other ESLint plugins. These alternatives could provide similar functionality, making it relatively easy to replace eslint-plugin-react-hooks if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The eslint-plugin-react-hooks is maintained by the React team, and its abandonment would likely be accompanied by a transition plan or alternative recommendations. Additionally, the project could continue using the last stable version of the plugin for a significant period.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of eslint-plugin-react-hooks to the project, its shallow integration, the availability of alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of this dependency would not likely be directly impactful to the reakeys project.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The vite-plugin-dts dependency is used to generate type declaration files (.d.ts) for the project. This functionality is crucial for TypeScript projects as it ensures that the types are correctly exported and can be used by other projects. Given that reakeys is a TypeScript project and the types are part of its public API, the functionality provided by vite-plugin-dts is highly important.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "vite-plugin-dts is integrated into the build process of the project, specifically in the vite.config.ts file. It is used to generate type declaration files during the build. While it is a significant part of the build process, replacing it would not require extensive changes to the codebase. The integration is deep in terms of the build process but not deeply embedded in the application logic.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are alternative packages that can generate type declaration files for TypeScript projects, such as tsc (TypeScript compiler) itself or other plugins like rollup-plugin-typescript2. However, these alternatives may require more configuration or may not integrate as seamlessly with Vite. The availability of alternatives makes it possible to replace vite-plugin-dts, but it may not be as straightforward or efficient.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The project is not directly dependent on external services or APIs that could change. However, if Vite or TypeScript introduces breaking changes that affect how type declaration files are generated, the project might need to find an alternative solution.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of vite-plugin-dts to the project's build process and the availability of alternatives, the abandonment of this dependency would be impactful but not critically so. The project could find and integrate an alternative solution, though it might require some effort.",
+    "impactful": true
+  }
+}

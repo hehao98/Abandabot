@@ -1,0 +1,66 @@
+{
+  "repo": "FHIR/GoFSH",
+  "dep1": "flat",
+  "dep2": "@typescript-eslint/eslint-plugin",
+  "dep3": "fs-extra",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The 'flat' dependency is used in multiple parts of the GoFSH project, including the optimization and processing of FHIR resources. It plays a crucial role in flattening and unflattening objects, which is essential for handling nested structures in FHIR definitions. Given its widespread use and the critical functionality it provides, the dependency is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The 'flat' dependency is integrated into several key components of the GoFSH project, including the optimizer plugins, processor, and extractor. Its usage is spread across different functionalities, indicating a deep integration within the project's codebase. Replacing it would require significant changes to the code, affecting multiple parts of the project.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "While there are alternative packages that offer similar functionality for flattening and unflattening objects, finding one that matches the specific needs and usage patterns of the GoFSH project could be challenging. The project's reliance on specific features and behaviors of the 'flat' package means that alternatives would need to be carefully evaluated and potentially adapted, making the replacement process difficult.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. The dependency is actively maintained, but the project has noted concerns about upgrading to a major version due to it being an esmodule. This indicates a potential future need to address compatibility issues, though not an immediate one.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of the 'flat' dependency to the GoFSH project, its deep integration, the challenges in finding suitable alternatives, and the moderate likelihood of external changes necessitating action, the abandonment of this dependency would likely be impactful to the project. The project would need to invest significant effort in either adapting to a new version or finding and integrating an alternative package.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @typescript-eslint/eslint-plugin is used for linting TypeScript code, ensuring code quality and consistency. Given that GoFSH is a TypeScript project, maintaining code quality is crucial for the project's maintainability and reliability. However, the core functionality of GoFSH, which is converting FHIR definitions from JSON to FSH, does not directly depend on linting. Therefore, while important for development practices, it is not critical to the project's primary functionality.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The @typescript-eslint/eslint-plugin is integrated into the project's development workflow, as indicated by the 'lint' and 'lint:fix' scripts in the package.json. It is used alongside other development tools like Prettier and Jest. However, its integration is limited to the development phase and does not affect the runtime or the core functionality of GoFSH. Replacing it would require adjustments to the linting configuration but would not impact the project's operational aspects.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to @typescript-eslint/eslint-plugin for linting TypeScript code, such as TSLint (though deprecated in favor of @typescript-eslint/eslint-plugin), ESLint with TypeScript support, and other static analysis tools. These alternatives can provide similar functionality, making it feasible to replace @typescript-eslint/eslint-plugin if necessary. However, transitioning to an alternative would require some effort to adjust the linting rules and configurations.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The @typescript-eslint/eslint-plugin is widely used and supported by the TypeScript community. While any software can become abandoned, the active community and the essential role of linting in TypeScript projects make it less likely for this specific plugin to be abandoned without a suitable replacement or alternative being available.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of @typescript-eslint/eslint-plugin for maintaining code quality in a TypeScript project, its moderate level of integration in the development workflow, the availability of alternatives, and the low likelihood of abandonment due to external factors, the abandonment of this dependency would not be directly impactful to the core functionality of GoFSH. However, it would require some effort to replace and adjust the linting configuration, affecting the development process but not the project's operational aspects.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The fs-extra package is used extensively throughout the GoFSH project for file system operations, including reading and writing files, ensuring directories exist, and handling JSON and XML files. Given its widespread use in critical operations such as processing FHIR resources and generating FSH output, the functionality provided by fs-extra is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "fs-extra is deeply integrated into the GoFSH project, with numerous imports across various files and modules. It is used in core functionalities such as processing FHIR resources, handling file operations, and managing project configurations. Replacing fs-extra would require significant refactoring of the codebase to adapt to a different file system utility library.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives to fs-extra, such as the native fs module with additional utilities or other third-party libraries like graceful-fs, these alternatives may not offer the same level of convenience and additional features provided by fs-extra. However, the core functionality of file system operations can be replicated with some effort, making the replacement feasible but potentially time-consuming.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While fs-extra is a widely used and maintained package, the Node.js ecosystem is dynamic, and changes in Node.js itself or in the broader ecosystem could impact the utility or necessity of fs-extra. However, given its current stability and widespread adoption, such changes are not immediately foreseeable.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of fs-extra to the GoFSH project, its deep integration, the availability of alternatives, and the likelihood of external changes, the abandonment of fs-extra would be impactful. The project relies heavily on fs-extra for critical file system operations, and while alternatives exist, the transition would require significant effort. Therefore, the abandonment of fs-extra would likely be directly impactful to the project.",
+    "impactful": true
+  }
+}

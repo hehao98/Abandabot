@@ -1,0 +1,66 @@
+{
+  "repo": "effector/patronum",
+  "dep1": "tsd",
+  "dep2": "babel-plugin-tester",
+  "dep3": "@babel/core",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The `tsd` dependency is used extensively in the project for testing TypeScript type definitions. It is crucial for ensuring the correctness of the type definitions in the project, which is a key aspect of maintaining the quality and reliability of the codebase. Given its role in the testing process, the functionality provided by `tsd` is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The `tsd` dependency is integrated into the project's test suite, specifically in the `test:types` script. It is used across multiple test files to assert the correctness of type definitions. While its integration is significant within the testing context, it is not deeply embedded in the core functionality or the main codebase of the project. Therefore, its integration is moderately difficult to replace.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are alternative packages available for testing TypeScript type definitions, such as `dtslint` and `ts-expect`. These alternatives provide similar functionality and could potentially serve as suitable replacements for `tsd`. However, switching to an alternative would require some effort to adapt the existing test suite to the new tool's API and features.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is relatively low. `tsd` is a well-established tool in the TypeScript ecosystem, and its abandonment would likely be gradual, giving the project maintainers time to find and transition to an alternative. However, the possibility of such changes cannot be entirely ruled out, especially if a critical issue or security vulnerability is discovered in `tsd`.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of `tsd` in ensuring the correctness of type definitions, its moderate level of integration in the project, the availability of alternative packages, and the relatively low likelihood of external environmental changes forcing action, the abandonment of `tsd` would be impactful but not critically so. The project could transition to an alternative with some effort, minimizing the direct impact on the project's core functionality.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The babel-plugin-tester is used in the project for testing purposes, specifically in the `src/macro.test.ts` file. It is used to test the babel plugin functionality, which is crucial for ensuring the correctness of the code transformations applied by the babel plugin. However, its role is limited to the development and testing phase and does not directly impact the production functionality of the project.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "The integration of babel-plugin-tester in the project is limited to the testing environment. It is used in a single test file (`src/macro.test.ts`) to test the babel plugin functionality. The dependency is not deeply integrated into the project's core codebase or production build process.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to babel-plugin-tester available in the npm ecosystem, such as jest, mocha, and ava, which can be used for testing babel plugins. These alternatives provide similar functionality and could serve as suitable replacements if babel-plugin-tester were to be abandoned.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The babel-plugin-tester is a stable and widely used tool in the JavaScript ecosystem, and there is no immediate indication that it will be abandoned. Additionally, its role in the project is limited to the testing phase, which is less sensitive to external changes compared to production dependencies.",
+      "score": 1
+    },
+    "reasoning": "Considering the limited role of babel-plugin-tester in the project, its shallow integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of babel-plugin-tester would not likely be directly impactful to the project.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The @babel/core dependency is crucial for the project as it is used for transpiling TypeScript and JavaScript code, which is a fundamental part of the build process. Without it, the project would not be able to compile its source code into a format that can be executed in various environments. This makes the functionality provided by @babel/core highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "@babel/core is deeply integrated into the project's build process, as evidenced by its use in multiple build scripts within the package.json file. Replacing it would require significant changes to the build configuration and potentially the source code itself, making the integration depth quite high.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives to @babel/core, such as TypeScript's own compiler (tsc) or other transpilers like SWC, these alternatives may not offer the same level of compatibility or feature set. Additionally, switching to an alternative would require a thorough evaluation and potentially significant changes to the build process, making the replacement somewhat difficult.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on @babel/core's abandonment is relatively low. @babel/core is a widely used and actively maintained project, and its abandonment would likely be a gradual process with ample warning. However, the possibility cannot be entirely ruled out, especially if a critical security issue were discovered.",
+      "score": 2
+    },
+    "reasoning": "Given the high importance of @babel/core to the project's build process, its deep integration, and the difficulty of finding a suitable alternative, the abandonment of @babel/core would likely be impactful to the project. However, the low likelihood of such an event occurring mitigates the overall impact.",
+    "impactful": true
+  }
+}

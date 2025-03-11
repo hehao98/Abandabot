@@ -1,0 +1,66 @@
+{
+  "repo": "VKCOM/VKUI",
+  "dep1": "@testing-library/jest-dom",
+  "dep2": "@size-limit/webpack",
+  "dep3": "eslint",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @testing-library/jest-dom package provides custom jest matchers to test the state of the DOM, which is crucial for ensuring the UI behaves as expected in tests. Given that VKUI is a React component library, testing the DOM state is essential for verifying component behavior and appearance. Therefore, the functionality provided by @testing-library/jest-dom is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of @testing-library/jest-dom in the project is minimal, as it is only imported once in the jest.setup.ts file. This indicates that while it is used across the project's tests, its integration is not deeply embedded within the codebase. Replacing it would primarily involve updating the jest setup configuration rather than modifying numerous test files.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to @testing-library/jest-dom, such as chai-dom and enzyme, which also provide utilities for DOM testing. However, @testing-library/jest-dom is specifically designed to work seamlessly with @testing-library/react, which is also used in the project. This makes it a more suitable choice, but alternatives do exist and could be considered if necessary.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. @testing-library/jest-dom is a well-maintained library with a large community and is part of the @testing-library ecosystem, which is widely used in the React community. However, the possibility of abandonment cannot be entirely ruled out, especially if the ecosystem shifts towards a different testing paradigm.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of @testing-library/jest-dom for DOM testing in the project, its minimal integration depth, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of this dependency would be impactful but not critically so. The project could transition to an alternative with moderate effort.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @size-limit/webpack plugin is used to track the size of dependencies in the project. While this is a useful tool for maintaining performance and optimizing bundle size, it is not directly involved in the core functionality of the VKUI library, which is a React component library. The primary focus of VKUI is on providing UI components, and while bundle size is important, it is not a core feature. Therefore, the importance of this dependency to the project is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The @size-limit/webpack plugin is integrated into the build process of the project, as indicated by its presence in the devDependencies of the package.json file. However, it is not deeply integrated into the core codebase of VKUI. It is used as a tool during the build process rather than being a part of the library's runtime or component logic. This makes it relatively easy to replace or remove if necessary.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative tools available for tracking and optimizing bundle size in webpack projects, such as webpack-bundle-analyzer and bundlewatch. These tools offer similar functionality and could serve as suitable replacements for @size-limit/webpack. The availability of these alternatives makes it easier to replace the dependency if needed.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The @size-limit/webpack plugin is a development tool, and its abandonment would not directly affect the runtime behavior of the VKUI library. While it is important to keep development tools up to date, the impact of this specific dependency's abandonment would be minimal.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis, the abandonment of the @size-limit/webpack dependency would not likely be directly impactful to the VKUI project. It is a development tool with moderate importance, low integration depth, available alternatives, and low likelihood of external environmental changes forcing action. Therefore, the impact of its abandonment would be minimal.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "ESLint is a crucial tool for maintaining code quality and consistency in JavaScript projects. It is widely used in the VKUI project for linting, as evidenced by its inclusion in the `package.json` file and the presence of multiple ESLint-related plugins and configurations. The project's reliance on ESLint for enforcing coding standards and identifying potential issues in the codebase underscores its importance.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "ESLint is deeply integrated into the VKUI project's development workflow. It is used in various scripts for linting, including `lint:es` and `lint:es:ci`, and is configured with multiple plugins and rules specific to the project's needs. The presence of custom ESLint plugins (`@project-tools/eslint-plugin-vkui`) and configurations indicates a high level of integration. Replacing ESLint would require significant effort to replicate its functionality and ensure compatibility with the existing codebase and development practices.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternative linting tools available, such as JSHint and TSLint, ESLint's extensive plugin ecosystem, configurability, and support for modern JavaScript features make it the preferred choice for many projects, including VKUI. Finding a suitable replacement that offers the same level of functionality and community support would be challenging. Additionally, migrating to an alternative tool would require updating the project's configuration and potentially modifying the codebase to comply with the new tool's rules.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on ESLint's abandonment is relatively low. ESLint is a mature and widely-used tool with a large community and ongoing support. However, changes in the JavaScript ecosystem, such as the introduction of new language features or shifts in community preferences, could potentially impact ESLint's relevance and necessitate a reevaluation of its use in the project.",
+      "score": 2
+    },
+    "reasoning": "Given ESLint's critical role in maintaining code quality and its deep integration into the VKUI project's development workflow, its abandonment would likely be directly impactful. The project relies on ESLint for enforcing coding standards and identifying potential issues, and finding a suitable replacement would be challenging. While the likelihood of ESLint being abandoned is low, the potential impact on the project is significant.",
+    "impactful": true
+  }
+}

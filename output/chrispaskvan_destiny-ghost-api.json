@@ -1,0 +1,66 @@
+{
+  "repo": "chrispaskvan/destiny-ghost-api",
+  "dep1": "lodash",
+  "dep2": "@godaddy/terminus",
+  "dep3": "globals",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "Lodash is used in multiple parts of the project, including authentication, Twilio controller, and helper functions. It provides utility functions like cloneDeep, groupBy, sortBy, camelCase, and sampleSize, which are essential for data manipulation and processing. Given its widespread use and the critical functionality it provides, the dependency is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "Lodash is integrated into several key components of the project, including authentication services, Twilio controller, and helper functions. Its methods are directly used for data manipulation, which suggests a deep integration. Replacing Lodash would require significant refactoring of these components to either implement the utility functions manually or find and integrate alternative libraries.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to Lodash, such as Ramda, Underscore, and native JavaScript methods. However, the choice of an alternative would depend on the specific utility functions used in the project. Some alternatives may not provide all the functionalities used, and integrating a new library would require testing and potential refactoring. The availability of alternatives is high, but the effort to replace Lodash with a suitable alternative is also significant.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of Lodash being abandoned is low, given its widespread use and active maintenance. However, the project should still consider the impact of such an event, as it would require immediate action to replace or reimplement the utility functions provided by Lodash. The risk is mitigated by the active community and the availability of alternatives, but the impact would still be significant.",
+      "score": 2
+    },
+    "reasoning": "Given the importance of Lodash to the project, its deep integration, and the effort required to replace it, the abandonment of Lodash would be impactful. However, the likelihood of such an event is low, and there are alternatives available. The project should monitor the status of Lodash and consider gradual refactoring to reduce dependency on it, but immediate action is not necessary.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @godaddy/terminus dependency is used for graceful shutdown and Kubernetes readiness / liveness checks in the project. Given the project's emphasis on being production-ready and its use of cloud environments, the functionality provided by @godaddy/terminus is crucial for ensuring the application can handle shutdowns gracefully and maintain high availability. This is particularly important in a cloud environment where applications are frequently scaled up and down.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of @godaddy/terminus appears to be minimal, as it is only used in the server.js file for creating a terminus instance. This suggests that while the functionality is important, the depth of its integration into the project's codebase is not extensive. Replacing it would primarily involve updating the server setup code.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that provide similar functionality for graceful shutdowns and health checks, such as 'http-terminator' and 'shutdown-handler'. These alternatives are well-maintained and could serve as suitable replacements, making it relatively easy to switch if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The project's use of @godaddy/terminus is for internal application management (graceful shutdowns and health checks), which is not directly influenced by external factors. However, if the package were to become abandoned, it could pose a risk to the project's ability to manage shutdowns gracefully in the future.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of graceful shutdowns and health checks in a production environment, the abandonment of @godaddy/terminus could be impactful to the project. However, the minimal integration depth and availability of suitable alternatives mitigate this impact. The project could transition to an alternative package with relative ease, reducing the direct impact of the dependency's abandonment.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The 'globals' dependency is used in the project's ESLint configuration to define global variables for the JavaScript environment. While it plays a role in ensuring code quality and consistency, its functionality is not directly tied to the core features of the project, such as querying the Destiny database or sending SMS notifications. Therefore, its importance to the project is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The 'globals' dependency is integrated into the project's ESLint configuration file (eslint.config.mjs). It is used to define global variables for the JavaScript environment, which is a specific and isolated part of the project. Replacing it would require updating the ESLint configuration, but it does not deeply integrate with the core functionality or other parts of the project.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are alternative packages and methods for defining global variables in ESLint configurations, such as manually specifying globals or using other packages that provide similar functionality. However, 'globals' is a well-established package specifically designed for this purpose, making it a preferred choice. Finding a suitable replacement would not be difficult, but it might require some adjustments to the ESLint configuration.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the 'globals' dependency's abandonment is low. The package is stable and widely used in the JavaScript ecosystem, especially in ESLint configurations. Changes in the JavaScript environment or ESLint itself are more likely to prompt updates than the abandonment of the 'globals' package.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of the 'globals' dependency to the project, its limited integration depth, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of 'globals' would not likely be directly impactful to the project. The project could continue to function with minimal adjustments, and the core features would remain unaffected.",
+    "impactful": false
+  }
+}

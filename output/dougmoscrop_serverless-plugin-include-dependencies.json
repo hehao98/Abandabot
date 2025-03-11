@@ -1,0 +1,66 @@
+{
+  "repo": "dougmoscrop/serverless-plugin-include-dependencies",
+  "dep1": "resolve",
+  "dep2": "micromatch",
+  "dep3": "eslint",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The 'resolve' dependency is crucial for the project as it is used to resolve module paths in the project's code. It is directly used in the 'get-dependency-list.js' file to resolve paths for dependencies and in 'include-dependencies.js' to resolve handler paths. This functionality is essential for the plugin to correctly identify and include dependencies in the Serverless package.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The 'resolve' dependency is deeply integrated into the project's code base. It is used in multiple places, including the core functionality of resolving module paths and handling dependencies. Replacing it would require significant changes to the code base, especially in the dependency resolution logic.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternative packages that can resolve module paths, such as 'enhanced-resolve' or 'browser-resolve', they may not provide the exact same functionality or API as 'resolve'. The project's code is specifically written to use 'resolve', and switching to an alternative would require code changes and testing to ensure compatibility.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While 'resolve' is a widely used package, the Node.js ecosystem is dynamic, and changes in Node.js itself or in the way modules are resolved could impact the need for 'resolve'. However, such changes are not imminent or highly likely in the short term.",
+      "score": 3
+    },
+    "reasoning": "Given the importance of the 'resolve' dependency to the project's core functionality, its deep integration into the code base, and the moderate difficulty of finding and integrating a suitable alternative, the abandonment of 'resolve' would likely be impactful to the project. The project relies on 'resolve' for critical path resolution tasks, and finding a replacement that matches its functionality and API would be challenging.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The micromatch package is used for filtering dependencies based on exclusion patterns in the project. This functionality is crucial for the plugin's core purpose of reducing the size of deployed functions by including only necessary dependencies. Without micromatch, the plugin would not be able to effectively filter out unwanted dependencies, significantly impacting its utility.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "Micromatch is integrated into the project at a specific point where it filters dependencies based on exclusion patterns. This integration is relatively shallow, as it is used in a single function for a specific purpose. Replacing micromatch would require changes to this function but would not necessitate a widespread refactoring of the codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to micromatch, such as minimatch and multimatch, which offer similar glob pattern matching capabilities. These alternatives could potentially serve as suitable replacements, making it less difficult to replace micromatch if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on micromatch's abandonment is low. Micromatch is a well-maintained package with a large user base, and its abandonment would likely be preceded by ample warning and the availability of migration paths. Additionally, the project's reliance on micromatch is not so deep that it would be immediately impacted by its abandonment.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of micromatch to the project's core functionality, its relatively shallow integration, the availability of suitable alternatives, and the low likelihood of its abandonment having an immediate impact, the abandonment of micromatch would not likely be directly impactful to the project. The project could transition to an alternative package with moderate effort, and the core functionality of the plugin would remain intact.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The dependency `eslint` is used in the project for linting JavaScript code, which is a critical part of maintaining code quality and consistency. The project's `package.json` includes `eslint` as a devDependency, and it is used in the `posttest` script to ensure that the code adheres to certain standards before it is considered ready for deployment. Given its role in enforcing coding standards, `eslint` is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "`eslint` is integrated into the project's development workflow through the `posttest` script in `package.json`. This means that every time the tests are run, `eslint` is also run to check the code quality. However, the integration is not deeply embedded into the core functionality of the project itself but rather is part of the development and testing process. This makes it relatively easy to replace or remove if necessary.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to `eslint` for JavaScript linting, such as `JSHint`, `TSLint` (for TypeScript), and `Prettier` (which can be used in conjunction with linters). These alternatives offer similar functionality and could potentially serve as replacements. However, `eslint` is highly configurable and has a large ecosystem of plugins, which might make it more challenging to find a direct replacement that meets all the project's needs.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on `eslint`'s abandonment is relatively low. `eslint` is a widely used and actively maintained tool in the JavaScript ecosystem. While it's possible that it could become abandoned in the future, the presence of alternatives and the tool's current popularity reduce the risk of being forced to act due to external changes.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of `eslint` in maintaining code quality, its integration into the development workflow, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of `eslint` would be impactful but not critically so. The project could transition to an alternative linting tool if necessary, though it would require some effort to adjust the development workflow and potentially reconfigure linting rules.",
+    "impactful": true
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "repo": "okfn/dataportals.org",
+  "dep1": "request",
+  "dep2": "errorhandler",
+  "dep3": "body-parser",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The 'request' dependency is used in the project for making HTTP requests, specifically for loading data from a Google spreadsheet in the 'lib/model.js' file. This functionality is crucial for the project as it directly impacts the ability to load and process the catalog data. Given its role in data loading, the functionality provided by 'request' is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The 'request' dependency is integrated into the project in a few key areas, including the 'lib/model.js' file where it is used to load data from a Google spreadsheet. While it is used in a limited number of places, its role in data loading is critical. However, the integration is not deeply embedded across the entire codebase, making it somewhat easier to replace if necessary.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that could serve as suitable replacements for 'request', such as 'axios', 'node-fetch', and 'got'. These alternatives provide similar functionality for making HTTP requests and are actively maintained. The availability of these alternatives makes it less difficult to replace 'request' in the project.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "Given that 'request' has been deprecated and no new changes are expected, the likelihood of external environmental changes forcing the project to act on the dependency's abandonment is high. The deprecation of 'request' could lead to security vulnerabilities or compatibility issues with newer versions of Node.js, which would necessitate action from the project maintainers.",
+      "score": 4
+    },
+    "reasoning": "Considering the importance of the 'request' dependency in loading catalog data, the availability of alternative packages, and the high likelihood of needing to act due to its deprecation, the abandonment of 'request' would likely be impactful to the project. The project would need to replace 'request' with an alternative to ensure continued functionality and security.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The errorhandler dependency is used in the project to handle errors during development. It provides detailed error stack traces and internal details of objects, which is crucial for debugging and development purposes. However, its functionality is limited to the development environment and does not affect the production environment. Therefore, while it is important for development, its impact on the overall project is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The errorhandler dependency is integrated into the project in a minimal way. It is only used in the development environment, as indicated by the conditional statement in app.js. This means its integration depth is shallow, and removing or replacing it would not require extensive changes to the codebase.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available that can serve as suitable replacements for errorhandler, such as express-error-handler, express-error-middleware, and custom error handling middleware. These alternatives can provide similar functionality, making it relatively easy to replace errorhandler if needed.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. Since errorhandler is only used in the development environment, changes in the production environment or other external factors are unlikely to necessitate immediate action.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis, the abandonment of the errorhandler dependency would not likely be directly impactful to the project. Its importance is moderate, limited to the development environment, and it is minimally integrated into the project. Additionally, there are several alternatives available, and the likelihood of external changes forcing action is low. Therefore, the dependency's abandonment would not be impactful.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The body-parser middleware is used to parse incoming request bodies in a middleware before your handlers, available under the req.body property. In the context of the dataportals.org project, it is used to parse JSON request bodies. Given that the project is a web application that likely handles form submissions or API requests, the functionality provided by body-parser is crucial for processing these requests. Therefore, the importance of body-parser to the project is high.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of body-parser in the project is straightforward and limited to a single line in the app.js file where it is used as middleware. This suggests that while body-parser is important for the functionality it provides, its integration into the project's codebase is not deeply complex. Replacing it would involve finding an alternative that can be similarly integrated with minimal changes to the existing code.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to body-parser that can parse request bodies in Express.js applications, such as express.json() (built into Express 4.16.0 and later), multer for multipart/form-data, and others. These alternatives provide similar functionality and can be used with minimal changes to the existing code. The availability of these alternatives makes it relatively easy to replace body-parser if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on body-parser's abandonment is low. body-parser is a widely used middleware with a stable API, and its functionality is now partially integrated into Express.js itself. Additionally, the existence of multiple alternatives reduces the risk associated with its potential abandonment.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of body-parser to the project's functionality, its relatively simple integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of body-parser would not likely be directly impactful to the project. The project could transition to an alternative with minimal effort if necessary.",
+    "impactful": false
+  }
+}

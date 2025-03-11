@@ -1,0 +1,66 @@
+{
+  "repo": "polkadot-js/apps",
+  "dep1": "@pinata/sdk",
+  "dep2": "@types/react-router-dom",
+  "dep3": "react-is",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @pinata/sdk is used for pinning files to IPFS, which is a critical functionality for the polkadot-js/apps project as it allows for decentralized sharing of the UI. The project specifically mentions the importance of pinning the UI to IPFS for faster access. Therefore, the functionality provided by @pinata/sdk is highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The @pinata/sdk is integrated into the project's build and release process, specifically in the scripts/ipfsUpload.mjs file. It is used for pinning the UI to IPFS and managing pinned files. The integration is not deeply embedded in the core functionality of the project but is crucial for the deployment and distribution of the UI.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are alternative services and libraries for pinning files to IPFS, such as Infura, Fleek, and the native IPFS HTTP API. However, @pinata/sdk provides a straightforward and easy-to-use interface for these operations, and switching to an alternative would require some refactoring of the build and release scripts. The availability of alternatives is moderate, but the ease of switching is somewhat hindered by the specific use of @pinata/sdk in the project's scripts.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While IPFS itself is a decentralized protocol and unlikely to be abandoned, the specific service provided by Pinata could change or be discontinued. However, the project could switch to another IPFS pinning service or run its own IPFS nodes if necessary.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of IPFS pinning for the project's deployment and distribution, the integration of @pinata/sdk in the build and release process, the availability of alternative services, and the moderate likelihood of external changes forcing action, the abandonment of @pinata/sdk would be impactful but not critically so. The project could adapt by switching to another IPFS pinning service or running its own IPFS nodes, but this would require some effort and refactoring.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @types/react-router-dom package provides type definitions for react-router-dom, which is crucial for TypeScript projects using react-router-dom for routing. Given that polkadot-js/apps is a TypeScript project, these type definitions are essential for ensuring type safety and developer experience. However, the core functionality of the application does not directly depend on these type definitions, as they are more of a development aid.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The integration of @types/react-router-dom in the project is limited to providing type definitions for react-router-dom. It does not deeply integrate with the core functionality of the application. Replacing or removing these type definitions would not affect the runtime behavior of the application, though it would impact the development experience.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to @types/react-router-dom, including manually defining types or using other type definition packages. However, these alternatives may require additional effort to implement and maintain. The availability of alternatives makes it less difficult to replace @types/react-router-dom, but it would still require some development effort.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. Type definitions are generally stable and do not require frequent updates. Additionally, the community around react-router-dom is active, reducing the risk of abandonment.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of @types/react-router-dom for development experience, the ease of integration, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of this dependency would not likely be directly impactful to the project. It would affect the development experience but not the runtime functionality of the application.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The `react-is` package is a utility for identifying the type of React elements. While it is used in the project, its functionality is not central to the core features of the Polkadot-js/apps, which is a portal into the Polkadot and Substrate networks. The project primarily relies on React for building the UI, but `react-is` is more of a supplementary utility. Therefore, its importance to the project is moderate.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The `react-is` package is likely used in various parts of the project to determine the type of React elements. However, its usage is not deeply integrated into the core functionality of the application. It is more of a utility that can be replaced or removed with relative ease without affecting the main features of the project.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to `react-is` that can provide similar functionality, such as manually checking the type of React elements or using other utility libraries. The availability of these alternatives makes it relatively easy to replace `react-is` if needed.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. `react-is` is a stable package that is widely used in the React ecosystem. While there is always a risk of a package being abandoned, the specific case of `react-is` does not present a high likelihood of such an event.",
+      "score": 1
+    },
+    "reasoning": "Considering the moderate importance of `react-is` to the project, the ease of replacing it due to its shallow integration and the availability of alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of `react-is` would not likely be directly impactful to the Polkadot-js/apps project.",
+    "impactful": false
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "repo": "stephenh/ts-proto",
+  "dep1": "@nestjs/microservices",
+  "dep2": "nice-grpc",
+  "dep3": "@semantic-release/npm",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The @nestjs/microservices package is used extensively throughout the project for gRPC method and stream method decorations, which are crucial for defining and handling gRPC services. The project relies on these decorations to generate and manage gRPC services, making the functionality provided by @nestjs/microservices highly important.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The @nestjs/microservices package is deeply integrated into the project's codebase, with its decorators used in multiple files to define gRPC methods and streams. This deep integration suggests that replacing the package would require significant refactoring of the codebase.",
+      "score": 5
+    },
+    "alternatives": {
+      "reasoning": "While there are alternatives to @nestjs/microservices for gRPC service management, such as grpc-node and @grpc/grpc-js, these alternatives may not provide the same level of integration with NestJS or the same ease of use. Finding a suitable replacement that matches the project's needs could be challenging.",
+      "score": 4
+    },
+    "likelihood": {
+      "reasoning": "Given the active development and widespread use of NestJS and its ecosystem, the likelihood of @nestjs/microservices being abandoned in the near future is low. However, changes in the broader Node.js ecosystem or in gRPC standards could potentially force the project to reconsider its dependencies.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of @nestjs/microservices to the project, its deep integration, the challenges in finding suitable alternatives, and the low likelihood of abandonment, the abandonment of this dependency would likely be impactful to the project.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The dependency 'nice-grpc' is used to generate server/client stubs for the 'ts-proto' project, which is crucial for the project's functionality related to gRPC services. The usage in 'src/generate-nice-grpc.ts' and 'integration/nice-grpc/typings-check.ts' indicates that it plays a significant role in the project's core operations, especially in handling gRPC communications.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The integration of 'nice-grpc' within the project appears to be moderate. It is used in specific files for generating gRPC service stubs and checking typings, which suggests it is not deeply intertwined with the entire codebase but is essential for certain functionalities. The presence of specific imports and usage in dedicated files indicates a focused integration rather than a pervasive one.",
+      "score": 3
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to 'nice-grpc' for gRPC communication in TypeScript, such as '@grpc/grpc-js' and 'grpc-web'. These alternatives are well-maintained and could potentially replace 'nice-grpc' with some adjustments to the codebase. The availability of these alternatives reduces the difficulty of replacing 'nice-grpc'.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The project's focus on gRPC services is stable, and 'nice-grpc' is one of several tools available for this purpose. Unless there are significant changes in the gRPC ecosystem or specific issues with 'nice-grpc', the project is unlikely to be forced to act.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of 'nice-grpc' in generating gRPC service stubs, its moderate integration within the project, the availability of alternatives, and the low likelihood of external changes forcing action, the abandonment of 'nice-grpc' would be somewhat impactful but not critically so. The project could transition to an alternative with moderate effort.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The @semantic-release/npm package is used in the project's release process to handle npm package publishing. Given that the project is a TypeScript protobuf generator, the npm package publishing is crucial for distributing the generated code. However, the core functionality of the project (protobuf generation) does not directly depend on @semantic-release/npm. Therefore, while important for the release process, it is not critical for the project's main functionality.",
+      "score": 3
+    },
+    "integration": {
+      "reasoning": "The @semantic-release/npm package is integrated into the project's release process as part of a series of plugins in the release.config.js file. Its role is specific to the release process, and it does not deeply integrate into the core codebase of the project. Replacing it would require adjustments to the release process but would not affect the main functionality of the project.",
+      "score": 2
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to @semantic-release/npm for handling npm package publishing, such as np, release-it, and standard-version. These alternatives offer similar functionality and could be used as replacements with some configuration changes. The availability of these alternatives makes it less difficult to replace @semantic-release/npm.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is low. The npm ecosystem is stable, and @semantic-release/npm is a widely used package with a large community. While abandonment is always a possibility, the current stability and community support reduce the likelihood of this scenario.",
+      "score": 1
+    },
+    "reasoning": "Considering the importance of @semantic-release/npm to the project's release process, the ease of integration replacement, the availability of alternatives, and the low likelihood of external environmental changes forcing action, the abandonment of @semantic-release/npm would not likely be directly impactful to the project. The project could adapt to a replacement with minimal disruption to its core functionality.",
+    "impactful": false
+  }
+}

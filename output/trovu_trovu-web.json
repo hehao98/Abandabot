@@ -1,0 +1,66 @@
+{
+  "repo": "trovu/trovu-web",
+  "dep1": "ajv",
+  "dep2": "@11ty/eleventy-plugin-syntaxhighlight",
+  "dep3": "@rollup/plugin-typescript",
+  "dep1_report": {
+    "importance": {
+      "reasoning": "The Ajv dependency is used for validating JSON schemas in the project, specifically in the Validator.ts module. Given that the project relies on validating shortcuts and their schemas, Ajv plays a crucial role in ensuring data integrity and correctness. The functionality provided by Ajv is directly tied to the core feature of validating and processing shortcuts, making it highly important to the project.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "Ajv is integrated into the project through the Validator.ts module, where it is used to validate shortcuts against a schema. The integration is deep as it directly affects the validation process, which is a critical part of the project's functionality. Replacing Ajv would require significant changes to the validation logic and potentially the schema definitions.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are several alternatives to Ajv for JSON schema validation, such as jsonschema, tv4, and z-schema. These alternatives provide similar functionality and could potentially serve as replacements. However, the ease of replacement would depend on the specific features and API differences between Ajv and the chosen alternative. Given the availability of alternatives, the difficulty of replacement is moderate.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on Ajv's abandonment is moderate. While Ajv is a widely used and actively maintained library, the JavaScript ecosystem is dynamic, and changes in dependencies or the emergence of new standards could necessitate a switch. However, given Ajv's strong position in the ecosystem, such a scenario is not highly likely in the near term.",
+      "score": 3
+    },
+    "reasoning": "Considering the importance of Ajv to the project's core functionality, its deep integration, the availability of alternatives, and the moderate likelihood of external changes necessitating action, the abandonment of Ajv would likely be impactful to the project. The project would need to invest significant effort in finding and integrating a suitable replacement, which could affect development timelines and stability.",
+    "impactful": true
+  },
+  "dep2_report": {
+    "importance": {
+      "reasoning": "The @11ty/eleventy-plugin-syntaxhighlight is used for syntax highlighting in the project. Given the nature of the project, which is a web shortcut service, syntax highlighting is not a core functionality but rather a feature that enhances the readability of code snippets or documentation. Therefore, while it adds value, it is not critical to the main functionality of the project.",
+      "score": 2
+    },
+    "integration": {
+      "reasoning": "The dependency is integrated into the project through a single line in the .eleventy.js configuration file. This indicates a shallow integration, as it does not appear to be deeply embedded within the project's codebase. Replacing or removing this plugin would likely require minimal changes to the project's configuration.",
+      "score": 1
+    },
+    "alternatives": {
+      "reasoning": "There are several alternative packages available for syntax highlighting in Eleventy projects, such as Prism.js or Highlight.js. These alternatives are well-maintained and could serve as suitable replacements, providing similar or even enhanced functionality. The availability of these alternatives makes it relatively easy to replace @11ty/eleventy-plugin-syntaxhighlight if necessary.",
+      "score": 2
+    },
+    "likelihood": {
+      "reasoning": "Given the nature of the dependency as a plugin for syntax highlighting, it is unlikely that external environmental changes would force the project to act on its abandonment. Syntax highlighting is a feature that, while useful, does not directly impact the core functionality of the project. Therefore, the likelihood of external factors necessitating action on this dependency's abandonment is low.",
+      "score": 1
+    },
+    "reasoning": "Considering the analysis, the abandonment of @11ty/eleventy-plugin-syntaxhighlight would not likely be directly impactful to the project. The functionality it provides is not critical to the core operations of the project, its integration is shallow, there are readily available alternatives, and external factors are unlikely to force action on its abandonment.",
+    "impactful": false
+  },
+  "dep3_report": {
+    "importance": {
+      "reasoning": "The @rollup/plugin-typescript is used in the project to handle TypeScript files during the build process. Given that the project is a web application with a significant amount of TypeScript code, the functionality provided by this plugin is crucial for the project's build and development workflow. It ensures that TypeScript code is correctly transpiled and integrated into the final build.",
+      "score": 5
+    },
+    "integration": {
+      "reasoning": "The plugin is integrated into the project's build process through the rollup.config.js file, where it is used in multiple configurations. This indicates a deep integration within the project's build system. Replacing it would require significant changes to the build configuration and potentially the build process itself.",
+      "score": 4
+    },
+    "alternatives": {
+      "reasoning": "There are alternative plugins and tools that can handle TypeScript in a Rollup build, such as @rollup/plugin-babel with @babel/preset-typescript or @rollup/plugin-sucrase. However, these alternatives may require additional configuration and might not offer the same level of integration and features as @rollup/plugin-typescript. The availability of alternatives makes replacement feasible but not trivial.",
+      "score": 3
+    },
+    "likelihood": {
+      "reasoning": "The likelihood of external environmental changes forcing the project to act on the dependency's abandonment is moderate. While the TypeScript ecosystem is stable, changes in Rollup or TypeScript itself could impact the plugin's functionality. However, given the plugin's active maintenance and the project's current stability, such changes are not immediately foreseeable.",
+      "score": 2
+    },
+    "reasoning": "Considering the importance of @rollup/plugin-typescript to the project's build process, its deep integration, the availability of alternatives, and the current stability of the TypeScript ecosystem, the abandonment of this dependency would be impactful but not critically so. The project could transition to an alternative with some effort, but the immediate impact on the build process and development workflow would be significant.",
+    "impactful": true
+  }
+}
