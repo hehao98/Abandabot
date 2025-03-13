@@ -1,8 +1,19 @@
 # Abandabot
 
-An intelligent assistant that evaluates abandoned dependencies
+This is the supplementary material repository for our paper "Designing Abandabot: When Does Open Source Dependency Abandonment Matter"
 
-## Setup
+It contains the following:
+
+* The full source code for our Abandabot-Predict prototype (see below for documentation)
+* The need finding interview protocol ([need-finding-interview-protocol.pdf](need-finding-interview-protocol.pdf))
+* The survey template for human evaluation of Abandabot-Predict ([survey-template.pdf](survey-template.pdf))
+* The appendix explaining the prototype used in the need finding interview ([APPENDIX.md](APPENDIX.md))
+
+## Abandabot-Predict
+
+This section provides README for the Abandabot-Predict prototype
+
+### Setup
 
 The project works with Python 3.11+ and uses [`poetry`](https://python-poetry.org/) for dependency management. With poetry installed, run the following command to setup the development environment and install all dependencies:
 
@@ -10,7 +21,7 @@ The project works with Python 3.11+ and uses [`poetry`](https://python-poetry.or
 poetry install
 ```
 
-The Abandabot currently uses ChatGPT-4o-mini and needs to have the OPENAI_API_KEY env variable setup in the `.env` file. Optionally, LangSmith config can be added. Example `.env` file:
+Abandabot needs env variable setup for LLM API keys in the `.env` file. Optionally, LangSmith config can be added. Example `.env` file:
 
 ```
 LANGSMITH_TRACING=true
@@ -22,9 +33,9 @@ FIREWORKS_API_KEY="[Your Fireworks API key]"
 ANTHROPIC_API_KEY="[Your Anthropic API key]"
 ```
 
-For TypeScript projects, please also install Node.js and ensure `node` is on the PATH.
+For TypeScript projects, please also install a recent version of Node.js and ensure `node` is on the PATH for running CodeQL queries.
 
-## Basic Usage
+### Basic Usage
 
 ```
 $ poetry run python -m abandabot -h
@@ -48,7 +59,7 @@ options:
 
 It will download CodeQL automatically to the abandabot directory. The current CodeQL version used (v2.20.4) may crash on Windows for certain TypeScript projects, so we recommend using Linux or Mac OS instead for running Abandabot.
 
-## Run Performance Evaluation
+### Run Performance Evaluation
 
 ```
 $ poetry run python -m abandabot.evaluate
