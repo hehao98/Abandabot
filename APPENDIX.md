@@ -15,3 +15,15 @@ We included the type of dependency because we hypothesized based on previous con
 For each detection, we implemented a prototype page showing the abandonment details, as shown in the following screenshot:
 
 ![](demo-detection-details.png)
+
+## Aggregated Participant Agreement with Abandabot-Predict Judgements
+
+There were 146 instances where the tool predicted Impactful, and participants agreed with 113/146 judgements. There were 157 instances where the tool predicted Not Impactful, participants agreeing with 142/157 judgements. 
+
+|                      | **Predicted Judgement**      |                         |
+|----------------------|------------------------------|-------------------------|
+|                      | **Impactful**               | **Unimpactful**        |
+|                      | (n=146)                      | (n=157)                 |
+| **Participant Judgement**  |                        |                         |
+| **Impactful**        | 113                          | 15                      |
+| **Unimpactful**      | 33                           | 142                     |

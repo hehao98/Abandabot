@@ -1,13 +1,20 @@
 # Abandabot
 
-This is the supplementary material repository for our paper "Designing Abandabot: When Does Open Source Dependency Abandonment Matter"
+This is the supplementary material repository for our paper "Designing Abandabot: When Does Open Source Dependency Abandonment Matter?"
 
 It contains the following:
 
 * The full source code for our Abandabot-Predict prototype (see below for documentation)
 * The need finding interview protocol ([need-finding-interview-protocol.pdf](need-finding-interview-protocol.pdf))
 * The survey template for human evaluation of Abandabot-Predict ([survey-template.pdf](survey-template.pdf))
-* The appendix explaining the prototype used in the need finding interview ([APPENDIX.md](APPENDIX.md))
+* An appendix reporting: (a) the prototype used in the need finding interview, and (b) aggregated participant agreement with Abandabot-Predict judgements per predicted class ([APPENDIX.md](APPENDIX.md))
+
+It does not contain the following due to the confidential requirements of our interviews:
+
+* Interview transcripts
+* The ground truth data we used for Abandabot-Predict evaluation (as it would be obvious from the data who attended our interviews)
+
+However, we provide the raw output from Abandabot-Predict inside the [`output/`](output) folder for a wide variety of popular JavaScript/TypeScript projects. They might be useful for follow-up research.
 
 ## Abandabot-Predict
 
@@ -61,6 +68,8 @@ It will download CodeQL automatically to the abandabot directory. The current Co
 
 ### Run Performance Evaluation
 
+This section provides documentation to the evaluation module, but a manually created ground truth file is needed (due to the confidential requirements of our interviews, we cannot share the ground truth we used in the paper).
+
 ```
 $ poetry run python -m abandabot.evaluate
 ```
@@ -72,5 +81,3 @@ repo,repo_url,dep,impactful,action
 abc/def,http://github.com/abc/def,vue,Yes,Immediate action is necessary
 ...
 ```
-
-Due to the confidential requirements of our interviews, we cannot share the ground truth we used.
